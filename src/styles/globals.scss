@@ -11,7 +11,7 @@ body,
 #__next,
 .ant-layout {
   height: 100%;
-
+background-color: #e8e8e8;
 }
 
 .ant-layout-sider {
@@ -1166,4 +1166,21 @@ a {
       color: $black;
     }
   }
+}
+
+.navbar{
+  .nav-link{
+    color: $white;
+    font-size: 16px;
+    font-family: "Marcellus", serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .nav-link.active{
+    color: $white;
+  }
+}
+
+.bg-dark{
+  background-color: $black !important;
 }
