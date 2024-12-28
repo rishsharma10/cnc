@@ -277,7 +277,7 @@ const ChatComponents = ({ setShareMsgs, set_Is_Forward, is_Forward }: any) => {
             chat?.data?.toReversed().map((res: any, reverseIndex: number) => {
               const index = chat.data.length - 1 - reverseIndex;
               return (
-                <div key={res._id} ref={(el) => (itemsRef.current[index] = el)}>
+                <div key={res._id} >
                   <div className="d-flex justify-content-between align-items-center gap-2">
                     <Checkbox
                       className={is_Forward ? "" : "d-none"}
