@@ -17,7 +17,6 @@ import {
 } from "./actionTypes";
 import { destroyCookie, setCookie } from "nookies";
 import crumbApi from "@/utils/crumbApis";
-import html2canvas from "html2canvas";
 import { getRoleForUrl, getTypeForUrl } from "@/utils/crumbValidation";
 
 

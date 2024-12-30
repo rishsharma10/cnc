@@ -4,7 +4,6 @@ import { Button, Flex, Form } from "antd";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { GlobalContext } from "@/context/Provider";
-const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 const ContentPage = () => {
   const [form] = Form.useForm();
   const {Toast} =useContext(GlobalContext)
