@@ -27,6 +27,8 @@ import brandImage from '@/assets/brand-guide/brand-1.png'
 import Link from "next/link";
 import { Carousel, Form } from "antd";
 import HenceforthIcons from "@/components/HenceforthIcons";
+import { ReactElement } from "react";
+import CommonLayout from "@/components/common/CommonLayout";
 const Home = () => {
   const itemData = [
     {
@@ -70,44 +72,7 @@ const Home = () => {
   ]
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-dark">
-        <div className="container">
-          <a className="navbar-brand" href="#">
-            <img src={logo.src} alt="error" height={60} width={60} />
-          </a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul className="navbar-nav mb-2 ms-auto gap-4 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">Page</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link "  href="#">Portofolio</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link "  href="#">Blog</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link "  href="#">Shop</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link "  href="#">Element</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link "  href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link "  href="#"><i className="fa-solid fa-grip-lines"></i></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+     
       {/* ------------------------- Hero Section ------------------------- */}
       <section className="hero-section py-0 h-100">
         <div className="container-fluid h-100">
@@ -237,7 +202,7 @@ const Home = () => {
                 <div className="cart-image text-center">
                   <img src={productImage.src} alt="error" />
                   <div className="cart-overlay">
-                    <span><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></span>
+                    <Link href={'/cart'}><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></Link>
                   </div>
                 </div>
                 <div className="cart-content mt-4 text-center">
@@ -296,7 +261,7 @@ const Home = () => {
         <div className="container">
           <Row>
             <Col span={24}>
-              <div className="contact-text d-flex align-items-center justify-content-between flex-wrap">
+              <div className="contact-text d-flex gap-4 align-items-center justify-content-center justify-content-sm-between text-center text-sm-start flex-wrap">
                 <h4 className="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</h4>
                 <Button type="primary" className="shadow-none h-auto">Contact us</Button>
               </div>
@@ -305,67 +270,15 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --------------------------- about section --------------------- */}
-      <section className="about-section">
-        <div className="container">
-          <Row justify={"center"}>
-            <Col span={24} md={20} lg={18} xl={10} xxl={9}>
-              <div className="about-content text-center">
-                <div className="logo mb-4">
-                  <img src={logo.src} alt="error" height={120} width={110} />
-                </div>
-                <p className="fs-6 mb-5">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-
-                  nostrud exercitation ullamco laboris.”</p>
-
-                <ul className="list-unstyled mb-5 p-0">
-                  <li>
-                    <h4 className="text-uppercase">Stores</h4>
-                  </li>
-                  <li><Link href={'#'}>Dunsmuir Ave, Los Angeles, CA 90036, USA</Link></li>
-                  <li><Link href={'#'}>Atkins Ave, Brooklyn, NY 11208, USA</Link></li>
-                </ul>
-                <Form>
-                  <h4 className="mb-3">News As Fresh As Our Coffee</h4>
-                  <FormItem>
-                    <Input className="border border-light py-0 pe-0" placeholder="Your E-mail Address..." suffix={<Button className="bg-white py-3 h-100 px-4"><HenceforthIcons.Email /></Button>} />
-                  </FormItem>
-                </Form>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </section>
-
-      {/* -------------------------- Footer -------------------------- */}
-      <footer className="footer">
-        <div className="container">
-          <Row>
-            <Col span={24}>
-              <div className="d-flex align-items-center justify-content-between gap-4">
-                <p className="m-0">© 2018 COOPER CRUMB, All Rights Reserved</p>
-
-                <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
-                  <li><Link href={'/'}>Home</Link></li>
-                  <li><Link href={'/'}>About</Link></li>
-                  <li><Link href={'/'}>Shop</Link></li>
-                  <li><Link href={'/'}>Contact</Link></li>
-                </ul>
-                <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
-                  <li><Link href={'/'}><i className="fa-brands fa-facebook"></i></Link></li>
-                  <li><Link href={'/'}><i className="fa-brands fa-square-instagram"></i></Link></li>
-                  <li><Link href={'/'}><i className="fa-brands fa-twitter"></i></Link></li>
-                  <li><Link href={'/'}><i className="fa-brands fa-linkedin"></i></Link></li>
-                </ul>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </footer>
     </>
   );
 };
-
+Home.getLayout = function getLayout(page: ReactElement) {
+  return (
+      <CommonLayout>
+          {page}
+      </CommonLayout>
+  )
+}
 export default Home;

@@ -1123,7 +1123,6 @@ a {
 
 .about-section {
   background: linear-gradient(#000000a8, #000000a8), url('../assets/brand-guide/hero-image.png') center/cover no-repeat;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1183,4 +1182,49 @@ a {
 
 .bg-dark{
   background-color: $black !important;
+}
+
+
+// --------------------------------- Cart Section ------------------------------
+.cart-banner{
+  height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h2{
+    font-size: 60px;
+    color: $white;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 500;
+  }
+}
+
+.auth-page{
+  background: url('../assets/brand-guide/hero-image.png') no-repeat;
+  background-position: left;
+  background-size: cover;
+  background-color: $white;
+  border-radius: 30px;
+  overflow: hidden;
+  padding: 40px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.cart-total{
+  .cart-list{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $border-color;
+    padding-block: 20px;
+
+    span:first-child{
+      font-weight: 600;
+      width: 25%;
+    }
+    
+  }
 }
