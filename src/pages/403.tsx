@@ -1,4 +1,4 @@
-import HenceforthIcons from "@/components/HenceforthIcons";
+import CrumbIcons from "@/components/CrumbIcons";
 import { Typography } from "antd";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -16,7 +16,7 @@ const AccessDenied = () => {
                 <Col className="gutter-row" span={12}>
                     <div className="d-flex justify-content-center align-items-center h-100">
                         <div className="text-center">
-                            <HenceforthIcons.AccessDenied />
+                            <CrumbIcons.AccessDenied />
                             <div className="text-center mt-4">
                                 <Typography.Title level={3} className="m-0 mb-2 fw-bold">Access Denied</Typography.Title>
                                 <Typography.Paragraph className="mb-1">You do not have permission to view this page.</Typography.Paragraph>

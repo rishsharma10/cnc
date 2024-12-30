@@ -1,10 +1,18 @@
-import { AntForm, Button, Col, FormItem, Input, InputPassword, Row } from '@/lib/AntRegistry'
+import { AntForm, Button, Col, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
 import { Form } from 'antd'
 import React from 'react'
 import logo from '@/assets/brand-guide/logo.png'
 import Link from 'next/link'
-import banner from '@/assets/brand-guide/hero-image.png'
 const SignupPage = () => {
+    const handleSubmit = async (values: any) => {
+        console.log(values, 'valuesssss');
+        try {
+            // const apiRes = await apis.Auth.signUp(payload);
+        } catch (error) {
+            
+        }
+
+    }
     return (
         <section>
             <div className="container">
@@ -17,20 +25,44 @@ const SignupPage = () => {
                                 <div className="logo text-center mb-5">
                                     <Link href={'/'}><img src={logo.src} alt="error" height={120} width={120} /></Link>
                                 </div>
-                                <Form layout='vertical' size='large'>
-                                    <FormItem label={'Username'}>
-                                        <Input placeholder='Enter Username' />
+                                <Form layout='vertical' size='large' onFinish={handleSubmit}>
+                                    <FormItem name='name' rules={[{ required: true, pattern: /^[a-zA-Z\s]+$/, message: "Please enter name" }]} label={'Name'}>
+                                        <Input placeholder='Enter name' />
                                     </FormItem>
-                                    <FormItem label={'Email'}>
+                                    <FormItem name={`email`} label={'Email'} rules={[
+                                        {
+                                            required: true,
+                                            message: "Please enter your email address",
+                                        },
+                                        {
+                                            type: 'email',
+                                            message: 'Please enter valid email address',
+                                        },
+                                    ]}>
                                         <Input placeholder='Enter Email' />
                                     </FormItem>
-                                    <FormItem label={'Password'}>
+                                    <FormItem name={`password`} label={'Password'} rules={[{ required: true, message: "Please enter password" }]}>
                                         <InputPassword placeholder='Enter Password' />
                                     </FormItem>
-                                    <FormItem label={'Confirm Password'}>
+                                    <FormItem name={`confirm_password`} label={'Confirm Password'} rules={[
+                                        { required: true, message: "Please enter confirm password" },
+                                        ({ getFieldValue }) => ({
+                                            validator(_, value) {
+                                                if (!value || getFieldValue("password") === value) {
+                                                    return Promise.resolve();
+                                                }
+                                                return Promise.reject(
+                                                    new Error(
+                                                        "The new password that you entered do not match"
+                                                    )
+                                                );
+                                            },
+                                        }),
+                                    ]}>
                                         <InputPassword placeholder='Enter Confirm Password' />
                                     </FormItem>
-                                    <div className="submit-btn text-center mt-5">
+                                    <Link href={`/login`}><TypographyText>Already have an account ? Login</TypographyText></Link>
+                                    <div className="submit-btn text-center mt-2">
                                         <Button htmlType='submit' type='primary' className='px-5'>Sign Up</Button>
                                     </div>
                                 </Form>

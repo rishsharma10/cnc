@@ -2,7 +2,7 @@ import CommonLayout from '@/components/common/CommonLayout'
 import { AntForm, Avatar, Button, Col, Flex, FormItem, Input, Row, Table } from '@/lib/AntRegistry'
 import React, { ReactElement } from 'react'
 import banner from '@/assets/brand-guide/hero-image.png'
-import HenceforthIcons from '@/components/HenceforthIcons'
+import CrumbIcons from '@/components/CrumbIcons'
 import productImage from '@/assets/brand-guide/product-img-5.png';
 import Link from 'next/link'
 const AddToCart = () => {

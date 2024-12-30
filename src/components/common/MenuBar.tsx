@@ -6,7 +6,7 @@ import {
     VideoCameraOutlined,
 } from '@ant-design/icons';
 import Link from "next/link";
-import HenceforthIcons from "../HenceforthIcons";
+import CrumbIcons from "../CrumbIcons";
 import { useRouter } from "next/router";
 import { GlobalContext } from "@/context/Provider";
 import { MenuProps } from "antd";
@@ -43,10 +43,10 @@ const MenuBar = () => {
       };
       const items: MenuItem[] = [
         
-          getItem(<Link href={`/${userType}`} className='text-decoration-none ms-2'>Dashboard</Link>, '', <HenceforthIcons.Dashboard />),
-          getItem(<Link href={`/${userType}/process/list/all/1`} className='text-decoration-none ms-2'>Process</Link>, 'process', <HenceforthIcons.Process />),
-          getItem(<Link href={`/${userType}/organization-chart/all`} className='text-decoration-none ms-2'>Organizational Chart</Link>, 'organization-chart', <HenceforthIcons.Organizational />),
-          getItem(<Link href={`/${userType}/alerts-activity/page/alert/1`} className='text-decoration-none ms-2'>Alerts & Activity</Link>, 'alerts-activity', <HenceforthIcons.AlertActivity />),
+          getItem(<Link href={`/${userType}`} className='text-decoration-none ms-2'>Dashboard</Link>, '', <CrumbIcons.Dashboard />),
+          getItem(<Link href={`/${userType}/process/list/all/1`} className='text-decoration-none ms-2'>Process</Link>, 'process', <CrumbIcons.Process />),
+          getItem(<Link href={`/${userType}/organization-chart/all`} className='text-decoration-none ms-2'>Organizational Chart</Link>, 'organization-chart', <CrumbIcons.Organizational />),
+          getItem(<Link href={`/${userType}/alerts-activity/page/alert/1`} className='text-decoration-none ms-2'>Alerts & Activity</Link>, 'alerts-activity', <CrumbIcons.AlertActivity />),
        
       ];
     return (
@@ -58,22 +58,22 @@ const MenuBar = () => {
                 items={[
                     {
                         key: '1',
-                        icon: <HenceforthIcons.Dashboard />,
+                        icon: <CrumbIcons.Dashboard />,
                         label: <Link className="text-decoration-none ms-2 ps-1" href={`/`}>Dashboard</Link>,
                     },
                     {
                         key: '2',
-                        icon: <HenceforthIcons.Process />,
+                        icon: <CrumbIcons.Process />,
                         label: <Link className="text-decoration-none ms-2 ps-1" href={`/process/list/all/1`}>Process</Link>,
                     },
                     {
                         key: '3',
-                        icon: <HenceforthIcons.Organizational />,
+                        icon: <CrumbIcons.Organizational />,
                         label: <Link className="text-decoration-none ms-2 ps-1" href={`/organization-chart/all`}>Organizational Chart</Link>,
                     },
                     {
                         key: '4',
-                        icon: <HenceforthIcons.AlertActivity />,
+                        icon: <CrumbIcons.AlertActivity />,
                         label: <Link className="text-decoration-none ms-2 ps-1" href={`/alerts-activity`}>Alerts & Activity</Link>,
                     },
                 ]}

@@ -157,7 +157,6 @@ export const imgFormatGoogle = (name: string) => {
   if (String(name)?.startsWith(`https://`)) {
     return name;
   } else {
-    // return henceforthS3Bucket?.image.getSmall(name)
   }
 };
 
@@ -206,7 +205,7 @@ export const getTypeForUrl = (role: string) => {
     return role;
   }
 };
-const henceforthValidations = {
+const crumbValidations = {
   roundOffCeil,
   stringReplace,
   email,
@@ -234,4 +233,4 @@ const henceforthValidations = {
   showPrice,
   strongPasswordRegEx,
 };
-export default henceforthValidations;
+export default crumbValidations;

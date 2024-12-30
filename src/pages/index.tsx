@@ -26,7 +26,7 @@ import galleryImage from '@/assets/brand-guide/59.png'
 import brandImage from '@/assets/brand-guide/brand-1.png'
 import Link from "next/link";
 import { Carousel, Form } from "antd";
-import HenceforthIcons from "@/components/HenceforthIcons";
+import CrumbIcons from "@/components/CrumbIcons";
 import { ReactElement } from "react";
 import CommonLayout from "@/components/common/CommonLayout";
 const Home = () => {

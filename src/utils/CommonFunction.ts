@@ -1,5 +1,5 @@
 import { NextRouter } from "next/router"
-import henceforthApi from "./henceforthApi"
+import crumbApi from "./crumbApis"
 import React from "react"
 
 export const ImageUploadApi = async (key: string, image: any) => {
@@ -7,7 +7,7 @@ export const ImageUploadApi = async (key: string, image: any) => {
     let apiRes: any
     let err: any
     try {
-        apiRes = await henceforthApi.Common.uploadFile(key, image)
+        apiRes = await crumbApi.Common.uploadFile(key, image)
     } catch (error) {
         err = error
     } finally {

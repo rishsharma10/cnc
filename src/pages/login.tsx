@@ -1,4 +1,4 @@
-import { AntForm, Button, Col, FormItem, Input, InputPassword, Row } from '@/lib/AntRegistry'
+import { AntForm, Button, Col, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
 import { Form } from 'antd'
 import React from 'react'
 import logo from '@/assets/brand-guide/logo.png'
@@ -18,15 +18,24 @@ const LoginPage = () => {
                                     <Link href={'/'}><img src={logo.src} alt="error" height={120} width={120} /></Link>
                                 </div>
                                 <Form layout='vertical' size='large'>
-                                    <FormItem label={'Username'}>
-                                        <Input placeholder='Enter Username' />
+                                <FormItem name={`email`} label={'Email'} rules={[
+                                        {
+                                            required: true,
+                                            message: "Please enter your email address",
+                                        },
+                                        {
+                                            type: 'email',
+                                            message: 'Please enter valid email address',
+                                        },
+                                    ]}>
+                                        <Input placeholder='Enter Email' />
                                     </FormItem>
-                                    <FormItem label={'Password'}>
+                                    <FormItem name={`password`} label={'Password'} rules={[{ required: true, message: "Please enter password" }]}>
                                         <InputPassword placeholder='Enter Password' />
                                     </FormItem>
-
+                                    <Link href={`/signup`}><TypographyText>Create an account ? Sign up</TypographyText></Link>
                                     <div className="submit-btn text-center mt-5">
-                                        <Button htmlType='submit' type='primary' className='px-5'>Submit</Button>
+                                        <Button htmlType='submit' type='primary' className='px-5'>LOGIN</Button>
                                     </div>
                                 </Form>
                             </div>

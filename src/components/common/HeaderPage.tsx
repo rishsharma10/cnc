@@ -1,5 +1,7 @@
 import React from 'react'
 import logo from '@/assets/brand-guide/logo.png';
+import { Button } from '@/lib/AntRegistry';
+import Link from 'next/link'
 const HeaderPage = () => {
     return (
         <nav className="navbar navbar-expand-lg bg-dark">
@@ -18,7 +20,7 @@ const HeaderPage = () => {
                         <li className="nav-item">
                             <a className="nav-link" href="#">Page</a>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <a className="nav-link " href="#">Portofolio</a>
                         </li>
                         <li className="nav-item">
@@ -29,13 +31,13 @@ const HeaderPage = () => {
                         </li>
                         <li className="nav-item">
                             <a className="nav-link " href="#">Element</a>
-                        </li>
+                        </li> */}
                         <li className="nav-item">
                             <a className="nav-link " href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link " href="#"><i className="fa-solid fa-grip-lines"></i></a>
-                        </li>
+                        <Link className="nav-item bg-white"  href="/login">
+                            <Button>Sign in</Button>
+                        </Link>
                     </ul>
                 </div>
             </div>

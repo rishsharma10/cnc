@@ -22,13 +22,12 @@ import { Grid, theme } from "antd";
 import { useContext, useState, useEffect } from "react";
 import profile from "@/assets/images/profile.png";
 import MenuBar from "./MenuBar";
-import HenceforthIcons from "../HenceforthIcons";
+import CrumbIcons from "../CrumbIcons";
 import Link from "next/link";
 import type { MenuProps } from "antd";
 import { useRouter } from "next/router";
 import { GlobalContext } from "@/context/Provider";
-import henceforthApi from "@/utils/henceforthApi";
-import ActivityCard from "../ActivityCard";
+import crumbApi from "@/utils/crumbApis";
 const MainLayout = (props: any) => {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
@@ -45,53 +44,7 @@ const MainLayout = (props: any) => {
     count: 0,
   });
 
-  const initData = async () => {
-    try {
-      let urlSearchParam = new URLSearchParams();
-      if (router.query.type) {
-        urlSearchParam.set("type", String(router.query.type).toUpperCase());
-      }
-      if (router.query.pagination) {
-        urlSearchParam.set(
-          "pagination",
-          String(Number(router.query.pagination) - 1)
-        );
-      }
-      // if (router.query.limit) {
-      urlSearchParam.set("limit", String(Number(router.query.limit) || 10));
-      urlSearchParam.set("type", "NOTIFICATION");
-      let apiRes = await henceforthApi.Alert_Activity.listing(
-        urlSearchParam.toString()
-      );
-      setState(apiRes);
-    } catch (error) { }
-  };
-  const handleSelectDeleteAll = async () => {
-    try {
-      let apiRes = await henceforthApi.Alert_Activity.markread("", { type: "all" })
-      await initData()
-    } catch (error) {
 
-    }
-  }
-
-  const handleRead = async (res: any) => {
-    try {
-      let apiRes = await henceforthApi.Alert_Activity.markread(res._id, { _id: res._id, type: "one" })
-      await initData()
-      router.replace(
-        res?.notification_type === "DEPARTMENT"
-          ? `/${userType}/department/page/1?limit=12?read_all=true`
-          : res?.notification_type === "PROCESS" ? res?.process_id ? `/${userType}/process/${res?.process_id}/details?read_all=true` : `/${userType}/teammates/page/all/1` : `/${userType}`
-      )
-
-    } catch (error) {
-
-    }
-  }
-  useEffect(() => {
-    initData();
-  }, [router.query?.read_all]);
 
 
 
@@ -149,7 +102,7 @@ const MainLayout = (props: any) => {
                   <Space direction={screens.sm ? 'horizontal' : 'vertical'} className='notification-heading justify-content-between w-100 mb-3 text-center text-sm-start'>
                     <TypographyTitle level={5} className='fw-bold m-0'>Unread Notifications</TypographyTitle>
                     {state?.data?.length > 0 &&
-                      <Button onClick={handleSelectDeleteAll} type='link' htmlType='button' className='text-green p-0 text-end'>Mark as all read</Button>}
+                      <Button type='link' htmlType='button' className='text-green p-0 text-end'>Mark as all read</Button>}
                   </Space>
                 </Col>
 
@@ -160,7 +113,7 @@ const MainLayout = (props: any) => {
                         {
                           state?.data?.length > 0 ?
                             Array.isArray(state?.data) && state?.data?.slice(0, 5)?.map((res: any, index: number) => {
-                              return <div key={res?._id} className="p-2" onClick={() => handleRead(res)}>
+                              return <div key={res?._id} className="p-2">
                                 <Link
                                   href={
                                     res?.notification_type === "DEPARTMENT"
@@ -168,7 +121,6 @@ const MainLayout = (props: any) => {
                                       : res?.notification_type === "PROCESS" ? res?.process_id ? `/${userType}/process/${res?.process_id}/details?read_all=true` : `/${userType}/teammates/page/all/1` : `/${userType}`
                                   }
                                 >
-                                  <ActivityCard {...res} type="unread" />
                                 </Link>
                               </div>
                             })
@@ -238,7 +190,7 @@ const MainLayout = (props: any) => {
           }
         >
           {/* <div className={`demo-logo-vertical my-4 ${collapsed ? 'px-1' : 'px-3'}`} >
-                        <HenceforthIcons.LogoBlack />
+                        <CrumbIcons.LogoBlack />
                     </div> */}
           {/* {collapsed ? <div className="profile_details mx-0 px-2 mb-4 d-flex align-items-center gap-2" >
                         <Avatar src={profile.src} size={40} style={{ minWidth: 40 }} className="m-auto" />
@@ -247,7 +199,7 @@ const MainLayout = (props: any) => {
             <Avatar
               src={
                 userInfo?.profile_pic
-                  ? henceforthApi.FILES.imageSmall(userInfo?.profile_pic)
+                  ? crumbApi.FILES.imageSmall(userInfo?.profile_pic)
                   : profile.src
               }
               size={40}
@@ -267,7 +219,7 @@ const MainLayout = (props: any) => {
             items={[
               {
                 key: "1",
-                icon: <HenceforthIcons.Dashboard />,
+                icon: <CrumbIcons.Dashboard />,
                 label: (
                   <Link
                     className={`text-decoration-none ms-2 ps-1 ${collapsed && "opacity-0"
@@ -280,7 +232,7 @@ const MainLayout = (props: any) => {
               },
               {
                 key: "2",
-                icon: <HenceforthIcons.Process />,
+                icon: <CrumbIcons.Process />,
                 label: (
                   <Link
                     className={`text-decoration-none ms-2 ps-1 ${collapsed && "opacity-0"
@@ -293,7 +245,7 @@ const MainLayout = (props: any) => {
               },
               {
                 key: "3",
-                icon: <HenceforthIcons.Organizational />,
+                icon: <CrumbIcons.Organizational />,
                 label: (
                   <Link
                     className={`text-decoration-none ms-2 ps-1 ${collapsed && "opacity-0"
@@ -306,7 +258,7 @@ const MainLayout = (props: any) => {
               },
               {
                 key: "4",
-                icon: <HenceforthIcons.AlertActivity />,
+                icon: <CrumbIcons.AlertActivity />,
                 label: (
                   <Link
                     className={`text-decoration-none ms-2 ps-1 ${collapsed && "opacity-0"
@@ -319,7 +271,7 @@ const MainLayout = (props: any) => {
               },
               // {
               //   key: "5",
-              //   icon: <HenceforthIcons.AlertActivity />,
+              //   icon: <CrumbIcons.AlertActivity />,
               //   label: (
               //     <Link
               //       className={`text-decoration-none ms-2 ps-1 ${collapsed && "opacity-0"
@@ -349,7 +301,7 @@ const MainLayout = (props: any) => {
               <Button
                 type="primary"
                 className="rounded-2 d-flex align-items-center justify-content-center"
-                icon={<HenceforthIcons.Menu />}
+                icon={<CrumbIcons.Menu />}
                 onClick={() => setCollapsed(!collapsed)}
               />
               <Flex align="center" gap={16}>
@@ -359,7 +311,7 @@ const MainLayout = (props: any) => {
                     className="h-100 bg-transparent p-0"
                     shape="circle"
                   >
-                    <HenceforthIcons.Notification />
+                    <CrumbIcons.Notification />
                   </Button>
                 </Link> */}
                 <Dropdown menu={{ items: itemsNotification }} prefixCls="notification-dropdown" trigger={['hover']} placement="bottomLeft" arrow>
@@ -369,7 +321,7 @@ const MainLayout = (props: any) => {
                       className="h-100 bg-transparent p-0"
                       shape="circle"
                     >
-                      <HenceforthIcons.Notification />
+                      <CrumbIcons.Notification />
                     </Button>
                   </Badge>
                 </Dropdown>
@@ -378,7 +330,7 @@ const MainLayout = (props: any) => {
                     <Avatar
                       src={
                         userInfo?.profile_pic
-                          ? henceforthApi.FILES.imageSmall(
+                          ? crumbApi.FILES.imageSmall(
                             userInfo?.profile_pic
                           )
                           : profile.src

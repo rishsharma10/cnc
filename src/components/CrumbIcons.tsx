@@ -911,7 +911,7 @@ const PDF_icn=()=><svg width="180" height="180" viewBox="0 0 180 180" fill="none
 </svg>
 
 
-const HenceforthIcons = {
+const crumbIcons = {
     TABusinessDev,
     TACustomerSupport,
     PDF_icn,
@@ -1001,4 +1001,4 @@ const HenceforthIcons = {
     Plus
 }
 
-export default HenceforthIcons;
+export default crumbIcons;

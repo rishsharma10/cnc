@@ -2,7 +2,7 @@ import { AntForm, Button, Col, FormItem, Input, Row } from '@/lib/AntRegistry'
 import Link from 'next/link'
 import React from 'react'
 import logo from '@/assets/brand-guide/logo.png';
-import HenceforthIcons from '../HenceforthIcons';
+import CrumbIcons from '../CrumbIcons';
 
 const FooterPage = () => {
     return (
@@ -31,7 +31,7 @@ const FooterPage = () => {
                                 <AntForm>
                                     <h4 className="mb-3">News As Fresh As Our Coffee</h4>
                                     <FormItem>
-                                        <Input className="border border-light py-0 pe-0" placeholder="Your E-mail Address..." suffix={<Button className="bg-white py-3 h-100 px-4"><HenceforthIcons.Email /></Button>} />
+                                        <Input className="border border-light py-0 pe-0" placeholder="Your E-mail Address..." suffix={<Button className="bg-white py-3 h-100 px-4"><CrumbIcons.Email /></Button>} />
                                     </FormItem>
                                 </AntForm>
                             </div>
