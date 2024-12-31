@@ -1,10 +1,32 @@
 import { AntForm, Button, Col, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
 import { Form } from 'antd'
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '@/assets/brand-guide/logo.png'
 import Link from 'next/link'
-import banner from '@/assets/brand-guide/hero-image.png'
+import { useRouter } from 'next/router'
+import crumbApi from '@/utils/crumbApis'
+import { GlobalContext } from '@/context/Provider'
 const LoginPage = () => {
+    const router = useRouter()
+    const {Toast} = useContext(GlobalContext)
+    const [loading, setLoading] = useState(false)
+    const handleSubmit = async (values: any) => {
+        console.log(values, 'valuesssss');
+        const payload = {
+            email:values.email,
+            password:values.password
+        }
+        try {
+            setLoading(true)
+            const apiRes = await crumbApi.Auth.login(payload);
+            router.replace(`/`)
+        } catch (error:any) {
+            Toast.error(error.message)
+        }finally{
+            setLoading(false)
+        }
+
+    }
     return (
         <section className='h-100 py-3'>
             <div className="container-fluid h-100">

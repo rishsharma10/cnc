@@ -14,6 +14,7 @@ import {
   TypographyTitle,
   Upload,
 } from "@/lib/AntRegistry";
+import React, { useContext, useState } from 'react'
 import HeroBanner from '@/assets/brand-guide/hero-image.png'
 import logo from '@/assets/brand-guide/logo.png'
 import seperator from '@/assets/brand-guide/slider-separator-img.png'
@@ -29,6 +30,7 @@ import { Carousel, Form } from "antd";
 import CrumbIcons from "@/components/CrumbIcons";
 import { ReactElement } from "react";
 import CommonLayout from "@/components/common/CommonLayout";
+import crumbApi from "@/utils/crumbApis";
 const Home = () => {
   const itemData = [
     {
@@ -70,6 +72,21 @@ const Home = () => {
       title: 'Coffee Brands',
     },
   ]
+ const [state, setState] = useState({data:[],count:0})
+
+
+  const initProductList  = async () => {
+    try {
+      let apiRes = await crumbApi.Product.list()
+      setState(apiRes)
+    } catch (error) {
+      
+    }
+  }
+React.useEffect(() => {
+  initProductList()
+},[])
+
   return (
     <>
      
@@ -130,33 +147,36 @@ const Home = () => {
           </Row>
         </div>
       </section>
-
-      {/* ------------------------- Blog Section ------------------------ */}
-      <section className="blog-section common-bg">
+   {/* ------------------------- Cart Section ------------------------ */}
+   <section className="cart-section common-bg">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
-              <h2 className="title">The Coffee Herald</h2>
+              <h2 className="title">Online Coffee Shop</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
               <p className="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
             </Col>
           </Row>
           <Row gutter={[20, 20]}>
-            {[...Array(3)].map(() => <Col span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
-              <div className="blog-card">
-                <div className="blog-image">
-                  <img src={blogImage.src} alt="error" className="img-fluid" />
+            {[...Array(4)].map(() => <Col span={24} sm={12} md={12} lg={6} xl={6} xxl={6}>
+              <div className="cart-card">
+                <div className="cart-image text-center">
+                  <img src={productImage.src} alt="error" />
+                  <div className="cart-overlay">
+                    <Link href={'/product/name/id'}><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></Link>
+                  </div>
                 </div>
-                <div className="blog-content mt-4">
-                  <h4>Prep Techniques</h4>
-                  <p className="mt-3 mb-3 text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio et explicabo, expedita debitis.</p>
-                  <Link href={'#'}>Read More</Link>
+                <div className="cart-content mt-4 text-center">
+                  <Link href={'#'}><h4>Kenya Coffee</h4></Link>
+                  <p className="text-secondary fs-6">$18.00</p>
                 </div>
               </div>
             </Col>)}
           </Row>
         </div>
       </section>
+      {/* ------------------------- Blog Section ------------------------ */}
+    
 
       {/* --------------------- Fixed Banner Section ---------------------- */}
       <section className="fixed-banner-section">
@@ -186,28 +206,25 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ------------------------- Cart Section ------------------------ */}
-      <section className="cart-section common-bg">
+      <section className="blog-section common-bg">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
-              <h2 className="title">Online Coffee Shop</h2>
+              <h2 className="title">The Coffee Herald</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
               <p className="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
             </Col>
           </Row>
           <Row gutter={[20, 20]}>
-            {[...Array(4)].map(() => <Col span={24} sm={12} md={12} lg={6} xl={6} xxl={6}>
-              <div className="cart-card">
-                <div className="cart-image text-center">
-                  <img src={productImage.src} alt="error" />
-                  <div className="cart-overlay">
-                    <Link href={'/cart'}><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></Link>
-                  </div>
+            {[...Array(3)].map(() => <Col span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
+              <div className="blog-card">
+                <div className="blog-image">
+                  <img src={blogImage.src} alt="error" className="img-fluid" />
                 </div>
-                <div className="cart-content mt-4 text-center">
-                  <Link href={'#'}><h4>Kenya Coffee</h4></Link>
-                  <p className="text-secondary fs-6">$18.00</p>
+                <div className="blog-content mt-4">
+                  <h4>Prep Techniques</h4>
+                  <p className="mt-3 mb-3 text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio et explicabo, expedita debitis.</p>
+                  <Link href={'#'}>Read More</Link>
                 </div>
               </div>
             </Col>)}
@@ -263,7 +280,7 @@ const Home = () => {
             <Col span={24}>
               <div className="contact-text d-flex gap-4 align-items-center justify-content-center justify-content-sm-between text-center text-sm-start flex-wrap">
                 <h4 className="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</h4>
-                <Button type="primary" className="shadow-none h-auto">Contact us</Button>
+                <Link href={`/contact`}><Button type="primary" className="shadow-none h-auto">Contact us</Button></Link>
               </div>
             </Col>
           </Row>

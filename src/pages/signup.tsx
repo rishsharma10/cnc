@@ -1,15 +1,30 @@
 import { AntForm, Button, Col, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
 import { Form } from 'antd'
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '@/assets/brand-guide/logo.png'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import crumbApi from '@/utils/crumbApis'
+import { GlobalContext } from '@/context/Provider'
 const SignupPage = () => {
+    const router = useRouter()
+    const {Toast} = useContext(GlobalContext)
+    const [loading, setLoading] = useState(false)
     const handleSubmit = async (values: any) => {
         console.log(values, 'valuesssss');
+        const payload = {
+            name:values.name,
+            email:values.email,
+            password:values.password
+        }
         try {
-            // const apiRes = await apis.Auth.signUp(payload);
-        } catch (error) {
-            
+            setLoading(true)
+            const apiRes = await crumbApi.Auth.signUp(payload);
+            router.replace(`/`)
+        } catch (error:any) {
+            Toast.error(error.message)
+        }finally{
+            setLoading(false)
         }
 
     }

@@ -102,7 +102,7 @@ const AddToCart = () => {
                                   
                                 </ul>
 
-                                <span><Button type='primary' size='large' className='px-5 text-uppercase'>Proceed to checkout</Button></span>
+                                <span><Link href={`/checkout/payment`}><Button type='primary' size='large' className='px-5 text-uppercase'>Proceed to checkout</Button></Link></span>
                             </div>
                         </Col>
                     </Row>

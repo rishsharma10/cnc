@@ -72,6 +72,15 @@ const Auth = {
   resetPassword: (info: any) => requests.put("user/reset/password", info),
   edit: (info: any) => requests.put("user/profile", info),
 };
+const Product = {
+  list: () => requests.get("user/product"),
+  details: (id: any) => requests.get(`user/product/${id}`),
+}
+const Cart = {
+  update: (info: any) => requests.put("user/cart", info),
+  add: (info: any) => requests.post("user/cart", info),
+  remove: (info: any) => requests.del("user/cart"),
+}
 
 const Common = {
   uploadFile: (key: string, file: any) =>
@@ -122,6 +131,8 @@ const FILES = {
 
 const crumbApi = {
   Auth,
+  Product,
+  Cart,
   API_ROOT,
   API_FILE_ROOT_DB_BACKUP,
   API_FILE_ROOT_SMALL,
