@@ -1,10 +1,11 @@
 import CommonLayout from '@/components/common/CommonLayout'
 import { AntForm, Avatar, Button, Col, Flex, FormItem, Input, Row, Table } from '@/lib/AntRegistry'
 import React, { ReactElement } from 'react'
-import banner from '@/assets/brand-guide/hero-image.png'
+
 import CrumbIcons from '@/components/CrumbIcons'
 import productImage from '@/assets/brand-guide/product-img-5.png';
 import Link from 'next/link'
+import CommonBanner from '@/components/CommonBanner';
 const AddToCart = () => {
     const dataSource = [
         {
@@ -12,14 +13,8 @@ const AddToCart = () => {
             cross:<Button shape='circle' className='border-0'>x</Button>,
             product: <Flex align='center' gap={8}><Avatar src={productImage.src} shape='square' size={100}/><span>Kenya Coffee</span></Flex>,
             price:'$18',
-            quantity: <Flex className='quantity-card'><Flex className='border border-dark border-end-0 p-4 h-100'>2</Flex><Flex className='flex-column h-100'><Button className='border-bottom-0 h-100' size='small'>+</Button><Button size='small' className='h-100 px-3'>-</Button></Flex></Flex>,
+            quantity: <Flex className='quantity-counter'><Flex className='p-3 counter-div'>2</Flex><Flex className='flex-column h-100'><Button>+</Button><Button>-</Button></Flex></Flex>,
             subtotal: '$36',
-        },
-        {
-            key: '2',
-            name: 'John',
-            age: 42,
-            address: '10 Downing Street',
         },
     ];
 
@@ -53,25 +48,16 @@ const AddToCart = () => {
     return (
         <>
             <section className="add-to-cart-section pt-0 bg-white" >
-                <div className="container-fluid px-0">
-                    <Row className='mx-0'>
-                        <Col span={24} className='px-0'>
-                            <div className="cart-banner" style={{ backgroundImage: `url(${banner.src}` }}>
-                                <h2>Cart</h2>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-
+               <CommonBanner title={"Cart"}/>
                 <div className="container mt-5">
                     <Row gutter={[20, 20]}>
                         <Col span={24}>
-                            <div className="cart-content">
+                            <div className="cart-content mb-4">
                                 <Table dataSource={dataSource} columns={columns} pagination={false}  scroll={{x:'100%'}}/>
                             </div>
 
                             <div className="coupon">
-                                <AntForm size='large' className='d-flex flex-wrap align-items-center gap-3'>
+                                <AntForm size='large' className='d-flex flex-wrap align-items-center gap-3 '>
                                     <FormItem className='w-25 m-0'>
                                         <Input placeholder='Coupon Code'/>
                                     </FormItem>

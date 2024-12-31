@@ -72,24 +72,24 @@ const Home = () => {
       title: 'Coffee Brands',
     },
   ]
- const [state, setState] = useState({data:[],count:0})
+  const [state, setState] = useState({ data: [], count: 0 })
 
 
-  const initProductList  = async () => {
+  const initProductList = async () => {
     try {
       let apiRes = await crumbApi.Product.list()
       setState(apiRes)
     } catch (error) {
-      
+
     }
   }
-React.useEffect(() => {
-  initProductList()
-},[])
+  React.useEffect(() => {
+    initProductList()
+  }, [])
 
   return (
     <>
-     
+
       {/* ------------------------- Hero Section ------------------------- */}
       <section className="hero-section py-0 h-100">
         <div className="container-fluid h-100">
@@ -147,8 +147,8 @@ React.useEffect(() => {
           </Row>
         </div>
       </section>
-   {/* ------------------------- Cart Section ------------------------ */}
-   <section className="cart-section common-bg">
+      {/* ------------------------- Cart Section ------------------------ */}
+      <section className="cart-section common-bg">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
@@ -176,7 +176,7 @@ React.useEffect(() => {
         </div>
       </section>
       {/* ------------------------- Blog Section ------------------------ */}
-    
+
 
       {/* --------------------- Fixed Banner Section ---------------------- */}
       <section className="fixed-banner-section">
@@ -293,9 +293,9 @@ React.useEffect(() => {
 };
 Home.getLayout = function getLayout(page: ReactElement) {
   return (
-      <CommonLayout>
-          {page}
-      </CommonLayout>
+    <CommonLayout>
+      {page}
+    </CommonLayout>
   )
 }
 export default Home;

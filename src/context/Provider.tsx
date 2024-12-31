@@ -254,13 +254,13 @@ function GlobalProvider(props: GlobleContextProviderProps) {
 
             Select: {
               lineWidth: 1,
-              borderRadiusOuter: 40,
-              borderRadius: 40,
-              borderRadiusLG: 40,
-              colorBorder: "transparent",
+              borderRadiusOuter: 0,
+              borderRadius: 0,
+              borderRadiusLG: 0,
+              colorBorder: "#dddddd",
               colorText: "#828282",
               colorTextPlaceholder: "#828282",
-              fontSize: 14,
+              fontSize: 16,
               controlHeightLG: 50,
               controlHeight: 42,
               colorBgContainer: "rgba(255, 255, 255, 0.5)",

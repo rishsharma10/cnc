@@ -508,3 +508,31 @@ ul.notification-dropdown-menu {
 //   position: relative;
 //   bottom: 10px;
 // }
+
+.ant-tabs {
+  border: 1px solid $border-color;
+  .ant-tabs-nav-list, .ant-tabs-tab,.ant-tabs-tab-btn{
+    text-align: center;
+    width: 100%;
+    margin: 0 !important;
+  }
+  .ant-tabs-nav-list{
+    background-color: $primary-light;
+  }
+  .ant-tabs-tab{
+    padding-inline: 12px;
+  }
+  .ant-tabs-tab-active{
+    background-color: $secondary !important;
+    .ant-tabs-tab-btn{
+      color: $white !important;
+    }
+  }
+  .ant-tabs-ink-bar{
+    display: none;
+  }
+  .ant-tabs-tabpane{
+    padding: 20px;
+    padding-top: 0;
+  }
+}
