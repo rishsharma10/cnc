@@ -227,7 +227,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
             },
             Form: {
               verticalLabelPadding: 4,
-              labelColor: "#121212",
+              labelColor: "#464646",
               itemMarginBottom: 16,
               labelHeight: 10,
               fontSize:16
@@ -373,11 +373,11 @@ function GlobalProvider(props: GlobleContextProviderProps) {
               colorText: "#000000",
             },
             Collapse: {
-              borderRadiusLG: 8,
-              borderRadius: 8,
-              colorBgElevated: "#000000",
+              borderRadiusLG: 0,
+              borderRadius: 0,
+              colorBgElevated: "#ffffff",
               colorBorder: "#E5E5E5",
-              colorFillAlter: "#000000",
+              colorFillAlter: "#ffffff",
               colorTextHeading: "#121212",
               fontSize: 16,
             },
