@@ -9,11 +9,11 @@ const HeaderPage = () => {
                 <Link className="navbar-brand" href="/">
                     <img src={logo.src} alt="error" height={60} width={60} />
                 </Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse " id="navbarSupportedContent">
-                    <ul className="navbar-nav mb-2 ms-auto gap-4 mb-lg-0">
+                    <ul className="navbar-nav mb-2 ms-auto gap-2 gap-lg-4 mb-lg-0">
                         <Link className="nav-item"  href="/" legacyBehavior>
                             <a className="nav-link active" aria-current="page">Home</a>
                         </Link>
@@ -44,8 +44,8 @@ const HeaderPage = () => {
                         <li className="nav-item">
                             <a className="nav-link " href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
                         </li>
-                        <Link className="nav-item bg-white"  href="/login">
-                            <Button>Sign in</Button>
+                        <Link className="nav-item"  href="/login">
+                            <Button className='bg-white'>Sign in</Button>
                         </Link>
                     </ul>
                 </div>

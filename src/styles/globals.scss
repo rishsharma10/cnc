@@ -1287,3 +1287,33 @@ button{
   height: 400px;
   min-height: 400px;
 }
+
+.about-testimonial-card{
+  *{
+    color: $white;
+    text-align: center;
+  }
+  .name{
+    font-family: "Marcellus", serif;
+  }
+}
+
+.ant-carousel .slick-dots li{
+  height: 12px !important;
+  width: 12px !important;
+  border-radius: 50% !important;
+  margin-inline: 6px !important;
+  button{
+    height: 100% !important;
+    width: 100% !important;
+    border-radius: 50% !important;
+    border: 1px solid $white !important;
+    background-color: transparent !important;
+    opacity: 1 !important;
+  }
+}
+.ant-carousel .slick-dots li.slick-active{
+  button{
+    background-color: $white !important;
+  }
+}

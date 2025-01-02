@@ -10,6 +10,7 @@ import { parseCookies } from "nookies";
 import logo from "@/assets/brand-guide/logo.png"
 import { Router } from 'next/router';
 import { Fragment, ReactElement, ReactNode } from "react";
+import Script from "next/script";
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement,) => ReactNode
 }
@@ -45,6 +46,8 @@ const MyApp = ({ Component, pageProps, ...props }: AppPropsWithLayout) => {
       </Head>
       {getLayout(<Component {...pageProps} />)}
     </GlobalProvider >
+
+    <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></Script>
   </Fragment>
 }
 
