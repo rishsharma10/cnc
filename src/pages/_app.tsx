@@ -49,6 +49,8 @@ const MyApp = ({ Component, pageProps, ...props }: AppPropsWithLayout) => {
       <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></Script>
       {getLayout(<Component {...pageProps} />)}
     </GlobalProvider >
+
+    <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></Script>
   </Fragment>
 }
 
