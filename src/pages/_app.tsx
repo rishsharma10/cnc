@@ -10,6 +10,7 @@ import { parseCookies } from "nookies";
 import logo from "@/assets/brand-guide/logo.png"
 import { Router } from 'next/router';
 import { Fragment, ReactElement, ReactNode } from "react";
+import Script from "next/script";
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement,) => ReactNode
 }
@@ -37,12 +38,15 @@ const MyApp = ({ Component, pageProps, ...props }: AppPropsWithLayout) => {
         <link rel="stylesheet" href="https://unpkg.com/treeflex/dist/css/treeflex.css"></link>
         <link rel="icon" href={logo.src} />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"/>
+       
         {/* <style jsx global>{`
       * {
         font-family: ${montserrat.style.fontFamily} !important; 
       }
     `}</style> */}
       </Head>
+      <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></Script>
       {getLayout(<Component {...pageProps} />)}
     </GlobalProvider >
   </Fragment>

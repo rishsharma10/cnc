@@ -100,7 +100,7 @@ const ProductDetails = () => {
 
               <Flex align='center' gap={20} className='my-5'>
                 <Flex className='quantity-counter'><Flex className='p-3 counter-div'>2</Flex><Flex className='flex-column h-100'><Button>+</Button><Button>-</Button></Flex></Flex>
-                <Button type='primary' size='large' className='px-5'>add to cart</Button>
+                <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>add to cart</Button></Link>
               </Flex>
 
               <ul className='list-unstyled p-0'>
