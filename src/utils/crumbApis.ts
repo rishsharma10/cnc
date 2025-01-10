@@ -2,8 +2,8 @@ import _superagent, { search } from "superagent";
 const SuperagentPromise = require("superagent-promise");
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-export const API_ROOT = "https://";
-export const BUCKET_ROOT = "https://";
+export const API_ROOT = "https://copper-crumb.wloper.com/api/";
+export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}/medium/`;
 const API_FILE_ROOT_ORIGINAL = `${BUCKET_ROOT}/original/`;
@@ -73,8 +73,8 @@ const Auth = {
   edit: (info: any) => requests.put("user/profile", info),
 };
 const Product = {
-  list: () => requests.get("user/product"),
-  details: (id: any) => requests.get(`user/product/${id}`),
+  list: () => requests.get("v1/products"),
+  details: (id: any) => requests.get(`v1/product/${id}`),
 }
 const Cart = {
   update: (info: any) => requests.put("user/cart", info),

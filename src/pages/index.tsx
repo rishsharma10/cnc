@@ -31,6 +31,7 @@ import CrumbIcons from "@/components/CrumbIcons";
 import { ReactElement } from "react";
 import CommonLayout from "@/components/common/CommonLayout";
 import crumbApi from "@/utils/crumbApis";
+import { stringReplace } from "@/utils/crumbValidation";
 const Home = () => {
   const itemData = [
     {
@@ -83,6 +84,8 @@ const Home = () => {
       
     }
   }
+  console.log(state,'statetttt');
+  
 React.useEffect(() => {
   initProductList()
 },[])
@@ -158,17 +161,20 @@ React.useEffect(() => {
             </Col>
           </Row>
           <Row gutter={[20, 20]}>
-            {[...Array(4)].map(() => <Col span={24} sm={12} md={12} lg={6} xl={6} xxl={6}>
+            {Array.isArray(state?.data) && state?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}>
               <div className="cart-card">
                 <div className="cart-image text-center">
-                  <img src={productImage.src} alt="error" />
+                  <div className="product-image">
+                  <img src={res?.thumb_url ?? productImage.src} alt="error" />
+
+                  </div>
                   <div className="cart-overlay">
-                    <Link href={'/product/name/id'}><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></Link>
+                    <Link href={`/product/${stringReplace(res.name)}/${res.id}`}><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></Link>
                   </div>
                 </div>
                 <div className="cart-content mt-4 text-center">
-                  <Link href={'#'}><h4>Kenya Coffee</h4></Link>
-                  <p className="text-secondary fs-6">$18.00</p>
+                  <Link href={`/product/${stringReplace(res.name)}/${res.id}`}><h4>{res?.name ?? 'N/A'}</h4></Link>
+                  <p className="text-secondary fs-6">${Number(res?.price).toFixed(2)}</p>
                 </div>
               </div>
             </Col>)}

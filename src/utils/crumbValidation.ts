@@ -106,7 +106,7 @@ const strongPassword = (str: string) => {
 const domainCheck=(str:string)=>{
   return strongPasswordRegEx.test(str)
 }
-const stringReplace = (str: string) => {
+export const stringReplace = (str: string) => {
   let newStr = str?.toLocaleLowerCase();
   return newStr.replace(/ /g, "-");
 };

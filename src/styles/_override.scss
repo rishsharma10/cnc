@@ -536,3 +536,12 @@ ul.notification-dropdown-menu {
     padding-top: 0;
   }
 }
+.product-image{
+  height: 260px !important;
+  width: 309px !important;
+  & img{
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
+  }
+}
