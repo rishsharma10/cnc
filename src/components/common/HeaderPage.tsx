@@ -1,9 +1,13 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import logo from '@/assets/brand-guide/logo.png';
 import { Button } from '@/lib/AntRegistry';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
+import { GlobalContext } from '@/context/Provider';
 const HeaderPage = () => {
+    const {userInfo} = useContext(GlobalContext)
+    console.log(userInfo,'userinfoooooooo');
+    
 
     const router = useRouter()
     return (
@@ -20,7 +24,7 @@ const HeaderPage = () => {
                         <Link className="nav-item"  href="/" legacyBehavior>
                             <a className="nav-link active" aria-current="page">Home</a>
                         </Link>
-                        <Link className="nav-item"  href="/products/search/1" legacyBehavior>
+                        <Link className="nav-item"  href="/products/search/1/1" legacyBehavior>
                             <a className="nav-link">Shop</a>
                         </Link>
                         <Link className="nav-item"  href="/about" legacyBehavior>
@@ -51,7 +55,7 @@ const HeaderPage = () => {
                             <a className="nav-link " href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
                         </li>
                         {/* <Link className="nav-item bg-white"  href="/login"> */}
-                            <Button onClick={() => router.replace(`/login`)} className='text-white' type='primary'>Sign in</Button>
+                        {userInfo?.access_token ? <Button className='text-white' type='primary'>{userInfo?.first_name ?? 'N/A'}</Button> : <Button onClick={() => router.replace(`/login`)} className='text-white' type='primary'>Sign in</Button> }
                         {/* </Link> */}
                     </ul>
                 </div>

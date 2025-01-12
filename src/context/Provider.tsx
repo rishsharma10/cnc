@@ -13,11 +13,9 @@ import { ConfigProvider } from "@/lib/AntRegistry";
 import { useRouter } from "next/router";
 import {
   COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN,
-  COOKIES_USER_TYPE,
 } from "./actionTypes";
-import { destroyCookie, setCookie } from "nookies";
+import { destroyCookie } from "nookies";
 import crumbApi from "@/utils/crumbApis";
-import { getRoleForUrl, getTypeForUrl } from "@/utils/crumbValidation";
 
 
 
@@ -61,6 +59,8 @@ interface CommonContextType {
   uploadImages: any;
   setClickedTexts: any;
   setPic: any;
+  cartData:any;
+  isCart:(pid:number) => boolean;
 }
 export const GlobalContext = createContext({} as CommonContextType);
 type GlobleContextProviderProps = {
@@ -174,7 +174,19 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     router.replace(`/${userType ? userType : "company"}/auth/login`);
   };
 
-
+  const [cartData,setCartData] = useState({data:[],count:0})
+  const initCart = async () => {
+    try {
+      let apiRes = await crumbApi.Cart.list()
+      setCartData({data:apiRes.cart,count:apiRes?.cart?.length})
+    } catch (error) {
+      
+    }
+  }
+ const isCart = (pid:any) => {
+    const isInCart = Array.isArray(cartData?.data) && cartData?.data.some((item:any) => item.id === pid);
+    return isInCart ? true : false;
+  }
 
   const getProfile = async () => {
     try {
@@ -184,6 +196,9 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   };
   console.log(router, "routerrrrrrr");
 
+  useEffect(() => {
+    initCart()
+  },[])
 
   return (
     <GlobalContext.Provider
@@ -195,8 +210,9 @@ function GlobalProvider(props: GlobleContextProviderProps) {
           loading,
           setLoading,
           setUserType,
+          isCart,
           capitalizeFirstLetter,
-
+          cartData,
           Toast,
           setUserInfo,
           userInfo,

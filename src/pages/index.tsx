@@ -22,8 +22,6 @@ import titleSeperator from '@/assets/brand-guide/title-separator.png'
 import offerItem from '@/assets/brand-guide/h2-custom-icon-5.png'
 import blogImage from '@/assets/brand-guide/hero-image.png'
 import coffeeLogo from '@/assets/brand-guide/coffee-logo.png'
-import productImage from '@/assets/brand-guide/product-img-5.png'
-import galleryImage from '@/assets/brand-guide/59.png'
 import brandImage from '@/assets/brand-guide/brand-1.png'
 import Link from "next/link";
 import { Carousel, Form } from "antd";
@@ -32,6 +30,7 @@ import { ReactElement } from "react";
 import CommonLayout from "@/components/common/CommonLayout";
 import crumbApi from "@/utils/crumbApis";
 import { stringReplace } from "@/utils/crumbValidation";
+import ProductCard from "@/components/ProductCard";
 const Home = () => {
   const itemData = [
     {
@@ -161,23 +160,7 @@ React.useEffect(() => {
             </Col>
           </Row>
           <Row gutter={[20, 20]}>
-            {Array.isArray(state?.data) && state?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}>
-              <div className="cart-card">
-                <div className="cart-image text-center">
-                  <div className="product-image">
-                  <img src={res?.thumb_url ?? productImage.src} alt="error" />
-
-                  </div>
-                  <div className="cart-overlay">
-                    <Link href={`/product/${stringReplace(res.name)}/${res.id}`}><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></Link>
-                  </div>
-                </div>
-                <div className="cart-content mt-4 text-center">
-                  <Link href={`/product/${stringReplace(res.name)}/${res.id}`}><h4>{res?.name ?? 'N/A'}</h4></Link>
-                  <p className="text-secondary fs-6">${Number(res?.price).toFixed(2)}</p>
-                </div>
-              </div>
-            </Col>)}
+            {Array.isArray(state?.data) && state?.data.map((res:any,index:number) => <ProductCard key={index} {...res}/>)}
           </Row>
         </div>
       </section>

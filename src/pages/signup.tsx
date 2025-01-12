@@ -6,25 +6,40 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import crumbApi from '@/utils/crumbApis'
 import { GlobalContext } from '@/context/Provider'
+import { setCookie } from 'nookies'
+import { COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN } from '@/context/actionTypes'
 const SignupPage = () => {
     const router = useRouter()
-    const {Toast} = useContext(GlobalContext)
+    const { Toast,setUserInfo,userInfo } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const handleSubmit = async (values: any) => {
         console.log(values, 'valuesssss');
         const payload = {
-            name:values.name,
-            email:values.email,
-            password:values.password
+            first_name: values.first_name,
+            last_name: values.last_name,
+            email: values.email,
+            phone: "12345678965650",
+            password: values.password,
+            password_confirmation:values?.confirm_password
         }
+
         try {
             setLoading(true)
             const apiRes = await crumbApi.Auth.signUp(payload);
+            crumbApi.setToken(apiRes.token)
+            const apiResUser = await crumbApi.Auth.profile();
+            setUserInfo({
+                ...apiResUser?.customer,
+                access_token:apiRes.token
+              });
+              setCookie(this, COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN, apiRes?.token, {
+                path: "/",
+              });
             router.replace(`/`)
-        } catch (error:any) {
+        } catch (error: any) {
             Toast.error(error.message)
-        }finally{
             setLoading(false)
+        } finally {
         }
 
     }
@@ -41,8 +56,11 @@ const SignupPage = () => {
                                     <Link href={'/'}><img src={logo.src} alt="error" height={120} width={120} /></Link>
                                 </div>
                                 <Form layout='vertical' size='large' onFinish={handleSubmit}>
-                                    <FormItem name='name' rules={[{ required: true, pattern: /^[a-zA-Z\s]+$/, message: "Please enter name" }]} label={'Name'}>
-                                        <Input placeholder='Enter name' />
+                                    <FormItem name='first_name' rules={[{ required: true, pattern: /^[a-zA-Z\s]+$/, message: "Please enter first name" }]} label={'First Name'}>
+                                        <Input placeholder='Enter first name' />
+                                    </FormItem>
+                                    <FormItem name='last_name' rules={[{ required: true, pattern: /^[a-zA-Z\s]+$/, message: "Please enter last name" }]} label={'Last Name'}>
+                                        <Input placeholder='Enter last name' />
                                     </FormItem>
                                     <FormItem name={`email`} label={'Email'} rules={[
                                         {
@@ -78,7 +96,7 @@ const SignupPage = () => {
                                     </FormItem>
                                     <Link href={`/login`}><TypographyText>Already have an account ? Login</TypographyText></Link>
                                     <div className="submit-btn text-center mt-2">
-                                        <Button htmlType='submit' type='primary' className='px-5'>Sign Up</Button>
+                                        <Button loading={loading} htmlType='submit' type='primary' className='px-5'>Sign Up</Button>
                                     </div>
                                 </Form>
                             </div>

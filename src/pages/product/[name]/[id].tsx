@@ -2,7 +2,7 @@
 import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
 import { AntForm, Avatar, Button, Checkbox, Col, Dropdown, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs, TextArea } from '@/lib/AntRegistry'
-import React, { ReactElement,useState } from 'react'
+import React, { ReactElement, useState, useContext, Fragment } from 'react'
 import productImage from '@/assets/brand-guide/product-img-5.png'
 import banner from '@/assets/brand-guide/bg-image.png'
 import Link from 'next/link'
@@ -11,9 +11,23 @@ import { MenuProps, TabsProps } from 'antd'
 import crumbApi, { BUCKET_ROOT } from '@/utils/crumbApis'
 import { ProductDetails } from '@/interface/product/ProductDetails'
 import { stringReplace } from '@/utils/crumbValidation'
-const ProductDetail = (props:ProductDetails) => {
-  console.log(props,'propsspsppsp');
- const [state, setState] = useState(props as ProductDetails)
+import ProductCard from '@/components/ProductCard'
+import CartCountCompo from '@/components/CartCountCompo'
+import { useRouter } from 'next/router';
+import { GlobalContext } from '@/context/Provider'
+
+interface typeProps extends ProductDetails {
+  is_cart_local: boolean
+  is_cart: boolean
+}
+const ProductDetail = (props: typeProps) => {
+  console.log(props, 'propsspsppsp');
+  const { Toast, userInfo,cartData,isCart } = useContext(GlobalContext)
+  const router = useRouter()
+  const [state, setState] = useState(props as typeProps)
+  const [loading, setLoading] = useState(false)
+  const [relatedProduct, setRelatedProduct] = useState({ data: [], count: 0 })
+  const [quantity, setQuantity] = useState(1)
   
 
   const items: TabsProps['items'] = [
@@ -58,13 +72,13 @@ const ProductDetail = (props:ProductDetails) => {
 
           <AntForm layout='vertical' size='large'>
             <FormItem label="Your review *">
-              <TextArea rows={6}/>
+              <TextArea rows={6} />
             </FormItem>
             <FormItem label="Name *">
-              <Input/>
+              <Input />
             </FormItem>
             <FormItem label="Email *">
-              <Input/>
+              <Input />
             </FormItem>
 
             <Checkbox>Save my name, email, and website in this browser for the next time I comment.</Checkbox>
@@ -75,23 +89,137 @@ const ProductDetail = (props:ProductDetails) => {
       </div>,
     },
   ];
+  const handleIncDec = async (pid: number, type: string, value: number, index?: number) => {
+    try {
+      if (type == 'INC') {
+        setQuantity(quantity + 1)
+      } else {
+        setQuantity(quantity - 1)
+      }
+      if (!userInfo?.access_token) {
+        let cart: any = localStorage.getItem('cart');
+        cart = cart ? JSON.parse(cart) : [];
+        let itemFound = false;
+        cart = cart.map((item: any) => {
+          if (item.id === pid) {
+            itemFound = true;
+            return { ...item, quantity: quantity };
+          }
+          return item;
+        });
+        if (!itemFound) {
+          return
+          // Toast.warning('Item not found in cart');
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+      } else {
+        const payload = {
+          product_id:state.id,
+          quantity:quantity
+        }
+        const apiRes = await crumbApi.Cart.update(payload)
+      }
+    } catch (error) {
 
-  const [relatedProduct, setRelatedProduct] = useState({data:[],count:0})
+    }
+  }
+console.log(cartData,'cartDatacartData');
+
+  const updateCart = (payload: any) => {
+    try {
+      let cart: any = localStorage.getItem('cart');
+      cart = cart ? JSON.parse(cart) : [];
+      const itemExists = cart.some((item: any) => item.id === payload.id);
+      if (itemExists) {
+        throw new Error('Item already in cart');
+      }
+      cart.push(payload);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      console.log('Item added to cart:', payload);
+      setState({
+        ...state,
+        is_cart_local: true
+      })
+    } catch (error: any) {
+      Toast.warning(error.message);
+    }
+  }
 
 
-  const initProductList  = async () => {
+  const addToCart = async () => {
+    try {
+      const payload = {
+        id: Number(router.query.id),
+        quantity: Number(quantity),
+        price: state.price,
+        size: 200,
+        name: state.name,
+        grid_size: 'small'
+      }
+      const cartPayload = {
+        product_id:state.id,
+        quantity:quantity
+      }
+      setLoading(true)
+      if (!userInfo?.access_token) {
+        updateCart(payload)
+      } else {
+        let apiRes = await crumbApi.Cart.add(cartPayload)
+        Toast.success(apiRes.message)
+      }
+    } catch (error) {
+
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const removeCart = async (id?: number) => {
+    setLoading(true)
+    try {
+
+      if (!userInfo?.access_token) {
+        let cart: any = localStorage.getItem('cart');
+        cart = cart ? JSON.parse(cart) : [];
+        const updatedCart = cart.filter((item: any) => item.id !== Number(id));
+        if (cart.length === updatedCart.length) {
+          throw new Error('Item not found in cart');
+        }
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        setState({
+          ...state,
+          is_cart_local: false
+        })
+      } else {
+
+      }
+    } catch (error: any) {
+      Toast.warning(error.message);
+    } finally {
+      setLoading(false)
+    }
+  }
+
+
+  const initProductList = async () => {
     try {
       let apiRes = await crumbApi.Product.list()
       setRelatedProduct(apiRes)
     } catch (error) {
-      
+
     }
   }
-  console.log(state,'statetttt');
-  
-React.useEffect(() => {
-  initProductList()
-},[])
+  console.log(state, 'statetttt');
+
+  React.useEffect(() => {
+    initProductList()
+  }, [])
+  React.useEffect(() => {
+    setState({
+      ...state,
+      is_cart:isCart(Number(router.query.id))
+    })
+  }, [isCart(Number(router.query.id))])
 
   return (
     <section className='product-list-section pt-0 bg-white'>
@@ -104,8 +232,8 @@ React.useEffect(() => {
                 <img src={state?.thumb_url ?? productImage.src} alt="error" className='h-100 w-100' />
               </div>
               <div className="preview-image-list">
-                {[state.image_1,state.image_2].map((res,index) => <div key={index} className="list-image">
-                  <img src={res ? `${BUCKET_ROOT}${res}`: productImage.src} alt="error" className='h-100 ' />
+                {[state.image_1, state.image_2].map((res, index) => <div key={index} className="list-image">
+                  <img src={res ? `${BUCKET_ROOT}${res}` : productImage.src} alt="error" className='h-100 ' />
                 </div>)}
               </div>
             </div>
@@ -123,8 +251,13 @@ React.useEffect(() => {
               <p>{state?.notes}</p>
 
               <Flex align='center' gap={20} className='my-5'>
-                <Flex className='quantity-counter'><Flex className='p-3 counter-div'>2</Flex><Flex className='flex-column h-100'><Button>+</Button><Button>-</Button></Flex></Flex>
-                <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>add to cart</Button></Link>
+                <CartCountCompo handleIncDec={handleIncDec} quantity={quantity} pid={Number(router.query.id)} />
+                {userInfo?.access_token?  <Fragment>{state?.is_cart ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
+                  </Fragment> :
+                  <Fragment>{state?.is_cart_local ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
+                  </Fragment>}
+
+                {/* <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>add to cart</Button></Link> */}
               </Flex>
 
               <ul className='list-unstyled p-0'>
@@ -163,26 +296,10 @@ React.useEffect(() => {
             </div>
           </Col>)}
         </Row> */}
-            <Row gutter={[20, 20]} className='mt-5'>
-            <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col>
-            {Array.isArray(relatedProduct?.data) && relatedProduct?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}>
-              <div className="cart-card">
-                <div className="cart-image text-center">
-                  <div className="product-image">
-                  <img src={res?.thumb_url ?? productImage.src} alt="error" />
-
-                  </div>
-                  <div className="cart-overlay">
-                    <Link href={`/product/${stringReplace(res.name)}/${res.id}`}><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></Link>
-                  </div>
-                </div>
-                <div className="cart-content mt-4 text-center">
-                  <Link href={`/product/${stringReplace(res.name)}/${res.id}`}><h4>{res?.name ?? 'N/A'}</h4></Link>
-                  <p className="text-secondary fs-6">${Number(res?.price).toFixed(2)}</p>
-                </div>
-              </div>
-            </Col>)}
-          </Row>
+        <Row gutter={[20, 20]} className='mt-5'>
+          <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col>
+          {Array.isArray(relatedProduct?.data) && relatedProduct?.data.map((res: any, index: number) => <ProductCard {...res} key={index} />)}
+        </Row>
       </div>
     </section>
   )
@@ -198,7 +315,7 @@ ProductDetail.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const apiRes = await crumbApi.Product.details(String(context.query.id));
-    return { props: apiRes.data[0] ? apiRes.data[0] :apiRes.data };
+    return { props: apiRes.data[0] ? apiRes.data[0] : apiRes.data };
   } catch (error) {
     return {
       redirect: {

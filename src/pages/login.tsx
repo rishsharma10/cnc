@@ -6,9 +6,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import crumbApi from '@/utils/crumbApis'
 import { GlobalContext } from '@/context/Provider'
+import { setCookie } from 'nookies'
+import { COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN } from '@/context/actionTypes'
 const LoginPage = () => {
     const router = useRouter()
-    const {Toast} = useContext(GlobalContext)
+    const {Toast,setUserInfo,userInfo} = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const handleSubmit = async (values: any) => {
         console.log(values, 'valuesssss');
@@ -19,11 +21,20 @@ const LoginPage = () => {
         try {
             setLoading(true)
             const apiRes = await crumbApi.Auth.login(payload);
+            crumbApi.setToken(apiRes.token)
+            const apiResUser = await crumbApi.Auth.profile();
+            setUserInfo({
+                ...apiResUser?.customer,
+                access_token:apiRes.token
+              });
+              setCookie(this, COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN, apiRes?.token, {
+                path: "/",
+              });
             router.replace(`/`)
         } catch (error:any) {
             Toast.error(error.message)
-        }finally{
             setLoading(false)
+        }finally{
         }
 
     }
@@ -39,7 +50,7 @@ const LoginPage = () => {
                                 <div className="logo text-center mb-5">
                                     <Link href={'/'}><img src={logo.src} alt="error" height={120} width={120} /></Link>
                                 </div>
-                                <Form layout='vertical' size='large'>
+                                <Form layout='vertical' size='large' onFinish={handleSubmit}>
                                 <FormItem name={`email`} label={'Email'} rules={[
                                         {
                                             required: true,
@@ -57,7 +68,7 @@ const LoginPage = () => {
                                     </FormItem>
                                     <Link href={`/signup`}><TypographyText>Create an account ? Sign up</TypographyText></Link>
                                     <div className="submit-btn text-center mt-5">
-                                        <Button htmlType='submit' type='primary' className='px-5'>LOGIN</Button>
+                                        <Button loading={loading} htmlType='submit' type='primary' className='px-5'>LOGIN</Button>
                                     </div>
                                 </Form>
                             </div>

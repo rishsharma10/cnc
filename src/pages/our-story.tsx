@@ -16,7 +16,10 @@ const OurStory = () => {
               Our story
             </h4>
             <p className="sub-title">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            From quiet kitchen experiments during motherhood to the bustling heart of Panchkula's culinary
+scene, Copper & Crumb represents the vision of two women who dared to dream differently.
+Here, antique copper pots share space with modern espresso machines, while Kerala vanilla
+beans infuse the air alongside French butter
             </p>
           </Col>
           <Col span={24} lg={12} xl={12} xxl={12}>

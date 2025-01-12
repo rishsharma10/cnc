@@ -58,11 +58,11 @@ const requests = {
 };
 
 const Auth = {
-  login: (info: any) => requests.post("user/login", info),
-  signUp: (info: any) => requests.post("user/signUp", info),
+  login: (info: any) => requests.post("v1/login", info),
+  signUp: (info: any) => requests.post("v1/register", info),
+  profile: () => requests.get(`v1/customer-details`),
   logout: () => requests.put("user/logout", {}),
   changePassword: (info: any) => requests.put("user/change/password", info),
-  profile: () => requests.get(`user/profile`),
   forgotPassword: (value: any) => requests.put("user/forget/password", value),
   resendOtp: (value: any) => requests.post("user/resend/email/otp", value),
   resendOtpPhone: (value: any) => requests.put("user/resend/phone/otp", value),
@@ -76,10 +76,15 @@ const Product = {
   list: () => requests.get("v1/products"),
   details: (id: any) => requests.get(`v1/product/${id}`),
 }
+const Category = {
+  list: () => requests.get("v1/categories"),
+  productList: (id: number) => requests.get(`v1/category-product/${id}`),
+}
 const Cart = {
-  update: (info: any) => requests.put("user/cart", info),
-  add: (info: any) => requests.post("user/cart", info),
-  remove: (info: any) => requests.del("user/cart"),
+  list: () => requests.get("v1/cart"),
+  update: (info: any) => requests.put("v1/cart/update", info),
+  add: (info: any) => requests.post("v1/cart/add", info),
+  remove: (info: any) => requests.del("v1/cart/remove"),
 }
 
 const Common = {
@@ -133,6 +138,7 @@ const crumbApi = {
   Auth,
   Product,
   Cart,
+  Category,
   API_ROOT,
   API_FILE_ROOT_DB_BACKUP,
   API_FILE_ROOT_SMALL,

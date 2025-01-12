@@ -1,11 +1,32 @@
 import CommonBanner from '@/components/CommonBanner'
 import { AntForm, Avatar, Button, Col, Dropdown, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs } from '@/lib/AntRegistry'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import productImage from '@/assets/brand-guide/product-img-5.png'
 import banner from '@/assets/brand-guide/bg-image.png'
 import Link from 'next/link'
+import { GetServerSideProps } from "next";
 import CommonLayout from '@/components/common/CommonLayout'
-const ProductList = () => {
+import crumbApi from '@/utils/crumbApis'
+import { useRouter } from 'next/router';
+import ProductCard from '@/components/ProductCard'
+const ProductList = (props: any) => {
+  const router = useRouter()
+  const [category, SetCategory] = useState(props.data)
+  const [state, setState] = useState({data:[],count:0})
+  console.log(props, 'proppsspsp');
+
+  const initProductList = async () => {
+    try {
+      let apiRes = await crumbApi.Category.productList(Number(router.query.created_by))
+      setState(apiRes)
+    } catch (error) {
+
+    }
+  }
+  React.useEffect(() => {
+    initProductList()
+  },[router.query.created_by,router.query.page])
+
 
   return (
     <section className='product-list-section pt-0 bg-white'>
@@ -16,15 +37,11 @@ const ProductList = () => {
             <div className='product-list-box'>
               <ul className='list-unstyled p-0 mb-5'>
                 <h4>Product categories</h4>
-                <li className='mb-2'><Link href={'#'}>Accessories</Link></li>
-                <li className='mb-2'><Link href={'#'}>Bean Varieties</Link></li>
-                <li className='mb-2'><Link href={'#'}>Coffee Cups</Link></li>
-                <li className='mb-2'><Link href={'#'}>Espresso Machines</Link></li>
-                <li className='mb-2'><Link href={'#'}>Fresh Coffee</Link></li>
-                <li><Link href={'#'}>Italian Coffee</Link></li>
+                {Array.isArray(category) && category.map((res, index) => <div role='button' onClick={() => router.push({...router.query,query:{created_by:res?.created_by,page:router.query.page}})} key={res.id}><li className='mb-2'>{res.name}</li></div>)}
+
               </ul>
 
-              <div className="product-tag">
+              {/* <div className="product-tag">
                 <h4 className='mb-3'>Product tags</h4>
                 <ul className='list-unstyled p-0 mb-5 gap-2 d-flex align-items-center flex-wrap'>
                   <li><Link href={'#'}>Aroma</Link>,</li>
@@ -37,7 +54,7 @@ const ProductList = () => {
                   <li><Link href={'#'}>Fresh</Link>,</li>
                   <li><Link href={'#'}>Cream</Link></li>
                 </ul>
-              </div>
+              </div> */}
 
               <div className="top-rated-product">
                 <h4 className='mb-3'>Top rated products</h4>
@@ -83,20 +100,7 @@ const ProductList = () => {
             </Flex>
             <Row gutter={[20, 20]} className='mt-5'>
               <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col>
-              {[...Array(6)].map(() => <Col span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
-                <div className="cart-card">
-                  <div className="cart-image text-center">
-                    <img src={productImage.src} alt="error" />
-                    <div className="cart-overlay">
-                      <Link href={'/product/name/id'}><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></Link>
-                    </div>
-                  </div>
-                  <div className="cart-content mt-4 text-center">
-                    <Link href={'#'}><h4>Kenya Coffee</h4></Link>
-                    <p className="text-secondary fs-6">$18.00</p>
-                  </div>
-                </div>
-              </Col>)}
+              {Array.isArray(state?.data) && state?.data.map((res:any,index:number) => <ProductCard class='product-related-image' {...res} key={index}/>)}
             </Row>
 
             <div className="d-flex align-items-center justify-content-center mt-5">
@@ -117,5 +121,17 @@ ProductList.getLayout = function getLayout(page: ReactElement) {
     </CommonLayout>
   )
 }
-
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const apiRes = await crumbApi.Category.list();
+    return { props: apiRes };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: `/login`,
+        permanent: false,
+      },
+    };
+  }
+};
 export default ProductList

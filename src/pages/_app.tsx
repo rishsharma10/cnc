@@ -56,22 +56,17 @@ const MyApp = ({ Component, pageProps, ...props }: AppPropsWithLayout) => {
 
 MyApp.getInitialProps = async (context: any) => {
   const accessToken = parseCookies(context.ctx)[COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN]
-  const userType = parseCookies(context.ctx)[COOKIES_USER_TYPE]
-  console.log(accessToken, 'accessToken');
-  let user_Type = userType == "admin" ? "admin" : userType
   try {
     if (accessToken) {
       crumbApi.setToken(accessToken)
       let apiRes = await crumbApi.Auth.profile()
-      // console.log(apiRes,"apooooooo");
-
-      const user_info = { ...apiRes.data }
-      return { user_info: { ...user_info, access_token: accessToken, userType:user_Type } }
+      const user_info = { ...apiRes.customer }
+      return { user_info: { ...user_info, access_token: accessToken } }
     }
-    return { user_info: { userType:user_Type, access_token: accessToken } }
+    return { user_info: {access_token: accessToken } }
 
   } catch (error: any) {
-    return { user_info: { access_token: accessToken, userType:user_Type } }
+    return { user_info: { access_token: accessToken } }
   }
 }
 
