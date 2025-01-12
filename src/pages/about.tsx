@@ -1,11 +1,13 @@
 import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
-import { Button, Col, Row } from '@/lib/AntRegistry'
+import { Button, Col, Row, TypographyText, TypographyTitle } from '@/lib/AntRegistry'
 import React, { ReactElement } from 'react'
 import aboutBanner from '@/assets/brand-guide/title-above.png';
 import banner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg';
 import titleImage from '@/assets/brand-guide/title-separator.png';
 import { Carousel } from 'antd';
+import titleSeperator from '@/assets/brand-guide/title-separator.png'
+import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import Link from 'next/link';
 const About = () => {
   const stateData = [
@@ -26,32 +28,131 @@ const About = () => {
       title: 'Coffee Brands',
     },
   ]
+  const aboutCoffee = [
+    {
+      image: blogImage.src,
+      title: 'Our Philosophy',
+      desc:`In a world of mass-produced goods, we choose the path of artisanal genuineness. Every
+      morning starts with the soothing sound of butter folded into the dough, each fold an
+      introspective reflection on excellence. Our commitment to handcrafting extends beyond the
+      cooking area – from sourcing heritage wheat varieties from local farmers to collaborating with
+      neighborhood artisans for our furniture.`
+    },
+    {
+      image: blogImage.src,
+      title: 'Our Impact',
+      desc:`Through our apprenticeship system, we're developing the next generation of talented culinary
+      craftspeople, with a special focus on women in professional kitchens. We have thus far:
+      1. Supervised and trained 12 women through our extensive apprenticeship scheme.
+      2. Worked with 15-20 farms nearby in order to source sustainable ingredients in tandem.
+      3. Reduced our carbon footprint with creative waste-cutting strategies.
+      4. Documented and provided guidance on preserved traditional crafts techniques.
+      `
+    },
+    {
+      image: blogImage.src,
+      title: 'Our Vision',
+      desc:`Looking forward, Copper & Crumb is more than just a cafe & patisserie; it's a movement
+      honoring the possibilities of what happens when civilizations interact respectfully and creatively.
+      Every day we strive to:
+      1. Respect conventional techniques while pushing the frontier of culinary fusion.
+      2. Create prospects for women working in professional kitchens.
+      3. Advocacy of environmentally friendly farming methods
+      4. Create a community around shared goals of creativity and workmanship.
+      `
+    },
+   
+  ]
   return (
     <>
       <section className="about-us pt-0 bg-white">
         <CommonBanner title="About us" />
+          <section className="blog-section common-bg">
+        <div className="container">
+          <Row justify={"center"} className="mb-5">
+            <Col span={24} md={20} lg={14} xl={12} className="text-center">
+              <h2 className="title">About us</h2>
+              <img src={titleSeperator.src} alt="error" className="title-seperator" />
+              {/* <p className="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p> */}
+            </Col>
+          </Row>
+          <Row gutter={[20, 20]}>
+            {aboutCoffee.map((res,index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
+              <div className="blog-card">
+                <div className="blog-image">
+                  <img src={res.image} alt="error" className="img-fluid" />
+                </div>
+                <div className="blog-content mt-4">
+                  <h4>{res.title}</h4>
+                  <p className="mt-3 mb-3 text-secondary">{res.desc}</p>
+                  {/* <Link href={'#'}>Read More</Link> */}
+                </div>
+              </div>
+            </Col>)}
+          </Row>
+        </div>
+      </section>
         <div className="container mt-sm-5 pt-5">
           <Row gutter={[20, 20]} justify={'center'}>
             <Col span={24} lg={16} xl={14} xxl={12} className='text-center'>
               <div className='mb-4 pb-2'><img src={aboutBanner.src} alt="error" /></div>
               <h4 className="title mb-4">
-                About Robusta
+                Our team
               </h4>
+              <h6 className="fw-semibold fs-4 mb-4">
+                The Visionaries Behind Copper & Crumb
+              </h6>
               <p className="sub-title">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                At Copper & Crumb, our story is woven from two distinct threads of passion, expertise, and
+                determination. Our founders represent the perfect blend of entrepreneurial vision and culinary
+                mastery, coming together to create something truly extraordinary.
               </p>
             </Col>
             <Col span={24} lg={12} xl={12} xxl={12}>
               <div className="about-banner mb-3">
                 <img src={banner.src} alt="error" className='img-fluid' />
               </div>
-              <p className='m-0 text-secondary'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum eius, voluptate porro doloribus modi, necessitatibus incidunt beatae natus minima vitae facilis, illum labore. Consectetur numquam quia nostrum cum eveniet quod.</p>
+              <TypographyTitle level={5}>Kannupriya: (Founder & Vision Director)
+              </TypographyTitle>
+              <p className='m-0 text-secondary'>In the quiet moments of motherhood, while her children slept, Kannupriya's kitchen became an
+                alchemist's laboratory. What started as a pursuit of the perfect entremet evolved into a vision for
+                transforming India's patisserie landscape. Her journey wasn't marked by formal culinary training,
+                but by something equally valuable—an unwavering dedication to mastery and an intuitive
+                understanding of how food brings people together.
+                Kannupriya's strength lies in her ability to see beyond the conventional. Where others saw just a
+                vacant storefront, she envisioned a haven where traditional craftsmanship could flourish
+                alongside modern innovation. Her entrepreneurial spirit is matched only by her commitment to
+                community building and ethical sourcing.
+                As Vision Director, Kannupriya has crafted more than just a patisserie—she's created a
+                movement. Her focus on empowering women in culinary arts, supporting local farmers, and
+                preserving traditional craftsmanship has transformed Copper & Crumb into a beacon of
+                sustainable luxury in the food industry.
+              </p>
             </Col>
             <Col span={24} lg={12} xl={12} xxl={12}>
               <div className="about-banner mb-3">
                 <img src={banner.src} alt="error" className='img-fluid' />
               </div>
-              <p className='m-0 text-secondary'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias velit facilis nobis dolor magni inventore, laborum aliquid similique voluptate cum harum modi sunt recusandae perspiciatis? Vel debitis voluptates velit aut.</p>
+              <TypographyTitle level={5}>Chef Zareen: Master Pastry Chef & Culinary Director
+              </TypographyTitle>
+              <p className='m-0 text-secondary'>From the prestigious kitchens of Le Cordon Bleu London to the vibrant streets of Panchkula,
+                Chef Zareen's journey is a testament to the transformative power of culinary arts. Her
+                accolades, including leading Team India to 4th position at the 7th World Tapas Competition,
+                speak to her technical mastery. However, it's her philosophy about food that truly sets her apart.
+                "Every layer tells a story," she often says, her hands gracefully demonstrating the art of
+                lamination. For Chef Zareen, French patisserie isn't just about technique—it's about cultural
+                dialogue. She sees every pastry as an opportunity to bridge worlds: the precision of French
+                methodology with the warmth of Indian flavors, traditional craftsmanship with contemporary
+                innovation.
+                As Culinary Director, Chef Zareen has created more than just a menu—she's pioneered a new
+                culinary language. Her signature creations, from the perfect butter chicken puff pastry (perfected
+                over 45 iterations) to innovative coffee-infused entremets, showcase her unique ability to honor
+                both French and Indian culinary traditions while creating something entirely new.
+                Under her guidance, Copper & Crumb's kitchen has become a learning ground for the next
+                generation of pastry chefs, with special emphasis on empowering women in professional
+                kitchens. Her mentorship program has already begun transforming lives, helping aspiring chefs
+                transition from never having held a piping bag to crafting perfect entremets.
+              </p>
             </Col>
           </Row>
         </div>
@@ -61,13 +162,19 @@ const About = () => {
         <div className="container ">
           <Row justify={'center'}>
             <Col span={24} lg={20} xl={18} xxl={16}>
-              <Carousel draggable={true}>
-                {[...Array(4)].map((res) => <div key={res} className="about-testimonial-card pb-5">
-                  <h4 className="title mb-3">Testimonials</h4>
+              <Carousel draggable={false}>
+                {[...Array(1)].map((res) => <div key={res} className="about-testimonial-card pb-5">
+                  <h4 className="title mb-3">Together, Creating Magic</h4>
                   <div className='mb-4 mb-sm-5'><img src={titleImage.src} alt="error" style={{ filter: 'sepia' }} className='mx-auto' /></div>
-                  <p className='fs-6'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed quaerat mollitia odit aut provident. Libero vitae provident cumque rerum sequi error aut nihil deleniti saepe. Reiciendis fuga sapiente voluptatum veniam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, molestias!</p>
+                  <p className='fs-6'>The partnership between Kannupriya and Chef Zareen represents the perfect blend of vision
+                    and expertise, business acumen and culinary artistry. Their collaboration has created more than
+                    just a patisserie—it's a movement celebrating the union of cultures, the preservation of craft,
+                    and the power of female entrepreneurship</p>
 
-                  <p className='m-0 mt-4 mt-sm-5 pb-3 text-uppercase fs-6 name'>Jean thompsan, <span className='text-lowercase'>barista</span></p>
+                  <p className='m-0 mt-4 mt-sm-5 pb-3 text-uppercase fs-6 name'>Their shared commitment to excellence, sustainability, and community building ensures that
+                    every visit to Copper & Crumb is more than just a culinary experience—it's a chance to be part
+                    of a larger story of transformation and tradition, innovation and authenticity.
+                  </p>
                 </div>)}
               </Carousel>
             </Col>
