@@ -1,8 +1,8 @@
 import CommonBanner from '@/components/CommonBanner'
 import { AntForm, Avatar, Button, Col, Dropdown, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs } from '@/lib/AntRegistry'
 import React, { ReactElement, useState } from 'react'
-import productImage from '@/assets/brand-guide/product-img-5.png'
-import banner from '@/assets/brand-guide/bg-image.png'
+import productImage from '@/assets/images/front-view-cake-slice-with-cream-fresh-red-strawberries-inside-plate-getting-sugar-powder-dark-background.jpg'
+import banner from '@/assets/images/espresso-pouring-from-coffee-machine-cafe.jpg'
 import Link from 'next/link'
 import { GetServerSideProps } from "next";
 import CommonLayout from '@/components/common/CommonLayout'

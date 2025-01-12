@@ -43,11 +43,6 @@ p {
 
 // ************************************ Auth Page **********************************
 .auth_section {
-  background: linear-gradient(90.62deg,
-      rgba(194, 162, 249, 0.03) 0.52%,
-      rgba(132, 169, 231, 0.12) 21.3%,
-      rgba(239, 200, 236, 0.27) 99.46%),
-    url("../assets/images/login_banner.png") left bottom no-repeat;
   height: 100%;
   padding-block: 60px;
   overflow: auto;
@@ -1038,7 +1033,7 @@ a {
 }
 
 .fixed-banner-section {
-  background: linear-gradient(#00000070, #00000070), url('../assets/brand-guide/hero-image.png') center/cover no-repeat;
+  background: linear-gradient(#000000ae, #000000ae), url('../assets/images/espresso-pouring-from-coffee-machine-cafe.jpg') center/cover no-repeat;
   background-attachment: fixed;
   height: 80vh;
 }
@@ -1141,7 +1136,7 @@ a {
 }
 
 .about-section {
-  background: linear-gradient(#000000a8, #000000a8), url('../assets/brand-guide/hero-image.png') center/cover no-repeat;
+  background: linear-gradient(#000000a8, #000000a8), url('../assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg') center/cover no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1238,6 +1233,17 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+
+  &::before{
+    height: 100%;
+    width: 100%;
+    content: '';
+    background-color: rgba(0, 0, 0, 0.618);
+    position: absolute;
+    inset: 0;
+    margin: auto;
+  }
 
   h2 {
     font-size: 60px;

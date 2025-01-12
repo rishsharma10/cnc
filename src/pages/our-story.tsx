@@ -3,7 +3,7 @@ import CommonBanner from '@/components/CommonBanner'
 import { Col, Row } from '@/lib/AntRegistry'
 import React, { ReactElement } from 'react'
 import aboutBanner from '@/assets/brand-guide/title-above.png';
-import banner from '@/assets/brand-guide/bg-image.png';
+import banner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg';
 const OurStory = () => {
   return (
     <section className="contact-us pt-0 bg-white">

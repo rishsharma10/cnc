@@ -15,12 +15,13 @@ import {
   Upload,
 } from "@/lib/AntRegistry";
 import React, { useContext, useState } from 'react'
-import HeroBanner from '@/assets/brand-guide/hero-image.png'
+import HeroBanner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg'
 import logo from '@/assets/brand-guide/logo.png'
 import seperator from '@/assets/brand-guide/slider-separator-img.png'
 import titleSeperator from '@/assets/brand-guide/title-separator.png'
 import offerItem from '@/assets/brand-guide/h2-custom-icon-5.png'
-import blogImage from '@/assets/brand-guide/hero-image.png'
+import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
+import serviceImage from '@/assets/images/delicious-coffee-cup-table.jpg'
 import coffeeLogo from '@/assets/brand-guide/coffee-logo.png'
 import brandImage from '@/assets/brand-guide/brand-1.png'
 import Link from "next/link";
@@ -266,7 +267,7 @@ const Home = () => {
             {[...Array(8)].map(() => <Col span={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
               <div className="gallery-card">
                 <div className="gallery-image">
-                  <img src={blogImage.src} alt="error" className="img-fluid" style={{ objectPosition: 'left' }} />
+                  <img src={serviceImage.src} alt="error" className="img-fluid" style={{ objectPosition: 'left' }} />
                 </div>
                 <div className="gallery-content">
                   <h4>Brewed</h4>

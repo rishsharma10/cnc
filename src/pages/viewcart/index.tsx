@@ -2,7 +2,7 @@ import CommonLayout from '@/components/common/CommonLayout'
 import { AntForm, Avatar, Button, Col, Flex, FormItem, Input, Row, Table } from '@/lib/AntRegistry'
 import React, { ReactElement, useState, useContext, Fragment } from 'react'
 import CrumbIcons from '@/components/CrumbIcons'
-import productImage from '@/assets/brand-guide/product-img-5.png';
+import productImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg';
 import Link from 'next/link'
 import CommonBanner from '@/components/CommonBanner';
 import { useRouter } from 'next/router';
