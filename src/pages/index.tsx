@@ -24,7 +24,7 @@ import blogImage from '@/assets/brand-guide/hero-image.png'
 import coffeeLogo from '@/assets/brand-guide/coffee-logo.png'
 import brandImage from '@/assets/brand-guide/brand-1.png'
 import Link from "next/link";
-import { Carousel, Form } from "antd";
+import { Carousel, Form, Grid } from "antd";
 import CrumbIcons from "@/components/CrumbIcons";
 import { ReactElement } from "react";
 import CommonLayout from "@/components/common/CommonLayout";
@@ -72,28 +72,56 @@ const Home = () => {
       title: 'Coffee Brands',
     },
   ]
- const [state, setState] = useState({data:[],count:0})
+  const [state, setState] = useState({ data: [], count: 0 })
 
 
-  const initProductList  = async () => {
+  const initProductList = async () => {
     try {
       let apiRes = await crumbApi.Product.list()
       setState(apiRes)
     } catch (error) {
-      
+
     }
   }
-  console.log(state,'statetttt');
-  
-React.useEffect(() => {
-  initProductList()
-},[])
+  console.log(state, 'statetttt');
+
+  React.useEffect(() => {
+    initProductList()
+  }, [])
+
+  const screens = Grid.useBreakpoint()
+
+  const responsive = [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1
+      }
+    }
+  ]
 
   return (
     <>
-     
+
       {/* ------------------------- Hero Section ------------------------- */}
-      <section className="hero-section py-0 h-100">
+      <section className="hero-section py-0 ">
         <div className="container-fluid h-100">
           <Row gutter={[24, 24]} className="h-100">
             <Col span={24} className="h-100 px-0">
@@ -101,17 +129,20 @@ React.useEffect(() => {
                 {[...Array(3)].map(() => <div className="position-relative">
                   <div className="hero-banner h-100">
                     <div className="hero-image h-100">
-                      <img src={HeroBanner.src} alt="error" className="img-fluid" />
+                      {/* <img src={HeroBanner.src} alt="error" className="img-fluid" /> */}
+                      <video className="img-fluid" controls={false} autoPlay={true} preload='preload' poster={HeroBanner.src}>
+                        <source src="/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4" type="video/mp4" />
+                        </video>
                     </div>
                     <div className="hero-content position-absolute top-0 start-0 h-100 w-100 text-center d-flex flex-column align-items-center justify-content-center">
                       <Row justify={"center"}>
                         <Col span={24} lg={14} xl={14}>
                           <div className="hero-logo mb-3">
-                            <img src={logo.src} alt="error" height={150} width={140} className="mx-auto" />
+                            <img src={logo.src} alt="error" height={screens.sm ? 150 : 100} width={screens.sm ? 140 : 90} className="mx-auto" />
                           </div>
                           <h1>Coffee Heaven</h1>
                           <img src={seperator.src} alt="error" className="mt-3 mb-4 mx-auto" />
-                          <p className="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse maxime ex, tenetur dignissimos ullam aliquid quam assumenda aspernatur tempore deleniti est ad sequi, accusantium, nihil quia architecto molestias? Fugiat, praesentium.</p>
+                          <p className="mb-4 mb-sm-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse maxime ex, tenetur dignissimos ullam aliquid quam assumenda aspernatur tempore deleniti est ad sequi, accusantium, nihil quia architecto molestias? Fugiat, praesentium.</p>
                           <span>
                             <Button size="large" type="primary" ghost className="rounded-0 border border-light text-uppercase py-3 h-auto px-5">Shop Here</Button>
                           </span>
@@ -149,8 +180,8 @@ React.useEffect(() => {
           </Row>
         </div>
       </section>
-   {/* ------------------------- Cart Section ------------------------ */}
-   <section className="cart-section common-bg">
+      {/* ------------------------- Cart Section ------------------------ */}
+      <section className="cart-section common-bg">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
@@ -159,13 +190,13 @@ React.useEffect(() => {
               <p className="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
             </Col>
           </Row>
-          <Row gutter={[20, 20]}>
-            {Array.isArray(state?.data) && state?.data.map((res:any,index:number) => <ProductCard key={index} {...res}/>)}
+          <Row gutter={[20, 20]} justify={'center'}>
+            {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <ProductCard key={index} {...res} />)}
           </Row>
         </div>
       </section>
       {/* ------------------------- Blog Section ------------------------ */}
-    
+
 
       {/* --------------------- Fixed Banner Section ---------------------- */}
       <section className="fixed-banner-section">
@@ -252,7 +283,7 @@ React.useEffect(() => {
         <div className="container-fluid">
           <Row gutter={[16, 16]}>
             <Col span={24}>
-              <Carousel dots={false} autoplay slidesToShow={5} slidesToScroll={1} draggable={true}>
+              <Carousel dots={false} autoplay slidesToShow={5} slidesToScroll={1} draggable={true} responsive={responsive}>
                 {[...Array(6)].map(() => <div className="brand-image">
                   <img src={brandImage.src} alt="error" />
                 </div>)}
@@ -282,9 +313,9 @@ React.useEffect(() => {
 };
 Home.getLayout = function getLayout(page: ReactElement) {
   return (
-      <CommonLayout>
-          {page}
-      </CommonLayout>
+    <CommonLayout>
+      {page}
+    </CommonLayout>
   )
 }
 export default Home;

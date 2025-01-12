@@ -30,7 +30,7 @@ const About = () => {
     <>
       <section className="about-us pt-0 bg-white">
         <CommonBanner title="About us" />
-        <div className="container mt-5 pt-5">
+        <div className="container mt-sm-5 pt-5">
           <Row gutter={[20, 20]} justify={'center'}>
             <Col span={24} lg={16} xl={14} xxl={12} className='text-center'>
               <div className='mb-4 pb-2'><img src={aboutBanner.src} alt="error" /></div>
@@ -62,12 +62,12 @@ const About = () => {
           <Row justify={'center'}>
             <Col span={24} lg={20} xl={18} xxl={16}>
               <Carousel draggable={true}>
-                {[...Array(4)].map((res) => <div key={res} className="about-testimonial-card py-5">
+                {[...Array(4)].map((res) => <div key={res} className="about-testimonial-card pb-5">
                   <h4 className="title mb-3">Testimonials</h4>
-                  <div className='mb-5'><img src={titleImage.src} alt="error" style={{ filter: 'sepia' }} className='mx-auto' /></div>
+                  <div className='mb-4 mb-sm-5'><img src={titleImage.src} alt="error" style={{ filter: 'sepia' }} className='mx-auto' /></div>
                   <p className='fs-6'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed quaerat mollitia odit aut provident. Libero vitae provident cumque rerum sequi error aut nihil deleniti saepe. Reiciendis fuga sapiente voluptatum veniam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, molestias!</p>
 
-                  <p className='m-0 mt-5 pb-3 text-uppercase fs-6 name'>Jean thompsan, <span className='text-lowercase'>barista</span></p>
+                  <p className='m-0 mt-4 mt-sm-5 pb-3 text-uppercase fs-6 name'>Jean thompsan, <span className='text-lowercase'>barista</span></p>
                 </div>)}
               </Carousel>
             </Col>

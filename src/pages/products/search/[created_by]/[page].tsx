@@ -31,7 +31,7 @@ const ProductList = (props: any) => {
   return (
     <section className='product-list-section pt-0 bg-white'>
       <CommonBanner title={"PRoduct List"} />
-      <div className="container mt-5 pt-5">
+      <div className="container mt-sm-5 pt-5">
         <Row gutter={[24, 24]} justify={'space-between'}>
           <Col span={24} lg={6} xl={6} xxl={6}>
             <div className='product-list-box'>

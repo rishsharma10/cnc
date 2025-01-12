@@ -224,7 +224,7 @@ console.log(cartData,'cartDatacartData');
   return (
     <section className='product-list-section pt-0 bg-white'>
       <CommonBanner title={"PRoduct Details"} image={state?.thumb_url} />
-      <div className="container mt-5 pt-5">
+      <div className="container mt-sm-5 pt-5">
         <Row gutter={[24, 24]} justify={'space-between'}>
           <Col span={24} lg={11} xl={12} xxl={12}>
             <div className="product-images">

@@ -7,6 +7,7 @@ import Link from 'next/link'
 import CommonBanner from '@/components/CommonBanner';
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@/context/Provider'
+import { Grid } from 'antd';
 const AddToCart = () => {
     const { Toast, userInfo, cartData, isCart } = useContext(GlobalContext)
     const router = useRouter()
@@ -51,7 +52,7 @@ const AddToCart = () => {
         },
     ];
     console.log(cartData, 'cartDatacartData');
-
+const screens = Grid.useBreakpoint()
     return (
         <>
             <section className="add-to-cart-section pt-0 bg-white" >
@@ -65,12 +66,12 @@ const AddToCart = () => {
 
                             <div className="coupon">
                                 <AntForm size='large' className='d-flex flex-wrap align-items-center gap-3 '>
-                                    <FormItem className='w-25 m-0'>
+                                    <FormItem className={screens.sm ? 'w-25 m-0' : 'w-100 m-0'}>
                                         <Input placeholder='Coupon Code' />
                                     </FormItem>
 
-                                    <Button type='primary' className='px-5 text-uppercase'>Apply Coupon</Button>
-                                    <Button type='primary' className='px-5 text-uppercase'>Update cart</Button>
+                                    <Button type='primary' block={screens.sm ? false : true} className='px-5 text-uppercase'>Apply Coupon</Button>
+                                    <Button type='primary' block={screens.sm ? false : true} className='px-5 text-uppercase'>Update cart</Button>
                                 </AntForm>
                             </div>
 
@@ -95,7 +96,7 @@ const AddToCart = () => {
 
                                 </ul>
 
-                                <span><Link href={`/checkout/payment`}><Button type='primary' size='large' className='px-5 text-uppercase'>Proceed to checkout</Button></Link></span>
+                                <span><Link href={`/checkout/payment`}><Button block={screens.sm ? false : true} type='primary' size='large' className='px-5 text-uppercase'>Proceed to checkout</Button></Link></span>
                             </div>
                         </Col>
                     </Row>

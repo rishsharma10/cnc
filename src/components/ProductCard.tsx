@@ -23,7 +23,7 @@ const ProductCard = (props: newDetails) => {
                 </div>
                 <div className="cart-content mt-4 text-center">
                     <Link href={`/product/${stringReplace(props.name)}/${props.id}`}><h4>{props?.name ?? 'N/A'}</h4></Link>
-                    <p className="text-secondary fs-6">${Number(props?.price).toFixed(2)}</p>
+                    <p className="text-secondary fs-6 m-0">${Number(props?.price).toFixed(2)}</p>
                 </div>
             </div>
         </Col>

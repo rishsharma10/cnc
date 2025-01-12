@@ -11,7 +11,7 @@ const HeaderPage = () => {
 
     const router = useRouter()
     return (
-        <nav className="navbar navbar-expand-lg bg-dark">
+        <nav className="navbar navbar-expand-lg common-bg">
             <div className="container">
                 <Link className="navbar-brand" href="/">
                     <img src={logo.src} alt="error" height={60} width={60} />

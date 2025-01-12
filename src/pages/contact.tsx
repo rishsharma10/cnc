@@ -9,7 +9,7 @@ const Contact = () => {
     <section className="contact-us pt-0 bg-white">
       <CommonBanner title="Contact us" />
 
-      <div className="container mt-5 pt-5">
+      <div className="container mt-sm-5 pt-5">
         <Row gutter={[24, 24]}>
           <Col span={24} lg={12} xl={12} xxl={12}>
             <div className="contact-info">
