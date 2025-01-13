@@ -2,7 +2,7 @@ import CommonLayout from '@/components/common/CommonLayout'
 import { Col, Flex, Row, TypographyTitle } from '@/lib/AntRegistry'
 import React, { ReactElement } from 'react'
 import HeroBanner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg'
-import titleSeperator from '@/assets/brand-guide/title-separator.png'
+import titleSeperator from '@/assets/images/freshly-baked-sweet-buns-puff-pastry.jpg'
 import serviceImage from '@/assets/images/delicious-coffee-cup-table.jpg'
 import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import CommonBanner from '@/components/CommonBanner'
@@ -48,7 +48,7 @@ const OurBlog = () => {
     ]
     return (
         <section className="blog-section pt-0 bg-white">
-            <CommonBanner title="Our Blog" />
+            <CommonBanner title="Our Blog" image={titleSeperator.src} />
             <div className="container mt-sm-5 pt-5">
                 <Row gutter={[20, 20]} justify={'center'}>
                     <Col span={24} lg={16} xl={14} xxl={12} className='text-center mb-4'>

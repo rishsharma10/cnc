@@ -7,6 +7,7 @@ import Link from 'next/link'
 import CommonBanner from '@/components/CommonBanner';
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@/context/Provider'
+import banner_img from "@/assets/images/plate_dish.jpg"
 import { Grid } from 'antd';
 const AddToCart = () => {
     const { Toast, userInfo, cartData, isCart } = useContext(GlobalContext)
@@ -56,7 +57,7 @@ const screens = Grid.useBreakpoint()
     return (
         <>
             <section className="add-to-cart-section pt-0 bg-white" >
-                <CommonBanner title={"Cart"} />
+                <CommonBanner title={"Cart"} image={banner_img.src} />
                 <div className="container mt-5">
                     <Row gutter={[20, 20]}>
                         <Col span={24}>

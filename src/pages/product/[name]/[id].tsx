@@ -59,7 +59,7 @@ const ProductDetail = (props: typeProps) => {
               -
               <span>18/04/2018</span>
             </Flex>
-            <p className='m-0'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
+            <p className='m-0'>Nice coffee</p>
           </div>
         </Flex>
 

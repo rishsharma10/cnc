@@ -8,24 +8,32 @@ import titleImage from '@/assets/brand-guide/title-separator.png';
 import { Carousel } from 'antd';
 import titleSeperator from '@/assets/brand-guide/title-separator.png'
 import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
+import image1 from "@/assets/images/WhatsApp Image 2025-01-11 at 00.47.32.jpeg"
+import image2 from "@/assets/images/WhatsApp Image 2025-01-11 at 00.47.33.jpeg"
+import imageabout from "@/assets/images/layered-fruit-cake-cake-with-strawberries-raspberry-sauce-cream-stone-background-patisserie-desserts.jpg"
+import imageabout2 from "@/assets/images/adult-harvesting-coffee.jpg"
 import Link from 'next/link';
 const About = () => {
   const stateData = [
     {
       count: 250,
       title: 'Varieties of Coffee',
+      desc:`From bold espressos to smooth cold brews, we have a coffee for every taste. Discover your perfect cup!`
     },
     {
       count: 126,
       title: 'Hours of Testing',
+      desc:`Every blend we offer is the result of countless hours of tasting and perfecting. At Copper & Crumb, we ensure every sip delivers exceptional flavor and quality.`
     },
     {
       count: 320,
       title: 'Coffee Markets',
+      desc:`We source the finest beans from renowned coffee markets worldwide, ensuring every cup embodies quality, flavor, and authenticity. Experience the best from farm to cup!`
     },
     {
       count: 220,
       title: 'Coffee Brands',
+      desc:`At Copper & Crumb, we proudly showcase our exclusive blends alongside carefully curated beans from the world’s top coffee brands. Taste the difference in every cup!`
     },
   ]
   const aboutCoffee = [
@@ -66,7 +74,7 @@ const About = () => {
   return (
     <>
       <section className="about-us pt-0 bg-white">
-        <CommonBanner title="About us" />
+        <CommonBanner title="About us" image={imageabout2.src} />
           <section className="blog-section common-bg">
         <div className="container">
           <Row justify={"center"} className="mb-5">
@@ -110,7 +118,7 @@ const About = () => {
             </Col>
             <Col span={24} lg={12} xl={12} xxl={12}>
               <div className="about-banner mb-3">
-                <img src={banner.src} alt="error" className='img-fluid' />
+                <img src={image1.src} alt="error" className='img-fluid' />
               </div>
               <TypographyTitle level={5}>Kannupriya: (Founder & Vision Director)
               </TypographyTitle>
@@ -131,7 +139,7 @@ const About = () => {
             </Col>
             <Col span={24} lg={12} xl={12} xxl={12}>
               <div className="about-banner mb-3">
-                <img src={banner.src} alt="error" className='img-fluid' />
+                <img src={image2.src} alt="error" className='img-fluid' />
               </div>
               <TypographyTitle level={5}>Chef Zareen: Master Pastry Chef & Culinary Director
               </TypographyTitle>
@@ -190,7 +198,7 @@ const About = () => {
               <div className="stats-card text-center">
                 <h1>{res.count}</h1>
                 <h4 className="mt-4 mb-2">{res.title}</h4>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit aenean</p>
+                <p>{res?.desc}</p>
               </div>
             </Col>)}
           </Row>
@@ -202,7 +210,7 @@ const About = () => {
           <Row>
             <Col span={24}>
               <div className="contact-text d-flex gap-4 align-items-center justify-content-center justify-content-sm-between text-center text-sm-start flex-wrap">
-                <h4 className="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</h4>
+                <h4 className="m-0">We’d love to hear from you! Reach out with any questions or feedback. Let’s connect!</h4>
                 <Link href={`/pages/contact-us`}><Button type="primary" className="shadow-none h-auto">Contact us</Button></Link>
               </div>
             </Col>

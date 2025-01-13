@@ -4,6 +4,7 @@ import { Col, Flex, Row, TypographyTitle } from '@/lib/AntRegistry'
 import React, { ReactElement } from 'react'
 import aboutBanner from '@/assets/brand-guide/title-above.png';
 import banner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg';
+import common_img from '@/assets/images/bun-with-poppy-seeds.jpg'
 const OurStory = () => {
 
   const story = [
@@ -128,7 +129,7 @@ const OurStory = () => {
   }
   return (
     <section className="contact-us pt-0 bg-white">
-      <CommonBanner title="Our story" />
+      <CommonBanner title="Our story" image={common_img.src}/>
       <div className="container mt-sm-5 pt-5">
         <Row gutter={[20, 20]} justify={'center'}>
           <Col span={24} lg={16} xl={14} xxl={12} className='text-center mb-4'>

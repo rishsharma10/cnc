@@ -23,7 +23,10 @@ import serviceImage from '@/assets/images/delicious-coffee-cup-table.jpg'
 import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import offerItem from '@/assets/brand-guide/h2-custom-icon-5.png'
 import coffeeLogo from '@/assets/brand-guide/coffee-logo.png'
-import brandImage from '@/assets/brand-guide/brand-1.png'
+import pastryimg from '@/assets/images/layered-fruit-cake-cake-with-strawberries-raspberry-sauce-cream-stone-background-patisserie-desserts.jpg'
+import side_view_man from '@/assets/images/side-view-man-preparing-food.jpg'
+import hand_holding from '@/assets/images/hand-holding-spoon-pouring-coffee-powder-grinder-grinding-coffee-pouring-into-portafilter.jpg'
+import person_serving from '@/assets/images/person-serving-cup-coffee.jpg'
 import Link from "next/link";
 import { Carousel, Form, Grid } from "antd";
 import CrumbIcons from "@/components/CrumbIcons";
@@ -36,7 +39,7 @@ import ProductCard from "@/components/ProductCard";
 const Home = () => {
   const itemData = [
     {
-      image: HeroBanner.src,
+      image: pastryimg.src,
       title: `Pastry Program
       `,
       subTitle: `Each creation tells a story of tradition reimagined. Our viennoiserie marries French technique
@@ -45,7 +48,7 @@ const Home = () => {
       in perfect harmony.`,
     },
     {
-      image: serviceImage.src,
+      image: person_serving.src,
       title: `Coffee Program
       `,
       subTitle: `In partnership with Beanrove Coffee Roasters, we bring you ethically sourced beans roasted to
@@ -153,36 +156,36 @@ const Home = () => {
   ]
   const bannerArray = [
     {
-      title:`The Quiet Zone
+      title: `The Quiet Zone
       `,
-      desc:`Find your sanctuary away from the world. A single traveler's paradise where you can savor a
+      desc: `Find your sanctuary away from the world. A single traveler's paradise where you can savor a
       perfectly crafted cappuccino alongside our signature entremet.`,
-      button:`Explore Our Menu`,
-      link:`/products/search/1/1`,
-      poster:HeroBanner.src,
-      video:'/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
+      button: `Explore Our Menu`,
+      link: `/products/search/1/1`,
+      poster: HeroBanner.src,
+      video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
     },
     {
-      title:`The Social Hub`,
-      desc:`Where stories unfold over perfectly laminated croissants and friendships deepen over
+      title: `The Social Hub`,
+      desc: `Where stories unfold over perfectly laminated croissants and friendships deepen over
       house-roasted coffee. Gather at tables crafted by local artisans, where every meal becomes a
       memory.
       `,
-      button:`Explore Our Menu`,
-      link:`/products/search/1/1`,
-      poster:blogImage.src,
-      video:'/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
+      button: `Explore Our Menu`,
+      link: `/products/search/1/1`,
+      poster: blogImage.src,
+      video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
     },
     {
-      title:`The Exhibition Kitchen`,
-      desc:`Watch art come to life as our pastry team transforms simple ingredients into extraordinary
+      title: `The Exhibition Kitchen`,
+      desc: `Watch art come to life as our pastry team transforms simple ingredients into extraordinary
       creations. From morning lamination to afternoon chocolate work, witness the magic of craft in
       motion.
       `,
-      button:`Explore Our Menu`,
-      link:`/products/search/1/1`,
-      poster:serviceImage.src,
-      video:'/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
+      button: `Explore Our Menu`,
+      link: `/products/search/1/1`,
+      poster: serviceImage.src,
+      video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
     }
   ]
 
@@ -194,8 +197,8 @@ const Home = () => {
         <div className="container-fluid h-100">
           <Row gutter={[24, 24]} className="h-100">
             <Col span={24} className="h-100 px-0">
-              <Carousel arrows={true} dots={false} autoplay={true}>
-                {bannerArray.map((res,index) => <div key={index} className="position-relative">
+              <Carousel arrows={true} dots={false} autoplay={false}>
+                {bannerArray.map((res, index) => <div key={index} className="position-relative">
                   <div className="hero-banner h-100">
                     <div className="hero-image h-100">
                       {/* <img src={HeroBanner.src} alt="error" className="img-fluid" /> */}
@@ -228,13 +231,19 @@ const Home = () => {
         </div>
       </section>
 
+
+
+
+
+
+
       {/* ------------------------- Offer Section ------------------------ */}
       <section className="offer-section">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={16} xl={14} className="text-center">
               <h2 className="title">Our Delicious Offer
-</h2>
+              </h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
               <p className="sub-title">At Copper & Crumb, we’re all about bringing you the finest coffee and delightful treats that perfectly complement your coffee experience. Whether you're craving a smooth espresso, a rich pour-over, or a freshly baked pastry, our menu has something for everyone.</p>
             </Col>
@@ -252,6 +261,57 @@ const Home = () => {
           </Row>
         </div>
       </section>
+      <section className="contact-us pt-0 bg-white">
+        <div className="container mt-sm-5 pt-5">
+          <Row gutter={[20, 20]} justify={'center'}>
+            <Col span={24} lg={12} xl={24} xxl={24}>
+              <Flex gap={40}>
+                <Col span={24} lg={6} xl={6} xxl={6}>
+                  <TypographyTitle className="text-uppercase" level={4}>Building Dreams One Layer at a Time
+                  </TypographyTitle>
+                  <p className='fs-16'>Where French technique meets Indian heart, crafting tomorrow's classics today.
+                    In our sunlit corner of Panchkula, a culinary revolution is taking shape. Here, antique copper
+                    pots share space with gleaming espresso machines, while the aroma of Kerala vanilla beans
+                    mingles with French butter. At Copper & Crumb, we're not just making pastries – we're crafting
+                    experiences that bridge continents and generations.</p>
+                  <Link href={`/products/search/1/1`} ><Button className="mt-3" type="primary" ghost>Reserve Your Experience</Button></Link>
+              
+                </Col>
+                <Col  span={24} lg={18} xl={18} xxl={18}>
+                <div className="about-banner mb-3">
+                  <img src={side_view_man.src} alt="error" className='img-fluid' />
+                </div>
+                </Col>
+              </Flex>
+            </Col>
+          </Row>
+        </div>
+      </section>
+      <section className="contact-us pt-0 bg-white">
+        <div className="container">
+          <Row gutter={[20, 20]} justify={'center'}>
+            <Col span={24} lg={12} xl={24} xxl={24}>
+              <Flex gap={40}>
+                <Col span={24} lg={6} xl={6} xxl={6}>
+                  <TypographyTitle className="text-uppercase" level={4}>Our Story Snapshot
+                  </TypographyTitle>
+                  <p className='fs-16'>From quiet kitchen experiments during motherhood to the bustling heart of Panchkula's culinary
+                    scene, Copper & Crumb represents the vision of two women who dared to dream differently.
+                    Here, antique copper pots share space with modern espresso machines, while Kerala vanilla
+                    beans infuse the air alongside French butter.</p>
+                  <Link href={`/our-story`} ><Button className="mt-3" type="primary" ghost>Discover Our Journey</Button></Link>
+                </Col>
+                
+                <Col  span={24} lg={18} xl={18} xxl={18}>
+                <div className="about-banner mb-3">
+                  <img src={hand_holding.src} alt="error" className='img-fluid' />
+                </div>
+                </Col>
+              </Flex>
+            </Col>
+          </Row>
+        </div>
+      </section>
       {/* ------------------------- Cart Section ------------------------ */}
       <section className="cart-section common-bg">
         <div className="container">
@@ -259,7 +319,7 @@ const Home = () => {
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Online Coffee Shop</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              <p className="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+              <p className="sub-title">Experience the finest coffee from the comfort of your home. From signature blends to fresh brews, our online shop brings the Copper & Crumb experience straight to your door. Sip, savor, and enjoy!</p>
             </Col>
           </Row>
           <Row gutter={[20, 20]} justify={'center'}>
@@ -303,13 +363,13 @@ const Home = () => {
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Signature Creations
-</h2>
+              </h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
               <p className="sub-title">At Copper & Crumb, we craft unique coffee experiences with our Signature Creations. Each cup is a masterpiece, made with quality ingredients and a dash of creativity to delight your senses.</p>
             </Col>
           </Row>
           <Row gutter={[20, 20]}>
-            {itemData.map((res,index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
+            {itemData.map((res, index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
               <div className="blog-card">
                 <div className="blog-image">
                   <img src={res.image} alt="error" className="img-fluid" />
