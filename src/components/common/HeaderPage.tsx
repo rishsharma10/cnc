@@ -33,7 +33,10 @@ const HeaderPage = () => {
                         <Link className="nav-item"  href="/our-story" legacyBehavior>
                             <a className="nav-link">Our story</a>
                         </Link>
-                        <Link className="nav-item"  href="/contact" legacyBehavior>
+                        <Link className="nav-item"  href="/our-blog" legacyBehavior>
+                            <a className="nav-link">Our Blog</a>
+                        </Link>
+                        <Link className="nav-item"  href="/pages/contact-us" legacyBehavior>
                             <a className="nav-link">Contact us</a>
                         </Link>
                         <Link className="nav-item" href="/viewcart" legacyBehavior>

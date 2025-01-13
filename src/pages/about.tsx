@@ -203,7 +203,7 @@ const About = () => {
             <Col span={24}>
               <div className="contact-text d-flex gap-4 align-items-center justify-content-center justify-content-sm-between text-center text-sm-start flex-wrap">
                 <h4 className="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</h4>
-                <Link href={`/contact`}><Button type="primary" className="shadow-none h-auto">Contact us</Button></Link>
+                <Link href={`/pages/contact-us`}><Button type="primary" className="shadow-none h-auto">Contact us</Button></Link>
               </div>
             </Col>
           </Row>

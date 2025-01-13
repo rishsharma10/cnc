@@ -15,13 +15,13 @@ import {
   Upload,
 } from "@/lib/AntRegistry";
 import React, { useContext, useState } from 'react'
-import HeroBanner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg'
 import logo from '@/assets/brand-guide/logo.png'
 import seperator from '@/assets/brand-guide/slider-separator-img.png'
+import HeroBanner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg'
 import titleSeperator from '@/assets/brand-guide/title-separator.png'
-import offerItem from '@/assets/brand-guide/h2-custom-icon-5.png'
-import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import serviceImage from '@/assets/images/delicious-coffee-cup-table.jpg'
+import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
+import offerItem from '@/assets/brand-guide/h2-custom-icon-5.png'
 import coffeeLogo from '@/assets/brand-guide/coffee-logo.png'
 import brandImage from '@/assets/brand-guide/brand-1.png'
 import Link from "next/link";
@@ -30,29 +30,63 @@ import CrumbIcons from "@/components/CrumbIcons";
 import { ReactElement } from "react";
 import CommonLayout from "@/components/common/CommonLayout";
 import crumbApi from "@/utils/crumbApis";
+// import video1 from "@/assets/videos/cori"
 import { stringReplace } from "@/utils/crumbValidation";
 import ProductCard from "@/components/ProductCard";
 const Home = () => {
   const itemData = [
     {
-      image: offerItem,
-      title: 'Types of Coffee',
-      subTitle: 'Lorem ipsum dolor sit ametal, consectetuer adipiscing elitus. Aeneantos commodo',
+      image: HeroBanner.src,
+      title: `Pastry Program
+      `,
+      subTitle: `Each creation tells a story of tradition reimagined. Our viennoiserie marries French technique
+      with Indian inspiration, while our entremets explore bold new flavor territories. Try our signature
+      pecan-coffee entremet, where house-roasted beans meet mascarpone mousse and tonka bean
+      in perfect harmony.`,
     },
     {
-      image: offerItem,
-      title: 'Bean Varieties',
-      subTitle: 'Lorem ipsum dolor sit ametal, consectetuer adipiscing elitus. Aeneantos commodo',
+      image: serviceImage.src,
+      title: `Coffee Program
+      `,
+      subTitle: `In partnership with Beanrove Coffee Roasters, we bring you ethically sourced beans roasted to
+      perfection. Every cup represents our commitment to sustainability and fair trade, delivering an
+      adventure in every sip`,
     },
     {
-      image: offerItem,
-      title: 'Coffee & Pastry',
-      subTitle: 'Lorem ipsum dolor sit ametal, consectetuer adipiscing elitus. Aeneantos commodo',
+      image: blogImage.src,
+      title: `Community & Sustainability`,
+      subTitle: `Our roots run deep in the local community. We work directly with farmers to source heritage
+      wheat varieties and seasonal fruits, ensuring both exceptional flavor and sustainable practices.
+      Our apprenticeship program focuses on empowering women in culinary arts, turning passion
+      into profession.
+      `,
+    },
+    // {
+    //   image: offerItem.src,
+    //   title: 'Coffee To Go',
+    //   subTitle: 'Lorem ipsum dolor sit ametal, consectetuer adipiscing elitus. Aeneantos commodo',
+    // },
+  ]
+  const serviceArray = [
+    {
+      image: offerItem.src,
+      title: 'Signature Coffee Blends',
+      subTitle: 'Handpicked beans, expertly brewed to bring you the perfect cup every time.',
     },
     {
-      image: offerItem,
-      title: 'Coffee To Go',
-      subTitle: 'Lorem ipsum dolor sit ametal, consectetuer adipiscing elitus. Aeneantos commodo',
+      image: offerItem.src,
+      title: 'Freshly Baked Pastries',
+      subTitle: 'Indulge in our range of delicious, oven-fresh pastries and snacks that pair perfectly with any coffee.',
+    },
+    {
+      image: offerItem.src,
+      title: 'Limited-Edition Flavors',
+      subTitle: 'From seasonal blends to innovative creations, enjoy unique flavors that you won’t find anywhere else.',
+    },
+    {
+      image: offerItem.src,
+      title: 'Specialty Drinks',
+      subTitle: 'Explore our range of crafted drinks, from classic lattes to unique iced beverages that refresh and delight.',
     },
   ]
   const stateData = [
@@ -117,6 +151,40 @@ const Home = () => {
       }
     }
   ]
+  const bannerArray = [
+    {
+      title:`The Quiet Zone
+      `,
+      desc:`Find your sanctuary away from the world. A single traveler's paradise where you can savor a
+      perfectly crafted cappuccino alongside our signature entremet.`,
+      button:`Explore Our Menu`,
+      link:`/products/search/1/1`,
+      poster:HeroBanner.src,
+      video:'/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
+    },
+    {
+      title:`The Social Hub`,
+      desc:`Where stories unfold over perfectly laminated croissants and friendships deepen over
+      house-roasted coffee. Gather at tables crafted by local artisans, where every meal becomes a
+      memory.
+      `,
+      button:`Explore Our Menu`,
+      link:`/products/search/1/1`,
+      poster:blogImage.src,
+      video:'/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
+    },
+    {
+      title:`The Exhibition Kitchen`,
+      desc:`Watch art come to life as our pastry team transforms simple ingredients into extraordinary
+      creations. From morning lamination to afternoon chocolate work, witness the magic of craft in
+      motion.
+      `,
+      button:`Explore Our Menu`,
+      link:`/products/search/1/1`,
+      poster:serviceImage.src,
+      video:'/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
+    }
+  ]
 
   return (
     <>
@@ -127,13 +195,13 @@ const Home = () => {
           <Row gutter={[24, 24]} className="h-100">
             <Col span={24} className="h-100 px-0">
               <Carousel arrows={true} dots={false} autoplay={true}>
-                {[...Array(3)].map(() => <div className="position-relative">
+                {bannerArray.map((res,index) => <div key={index} className="position-relative">
                   <div className="hero-banner h-100">
                     <div className="hero-image h-100">
                       {/* <img src={HeroBanner.src} alt="error" className="img-fluid" /> */}
-                      <video className="img-fluid" controls={false} autoPlay={true} preload='preload' poster={HeroBanner.src}>
-                        <source src="/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4" type="video/mp4" />
-                        </video>
+                      <video className="img-fluid" controls={false} autoPlay={true} preload='preload' poster={res.poster}>
+                        <source src={res.video} type="video/mp4" />
+                      </video>
                     </div>
                     <div className="hero-content position-absolute top-0 start-0 h-100 w-100 text-center d-flex flex-column align-items-center justify-content-center">
                       <Row justify={"center"}>
@@ -141,11 +209,13 @@ const Home = () => {
                           <div className="hero-logo mb-3">
                             <img src={logo.src} alt="error" height={screens.sm ? 150 : 100} width={screens.sm ? 140 : 90} className="mx-auto" />
                           </div>
-                          <h1>Coffee Heaven</h1>
+                          <h1>{res.title}
+                          </h1>
                           <img src={seperator.src} alt="error" className="mt-3 mb-4 mx-auto" />
-                          <p className="mb-4 mb-sm-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse maxime ex, tenetur dignissimos ullam aliquid quam assumenda aspernatur tempore deleniti est ad sequi, accusantium, nihil quia architecto molestias? Fugiat, praesentium.</p>
+                          <p className="mb-4 mb-sm-5">{res.desc}
+                          </p>
                           <span>
-                            <Button size="large" type="primary" ghost className="rounded-0 border border-light text-uppercase py-3 h-auto px-5">Shop Here</Button>
+                            <Link href={res.link}><Button size="large" type="primary" ghost className="rounded-0 border border-light text-uppercase py-3 h-auto px-5">{res.button}</Button></Link>
                           </span>
                         </Col>
                       </Row>
@@ -163,16 +233,17 @@ const Home = () => {
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={16} xl={14} className="text-center">
-              <h2 className="title">Our Delicious Offer</h2>
+              <h2 className="title">Our Delicious Offer
+</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              <p className="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+              <p className="sub-title">At Copper & Crumb, we’re all about bringing you the finest coffee and delightful treats that perfectly complement your coffee experience. Whether you're craving a smooth espresso, a rich pour-over, or a freshly baked pastry, our menu has something for everyone.</p>
             </Col>
           </Row>
           <Row gutter={[14, 14]} justify={'center'}>
-            {itemData.map((res: any) => <Col key={res} span={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+            {serviceArray.map((res: any) => <Col key={res} span={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
               <div className="offered-items-container text-center h-100 p-4">
                 <div className="item-image">
-                  <img src={res.image.src} alt="error" />
+                  <img src={res.image} alt="error" />
                 </div>
                 <h4 className="mt-3 mb-3">{res.title}</h4>
                 <p className="text-secondary">{res.subTitle}</p>
@@ -213,7 +284,7 @@ const Home = () => {
       </section>
 
       {/* ---------------------- Stats Section --------------------------- */}
-      <section className="stats-section">
+      {/* <section className="stats-section">
         <div className="container">
           <Row gutter={[22, 20]}>
             {stateData.map((res: any) => <Col key={res} span={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
@@ -225,27 +296,28 @@ const Home = () => {
             </Col>)}
           </Row>
         </div>
-      </section>
+      </section> */}
 
       <section className="blog-section common-bg">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
-              <h2 className="title">The Coffee Herald</h2>
+              <h2 className="title">Signature Creations
+</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              <p className="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+              <p className="sub-title">At Copper & Crumb, we craft unique coffee experiences with our Signature Creations. Each cup is a masterpiece, made with quality ingredients and a dash of creativity to delight your senses.</p>
             </Col>
           </Row>
           <Row gutter={[20, 20]}>
-            {[...Array(3)].map(() => <Col span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
+            {itemData.map((res,index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
               <div className="blog-card">
                 <div className="blog-image">
-                  <img src={blogImage.src} alt="error" className="img-fluid" />
+                  <img src={res.image} alt="error" className="img-fluid" />
                 </div>
                 <div className="blog-content mt-4">
-                  <h4>Prep Techniques</h4>
-                  <p className="mt-3 mb-3 text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio et explicabo, expedita debitis.</p>
-                  <Link href={'#'}>Read More</Link>
+                  <h4>{res.title}</h4>
+                  <p className="mt-3 mb-3 text-secondary">{res.subTitle}</p>
+                  {/* <Link href={'#'}>Read More</Link> */}
                 </div>
               </div>
             </Col>)}
@@ -260,7 +332,7 @@ const Home = () => {
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Our Sweet Gallery</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              <p className="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+              <p className="sub-title">Treat yourself to our hand-crafted desserts and freshly baked pastries. The perfect sweet companion to your favorite brew, crafted to delight every time</p>
             </Col>
           </Row>
           <Row gutter={[20, 20]} className="mx-0">
@@ -280,7 +352,7 @@ const Home = () => {
       </section>
 
       {/* ---------------------------- Brand Section ------------------- */}
-      <section className="beand-section">
+      {/* <section className="beand-section">
         <div className="container-fluid">
           <Row gutter={[16, 16]}>
             <Col span={24}>
@@ -292,7 +364,7 @@ const Home = () => {
             </Col>
           </Row>
         </div>
-      </section>
+      </section> */}
 
       {/* ---------------------------- contact-section ---------------- */}
       <section className="contact-section common-bg">
@@ -300,8 +372,8 @@ const Home = () => {
           <Row>
             <Col span={24}>
               <div className="contact-text d-flex gap-4 align-items-center justify-content-center justify-content-sm-between text-center text-sm-start flex-wrap">
-                <h4 className="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</h4>
-                <Link href={`/contact`}><Button type="primary" className="shadow-none h-auto">Contact us</Button></Link>
+                <h4 className="m-0">We’d love to hear from you! Reach out with any questions or feedback. Let’s connect!</h4>
+                <Link href={`/pages/contact-us`}><Button type="primary" className="shadow-none h-auto">Contact us</Button></Link>
               </div>
             </Col>
           </Row>
