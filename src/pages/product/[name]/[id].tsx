@@ -8,7 +8,7 @@ import banner from '@/assets/images/espresso-pouring-from-coffee-machine-cafe.jp
 import Link from 'next/link'
 import { GetServerSideProps } from "next";
 import { MenuProps, TabsProps } from 'antd'
-import crumbApi, { BUCKET_ROOT } from '@/utils/crumbApis'
+import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis'
 import { ProductDetails } from '@/interface/product/ProductDetails'
 import { stringReplace } from '@/utils/crumbValidation'
 import ProductCard from '@/components/ProductCard'
@@ -90,12 +90,9 @@ const ProductDetail = (props: typeProps) => {
     },
   ];
   const handleIncDec = async (pid: number, type: string, value: number, index?: number) => {
+    debugger
     try {
-      if (type == 'INC') {
-        setQuantity(quantity + 1)
-      } else {
-        setQuantity(quantity - 1)
-      }
+      
       if (!userInfo?.access_token) {
         let cart: any = localStorage.getItem('cart');
         cart = cart ? JSON.parse(cart) : [];
@@ -112,15 +109,25 @@ const ProductDetail = (props: typeProps) => {
           // Toast.warning('Item not found in cart');
         }
         localStorage.setItem('cart', JSON.stringify(cart));
+        if (type == 'INC') {
+          setQuantity(quantity + 1)
+        } else {
+          setQuantity(quantity - 1)
+        }
       } else {
         const payload = {
           product_id:state.id,
           quantity:quantity
         }
         const apiRes = await crumbApi.Cart.update(payload)
+        if (type == 'INC') {
+          setQuantity(quantity + 1)
+        } else {
+          setQuantity(quantity - 1)
+        }
       }
     } catch (error) {
-
+Toast.error(error)
     }
   }
 console.log(cartData,'cartDatacartData');
@@ -151,7 +158,7 @@ console.log(cartData,'cartDatacartData');
       const payload = {
         id: Number(router.query.id),
         quantity: Number(quantity),
-        price: state.price,
+        price: state.customer_buying_price,
         size: 200,
         name: state.name,
         grid_size: 'small'
@@ -229,7 +236,7 @@ console.log(cartData,'cartDatacartData');
           <Col span={24} lg={11} xl={12} xxl={12}>
             <div className="product-images">
               <div className="preview-image mb-4">
-                <img src={state?.thumb_url ?? productImage.src} alt="error" className='h-100 w-100' />
+                <img src={state?.feature_image ? `${BUCKET_ROOT}${state?.feature_image}` : productImage.src} alt="error" className='h-100 w-100' />
               </div>
               <div className="preview-image-list">
                 {[state.image_1, state.image_2].map((res, index) => <div key={index} className="list-image">
@@ -243,7 +250,7 @@ console.log(cartData,'cartDatacartData');
               <h4 className="title fs-1">
                 {state.name}
               </h4>
-              <p className='fs-5'>${Number(state.price).toFixed(2)}</p>
+              <p className='fs-5'>{CURRENCY}{Number(state.customer_buying_price).toFixed(2)}</p>
 
               <Flex className='rate mb-4' gap={6}><Rate className='fs-5' value={3} />
                 <span className='text-secondary'>(1 customer review)</span></Flex>

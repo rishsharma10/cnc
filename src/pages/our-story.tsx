@@ -5,6 +5,7 @@ import React, { ReactElement } from 'react'
 import aboutBanner from '@/assets/brand-guide/title-above.png';
 import banner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg';
 import common_img from '@/assets/images/bun-with-poppy-seeds.jpg'
+import { Grid } from 'antd';
 const OurStory = () => {
 
   const story = [
@@ -124,12 +125,14 @@ const OurStory = () => {
       `
     },
   ]
-  const isEven = (number:number) => {
+  const isEven = (number: number) => {
     return number % 2 === 0;
   }
+
+  const screens = Grid.useBreakpoint()
   return (
     <section className="contact-us pt-0 bg-white">
-      <CommonBanner title="Our story" image={common_img.src}/>
+      <CommonBanner title="Our story" image={common_img.src} />
       <div className="container mt-sm-5 pt-5">
         <Row gutter={[20, 20]} justify={'center'}>
           <Col span={24} lg={16} xl={14} xxl={12} className='text-center mb-4'>
@@ -143,25 +146,29 @@ const OurStory = () => {
               beans infuse the air alongside French butter
             </p> */}
           </Col>
-          {story?.map((res, index) => <Col key={index} span={24} lg={12} xl={24} xxl={24}>
-            {!isEven(index)? <Flex gap={40}>
+          {story?.map((res, index) => <Col key={index} span={24}>
+            {!isEven(index) ? <Row gutter={[20, 20]}>
               <Col span={24} lg={12} xl={12} xxl={12}>
                 <TypographyTitle level={4}>{res.title}</TypographyTitle>
                 <p className='fs-16'>{res.desc}</p>
               </Col>
-              <div className="about-banner mb-3">
-                <img src={res.image} alt="error" className='img-fluid' />
-              </div>
-            </Flex> :
-              <Flex gap={40}>
+              <Col span={24} lg={12} xl={12} xxl={12} order={screens.md ? 2 : 1}>
                 <div className="about-banner mb-3">
                   <img src={res.image} alt="error" className='img-fluid' />
                 </div>
-                <Col span={24} lg={12} xl={12} xxl={12}>
+              </Col>
+            </Row> :
+              <Row gutter={[20,20]}>
+                <Col span={24} lg={12} xl={12} xxl={12} order={screens.md ? 1 : 2}>
+                <div className="about-banner mb-3">
+                  <img src={res.image} alt="error" className='img-fluid' />
+                </div>
+                </Col>
+                <Col span={24} lg={12} xl={12} xxl={12} order={screens.md ? 2 : 1}>
                   <TypographyTitle level={4}>{res.title}</TypographyTitle>
                   <p className='fs-16'>{res.desc}</p>
                 </Col>
-              </Flex>}
+              </Row>}
           </Col>)}
         </Row>
       </div>

@@ -51,18 +51,18 @@ const MainLayout = (props: any) => {
 
   const items: MenuProps["items"] = [
     {
-      key: "1",
+      key: "2",
       label: (
-        <Link href={`/${userType}/setting`} className="fw-medium">
-          Settings
+        <Link href={`/profile`} className="fw-medium">
+          Profile
         </Link>
       ),
     },
     {
-      key: "2",
+      key: "1",
       label: (
-        <Link href={`/${userType}/profile`} className="fw-medium">
-          Profile
+        <Link href={`/address`} className="fw-medium">
+          Address
         </Link>
       ),
     },

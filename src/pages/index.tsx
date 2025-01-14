@@ -263,10 +263,8 @@ const Home = () => {
       </section>
       <section className="contact-us pt-0 bg-white">
         <div className="container mt-sm-5 pt-5">
-          <Row gutter={[20, 20]} justify={'center'}>
-            <Col span={24} lg={12} xl={24} xxl={24}>
-              <Flex gap={40}>
-                <Col span={24} lg={6} xl={6} xxl={6}>
+          <Row gutter={[20, 20]} justify={'space-between'}>
+                <Col span={24} lg={7} xl={7} xxl={7}>
                   <TypographyTitle className="text-uppercase" level={4}>Building Dreams One Layer at a Time
                   </TypographyTitle>
                   <p className='fs-16'>Where French technique meets Indian heart, crafting tomorrow's classics today.
@@ -277,22 +275,23 @@ const Home = () => {
                   <Link href={`/products/search/1/1`} ><Button className="mt-3" type="primary" ghost>Reserve Your Experience</Button></Link>
               
                 </Col>
-                <Col  span={24} lg={18} xl={18} xxl={18}>
+                <Col  span={24} lg={16} xl={16} xxl={16}>
                 <div className="about-banner mb-3">
                   <img src={side_view_man.src} alt="error" className='img-fluid' />
                 </div>
                 </Col>
-              </Flex>
-            </Col>
           </Row>
         </div>
       </section>
       <section className="contact-us pt-0 bg-white">
         <div className="container">
-          <Row gutter={[20, 20]} justify={'center'}>
-            <Col span={24} lg={12} xl={24} xxl={24}>
-              <Flex gap={40}>
-                <Col span={24} lg={6} xl={6} xxl={6}>
+          <Row gutter={[20, 20]} justify={'space-between'}>
+          <Col  span={24} lg={16} xl={16} xxl={16}>
+                <div className="about-banner mb-3">
+                  <img src={hand_holding.src} alt="error" className='img-fluid' />
+                </div>
+                </Col>
+                <Col span={24} lg={7} xl={7} xxl={7}>
                   <TypographyTitle className="text-uppercase" level={4}>Our Story Snapshot
                   </TypographyTitle>
                   <p className='fs-16'>From quiet kitchen experiments during motherhood to the bustling heart of Panchkula's culinary
@@ -302,13 +301,7 @@ const Home = () => {
                   <Link href={`/our-story`} ><Button className="mt-3" type="primary" ghost>Discover Our Journey</Button></Link>
                 </Col>
                 
-                <Col  span={24} lg={18} xl={18} xxl={18}>
-                <div className="about-banner mb-3">
-                  <img src={hand_holding.src} alt="error" className='img-fluid' />
-                </div>
-                </Col>
-              </Flex>
-            </Col>
+                
           </Row>
         </div>
       </section>

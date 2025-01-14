@@ -60,6 +60,7 @@ interface CommonContextType {
   setClickedTexts: any;
   setPic: any;
   cartData:any;
+  initCart:() => void
   isCart:(pid:number) => boolean;
 }
 export const GlobalContext = createContext({} as CommonContextType);
@@ -171,7 +172,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
       maxAge: 0,
       path: `/`,
     });
-    router.replace(`/${userType ? userType : "company"}/auth/login`);
+    router.replace(`/login`);
   };
 
   const [cartData,setCartData] = useState({data:[],count:0})
@@ -208,6 +209,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
           logout,
           userType,
           loading,
+          initCart,
           setLoading,
           setUserType,
           isCart,

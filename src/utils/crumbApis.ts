@@ -4,6 +4,7 @@ const superagent = SuperagentPromise(_superagent, global.Promise);
 
 export const API_ROOT = "https://copper-crumb.wloper.com/api/";
 export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
+export const CURRENCY ='₹'
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}/medium/`;
 const API_FILE_ROOT_ORIGINAL = `${BUCKET_ROOT}/original/`;
@@ -60,6 +61,8 @@ const requests = {
 const Auth = {
   login: (info: any) => requests.post("v1/login", info),
   signUp: (info: any) => requests.post("v1/register", info),
+  validateCoupon: (info: any) => requests.post("v1/validate-coupon", info),
+  updateAddress: (info: any) => requests.post("v1/update-profile-address", info),
   profile: () => requests.get(`v1/customer-details`),
   logout: () => requests.put("user/logout", {}),
   changePassword: (info: any) => requests.put("user/change/password", info),

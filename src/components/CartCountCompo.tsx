@@ -7,9 +7,9 @@ interface typeProps {
     pid:number
     index?:number
 }
-const CartCountCompo = ({handleIncDec,quantity,pid}:typeProps) => {
+const CartCountCompo = ({handleIncDec,quantity,pid,index}:typeProps) => {
   return (
-    <Flex className='quantity-counter'><Flex className='p-3 counter-div'>{quantity}</Flex><Flex className='flex-column h-100'><Button onClick={() => handleIncDec(pid,'INC',1,0)}>+</Button><Button disabled={quantity <= 1} onClick={() =>  handleIncDec(pid,'DEC',1,0)}>-</Button></Flex></Flex>
+    <Flex className='quantity-counter'><Flex className='p-3 counter-div'>{quantity}</Flex><Flex className='flex-column h-100'><Button onClick={() => handleIncDec(pid,'INC',1,index)}>+</Button><Button disabled={quantity <= 1} onClick={() =>  handleIncDec(pid,'DEC',1,0)}>-</Button></Flex></Flex>
   )
 }
 

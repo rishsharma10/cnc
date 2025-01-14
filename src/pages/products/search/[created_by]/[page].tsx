@@ -56,7 +56,7 @@ const ProductList = (props: any) => {
                 </ul>
               </div> */}
 
-              <div className="top-rated-product">
+              {/* <div className="top-rated-product">
                 <h4 className='mb-3'>Top rated products</h4>
                 <Link href={'/product/search/1'}>
                   <Flex align='center'>
@@ -70,17 +70,17 @@ const ProductList = (props: any) => {
                     </div>
                   </Flex>
                 </Link>
-              </div>
+              </div> */}
 
-              <AntForm size='large' className='mt-5'>
+              {/* <AntForm size='large' className='mt-5'>
                 <FormItem>
                   <Input placeholder='Search' suffix={<Button size='small' className='border-0'><i className="fa-solid fa-magnifying-glass"></i></Button>} />
                 </FormItem>
-              </AntForm>
+              </AntForm> */}
 
-              <div className="product-banner mt-5">
+              {/* <div className="product-banner mt-5">
                 <Avatar src={banner.src} className='img-fluid rounded-0' shape='square' />
-              </div>
+              </div> */}
             </div>
           </Col>
           <Col span={24} lg={18} xl={18} xxl={18}>

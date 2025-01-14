@@ -4,6 +4,7 @@ import { stringReplace } from '@/utils/crumbValidation'
 import productImage from '@/assets/brand-guide/product-img-5.png'
 import Link from 'next/link'
 import React from 'react'
+import { CURRENCY } from '@/utils/crumbApis'
 interface newDetails extends ProductDetails {
     class: string;
   }
@@ -23,7 +24,7 @@ const ProductCard = (props: newDetails) => {
                 </div>
                 <div className="cart-content mt-4 text-center">
                     <Link href={`/product/${stringReplace(props.name)}/${props.id}`}><h4>{props?.name ?? 'N/A'}</h4></Link>
-                    <p className="text-secondary fs-6 m-0">${Number(props?.price).toFixed(2)}</p>
+                    <p className="text-secondary fs-6 m-0">{CURRENCY}{Number(props?.customer_buying_price).toFixed(2)}</p>
                 </div>
             </div>
         </Col>
