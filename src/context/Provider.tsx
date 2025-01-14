@@ -198,8 +198,10 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   console.log(router, "routerrrrrrr");
 
   useEffect(() => {
-    initCart()
-  },[])
+    if(userInfo?.access_token){
+      initCart()
+    }
+  },[userInfo?.access_token])
 
   return (
     <GlobalContext.Provider
