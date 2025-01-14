@@ -99,6 +99,7 @@ const AddToCart = () => {
                 ...userInfo,
                 b_address_line_1: values.b_address_line_1 ?? 'Goa Panji'
             })
+            setShow(false)
         } catch (error) {
 
         } finally {

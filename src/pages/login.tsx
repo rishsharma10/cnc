@@ -10,7 +10,7 @@ import { setCookie } from 'nookies'
 import { COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN } from '@/context/actionTypes'
 const LoginPage = () => {
     const router = useRouter()
-    const {Toast,setUserInfo,userInfo} = useContext(GlobalContext)
+    const {Toast,setUserInfo,initCart} = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const handleSubmit = async (values: any) => {
         console.log(values, 'valuesssss');
@@ -23,6 +23,7 @@ const LoginPage = () => {
             const apiRes = await crumbApi.Auth.login(payload);
             crumbApi.setToken(apiRes.token)
             const apiResUser = await crumbApi.Auth.profile();
+            await initCart()
             setUserInfo({
                 ...apiResUser?.customer,
                 access_token:apiRes.token

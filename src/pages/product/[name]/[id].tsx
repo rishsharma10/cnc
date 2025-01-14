@@ -125,6 +125,11 @@ const ProductDetail = (props: typeProps) => {
         } else {
           const apiRes = await crumbApi.Cart.update(payload)
         }
+        if (type == 'INC' && cart_qty_new ==1) {
+          await addToCart()
+        } else {
+          const apiRes = await crumbApi.Cart.update(payload)
+        }
         if (type == 'INC') {
           setState({
             ...state,
@@ -187,7 +192,8 @@ const ProductDetail = (props: typeProps) => {
         let apiRes = await crumbApi.Cart.add(cartPayload)
         setState({
           ...state,
-          // cart_qty:1
+          cart_qty:1,
+          is_cart:true
         })
         Toast.success(apiRes.message)
       }
