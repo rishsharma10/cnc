@@ -19,16 +19,17 @@ import { GlobalContext } from '@/context/Provider'
 interface typeProps extends ProductDetails {
   is_cart_local: boolean
   is_cart: boolean
+  cart_qty: number
 }
 const ProductDetail = (props: typeProps) => {
   console.log(props, 'propsspsppsp');
-  const { Toast, userInfo,cartData,isCart } = useContext(GlobalContext)
+  const { Toast, userInfo, cartData, isCart } = useContext(GlobalContext)
   const router = useRouter()
   const [state, setState] = useState(props as typeProps)
   const [loading, setLoading] = useState(false)
   const [relatedProduct, setRelatedProduct] = useState({ data: [], count: 0 })
   const [quantity, setQuantity] = useState(1)
-  
+
 
   const items: TabsProps['items'] = [
     {
@@ -89,10 +90,10 @@ const ProductDetail = (props: typeProps) => {
       </div>,
     },
   ];
-  const handleIncDec = async (pid: number, type: string, value: number, index?: number) => {
+  const handleIncDec = async (pid: number, type: string, cart_qty_new: number, index?: number) => {
     debugger
     try {
-      
+
       if (!userInfo?.access_token) {
         let cart: any = localStorage.getItem('cart');
         cart = cart ? JSON.parse(cart) : [];
@@ -100,7 +101,7 @@ const ProductDetail = (props: typeProps) => {
         cart = cart.map((item: any) => {
           if (item.id === pid) {
             itemFound = true;
-            return { ...item, quantity: quantity };
+            return { ...item, quantity: cart_qty_new };
           }
           return item;
         });
@@ -110,27 +111,39 @@ const ProductDetail = (props: typeProps) => {
         }
         localStorage.setItem('cart', JSON.stringify(cart));
         if (type == 'INC') {
-          setQuantity(quantity + 1)
+          setQuantity(cart_qty_new)
         } else {
-          setQuantity(quantity - 1)
+          setQuantity(cart_qty_new)
         }
       } else {
         const payload = {
-          product_id:state.id,
-          quantity:quantity
+          product_id: state.id,
+          quantity:cart_qty_new
         }
-        const apiRes = await crumbApi.Cart.update(payload)
-        if (type == 'INC') {
-          setQuantity(quantity + 1)
+        if (type == 'DEC' && cart_qty_new ==0) {
+          await removeCart(pid)
         } else {
-          setQuantity(quantity - 1)
+          const apiRes = await crumbApi.Cart.update(payload)
+        }
+        if (type == 'INC') {
+          setState({
+            ...state,
+            is_cart: true,
+            cart_qty:cart_qty_new
+          })
+        } else {
+          setState({
+            ...state,
+            is_cart:cart_qty_new == 0 ? false : true,
+            cart_qty: cart_qty_new
+          })
         }
       }
     } catch (error) {
-Toast.error(error)
+      Toast.error(error)
     }
   }
-console.log(cartData,'cartDatacartData');
+  console.log(cartData, 'cartDatacartData');
 
   const updateCart = (payload: any) => {
     try {
@@ -164,14 +177,18 @@ console.log(cartData,'cartDatacartData');
         grid_size: 'small'
       }
       const cartPayload = {
-        product_id:state.id,
-        quantity:quantity
+        product_id: state.id,
+        quantity: quantity
       }
       setLoading(true)
       if (!userInfo?.access_token) {
         updateCart(payload)
       } else {
         let apiRes = await crumbApi.Cart.add(cartPayload)
+        setState({
+          ...state,
+          // cart_qty:1
+        })
         Toast.success(apiRes.message)
       }
     } catch (error) {
@@ -198,7 +215,11 @@ console.log(cartData,'cartDatacartData');
           is_cart_local: false
         })
       } else {
-
+        let apiRes = await crumbApi.Cart.remove({ product_id: Number(id) })
+        setState({
+          ...state,
+          is_cart: false
+        })
       }
     } catch (error: any) {
       Toast.warning(error.message);
@@ -216,6 +237,11 @@ console.log(cartData,'cartDatacartData');
 
     }
   }
+  const isCartQuantity = (pid: any) => {
+    debugger
+    const isInCart = Array.isArray(cartData?.data) && cartData?.data.find((item: any) => item.id === pid);
+    return isInCart?.quantity
+  }
   console.log(state, 'statetttt');
 
   React.useEffect(() => {
@@ -224,9 +250,10 @@ console.log(cartData,'cartDatacartData');
   React.useEffect(() => {
     setState({
       ...state,
-      is_cart:isCart(Number(router.query.id))
+      is_cart: isCart(Number(router.query.id)),
+      cart_qty: isCartQuantity(Number(router.query.id)) ?? 0
     })
-  }, [isCart(Number(router.query.id))])
+  }, [isCart(Number(router.query.id)), isCartQuantity(Number(router.query.id))])
 
   return (
     <section className='product-list-section pt-0 bg-white'>
@@ -258,9 +285,9 @@ console.log(cartData,'cartDatacartData');
               <p>{state?.notes}</p>
 
               <Flex align='center' gap={20} className='my-5'>
-                <CartCountCompo handleIncDec={handleIncDec} quantity={quantity} pid={Number(router.query.id)} />
-                {userInfo?.access_token?  <Fragment>{state?.is_cart ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
-                  </Fragment> :
+                <CartCountCompo is_cart={state.is_cart} handleIncDec={handleIncDec} quantity={state.cart_qty} pid={Number(router.query.id)} />
+                {userInfo?.access_token ? <Fragment>{state?.is_cart ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
+                </Fragment> :
                   <Fragment>{state?.is_cart_local ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
                   </Fragment>}
 

@@ -12,83 +12,111 @@ import { Grid } from 'antd';
 import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis';
 import CartCountCompo from '@/components/CartCountCompo';
 const AddToCart = () => {
-    const { Toast, userInfo, cartData, initCart } = useContext(GlobalContext)
+    const { Toast, userInfo, cartData, initCart, setUserInfo } = useContext(GlobalContext)
     const router = useRouter()
     const [state, setState] = useState({ data: cartData.data, count: cartData.count })
+    const [show, setShow] = useState(false)
+    const [loading, setLoading] = useState(false)
 
 
 
     const handleIncDec = async (pid: number, type: string, qty: number, index: number) => {
         debugger
         try {
-          
-          if (!userInfo?.access_token) {
-            let cart: any = localStorage.getItem('cart');
-            cart = cart ? JSON.parse(cart) : [];
-            let itemFound = false;
-            cart = cart.map((item: any) => {
-              if (item.id === pid) {
-                itemFound = true;
-                return { ...item, quantity: qty };
-              }
-              return item;
-            });
-            if (!itemFound) {
-              return
-              // Toast.warning('Item not found in cart');
-            }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            // if (type == 'INC') {
-            //   setQuantity(quantity + 1)
-            // } else {
-            //   setQuantity(quantity - 1)
-            // }
-          } else {
-            const payload = {
-              product_id:pid,
-              quantity:qty
-            }
-            const apiRes = await crumbApi.Cart.update(payload)
-            if (type == 'INC') {
-                const data = state.data
-                data[index].quantity = qty +1
+
+            if (!userInfo?.access_token) {
+                let cart: any = localStorage.getItem('cart');
+                cart = cart ? JSON.parse(cart) : [];
+                let itemFound = false;
+                cart = cart.map((item: any) => {
+                    if (item.id === pid) {
+                        itemFound = true;
+                        return { ...item, quantity: qty };
+                    }
+                    return item;
+                });
+                if (!itemFound) {
+                    return
+                    // Toast.warning('Item not found in cart');
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                // if (type == 'INC') {
+                //   setQuantity(quantity + 1)
+                // } else {
+                //   setQuantity(quantity - 1)
+                // }
             } else {
-                const data = state.data
-                data[index].quantity = qty -1
+                const payload = {
+                    product_id: pid,
+                    quantity: qty
+                }
+                const apiRes = await crumbApi.Cart.update(payload)
+                if (type == 'INC') {
+                    const data = state.data
+                    data[index].quantity = qty
+                    setState({
+                        ...state,
+                        data
+                    })
+                } else {
+                    const data = state.data
+                    data[index].quantity = qty
+                    setState({
+                        ...state,
+                        data
+                    })
+                }
             }
-          }
         } catch (error) {
-    Toast.error(error)
-        }
-      }
-      const handleRemoveCart = async (id:number,index:number) => {
-        debugger
-        try {
-            let apiRes = await crumbApi.Cart.remove({product_id:id})
-            await initCart()
-        } catch (error) {
-            
+            Toast.error(error)
         }
     }
-    const applyCoupon = async (values:any) => {
+    const handleRemoveCart = async (id: number, index: number) => {
+        debugger
+        try {
+            let apiRes = await crumbApi.Cart.remove({ product_id: id })
+            await initCart()
+        } catch (error) {
+
+        }
+    }
+    const applyCoupon = async (values: any) => {
         try {
             // let apiRes 
         } catch (error) {
-            
+
         }
-    } 
-    const dataSource:any = Array.isArray(state.data) && state.data.map((res,index) => {
+    }
+    const handleSubmit = async (values: any) => {
+        const payload = {
+            ...values,
+            billing_same: true
+        }
+        try {
+            setLoading(true)
+            let apiRes = await crumbApi.Auth.updateAddress(payload)
+            setUserInfo({
+                ...userInfo,
+                b_address_line_1: values.b_address_line_1 ?? 'Goa Panji'
+            })
+        } catch (error) {
+
+        } finally {
+            setLoading(false)
+        }
+    }
+    const dataSource: any = Array.isArray(state.data) && state.data.map((res, index) => {
         return {
             key: index,
-            cross: <Button onClick={() => handleRemoveCart(Number(res?.product?.id),index)} shape='circle' className='border-0'>x</Button>,
-            product: <Flex align='center' gap={8}><Avatar src={res?.product?.feature_image ? `${BUCKET_ROOT}${res?.product?.feature_image}` :productImage.src} shape='square' size={100} /><span>{res?.product?.name}</span></Flex>,
+            cross: <Button onClick={() => handleRemoveCart(Number(res?.product?.id), index)} shape='circle' className='border-0'>x</Button>,
+            product: <Flex align='center' gap={8}><Avatar src={res?.product?.feature_image ? `${BUCKET_ROOT}${res?.product?.feature_image}` : productImage.src} shape='square' size={100} /><span>{res?.product?.name}</span></Flex>,
             price: `${CURRENCY}${res?.product?.customer_buying_price}`,
-            quantity: <CartCountCompo handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product?.id)} />,
+            quantity: <CartCountCompo is_cart={res?.quantity>1 ?true:false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product?.id)} />,
             subtotal: `${CURRENCY}${res?.quantity * res?.product?.customer_buying_price}`,
         }
     })
-console.log(state,'statetettetetet');
-console.log(cartData,'cartDatacartData');
+    console.log(state, 'statetettetetet');
+    console.log(cartData, 'cartDatacartData');
 
 
 
@@ -122,14 +150,14 @@ console.log(cartData,'cartDatacartData');
         },
     ];
     console.log(cartData, 'cartDatacartData');
-const screens = Grid.useBreakpoint()
+    const screens = Grid.useBreakpoint()
 
-React.useEffect(() => {
-    setState({
-        data:cartData.data,
-        count:cartData.count
-    })
-},[cartData])
+    React.useEffect(() => {
+        setState({
+            data: cartData.data,
+            count: cartData.count
+        })
+    }, [cartData])
     return (
         <>
             <section className="add-to-cart-section pt-0 bg-white" >
@@ -162,9 +190,65 @@ React.useEffect(() => {
                                     </li>
                                     <li className='cart-list'>
                                         <span>Shipping</span>
-                                        <span>Enter your address to view shipping options.
-                                            <br />
-                                            <Link href={'#'}>Calculate shipping</Link></span>
+                                        {/* <Flex> */}
+                                        {!show ? <><span role='button'>{userInfo?.b_address_line_1 ?? 'Enter your address to view shipping options.'}
+                                        </span><Button onClick={() => setShow(true)} type='text'>Change address</Button></> : <AntForm className='w-100' layout='vertical' size='large' onFinish={handleSubmit}>
+                                            <Row gutter={[10, 5]}>
+                                                <Col span={12}>
+                                                    <FormItem name='b_first_name' rules={[{ required: true, message: "Please enter first name" }]} label={'First name'}>
+                                                        <Input placeholder='Enter first name' />
+                                                    </FormItem>
+                                                </Col>
+                                                <Col span={12}>
+                                                    <FormItem name='b_last_name' rules={[{ required: true, message: "Please enter last name" }]} label={'Last name'}>
+                                                        <Input placeholder='Enter last name' />
+                                                    </FormItem>
+                                                </Col>
+                                                <Col span={18}>
+                                                    <FormItem name='b_address_line_1' rules={[{ required: true, message: "Please enter address" }]} label={'Address'}>
+                                                        <Input placeholder='Enter Address' />
+                                                    </FormItem>
+                                                </Col>
+                                                <Col span={6}>
+                                                    <FormItem name='b_phone' rules={[{ required: true, message: "Please enter phone number" }]} label={'Phone Number'}>
+                                                        <Input placeholder='Enter phone number' />
+                                                    </FormItem>
+                                                </Col>
+
+                                                <Col span={6}>
+                                                    <FormItem name='b_country' rules={[{ required: true, message: "Please enter country" }]} label={'Country'}>
+                                                        <Input placeholder='Enter country' />
+                                                    </FormItem>
+                                                </Col>
+                                                <Col span={6}>
+                                                    <FormItem name='b_state' rules={[{ required: true, message: "Please enter state" }]} label={'State'}>
+                                                        <Input placeholder='Enter state' />
+                                                    </FormItem>
+                                                </Col>
+                                                <Col span={6}>
+                                                    <FormItem name='b_city' rules={[{ required: true, message: "Please enter city" }]} label={'City'}>
+                                                        <Input placeholder='Enter city' />
+                                                    </FormItem>
+                                                </Col>
+                                                <Col span={6}>
+                                                    <FormItem name='b_zipcode' rules={[{ required: true, message: "Please enter pincode" }]} label={'Pincode'}>
+                                                        <Input placeholder='Enter pincode' />
+                                                    </FormItem>
+                                                </Col>
+
+                                                <Flex gap={40} justify='start'>
+                                                    <div className="submit-btn text-center">
+                                                        <Button type='default' onClick={() => setShow(false)} className='px-5'>CANCEL</Button>
+                                                    </div>
+                                                    <div className="submit-btn text-center">
+                                                        <Button loading={loading} htmlType='submit' type='primary' className='px-5'>UPDATE</Button>
+                                                    </div>
+                                                </Flex>
+
+                                            </Row>
+                                        </AntForm>}
+                                        {/* <Button>Edit</Button> */}
+                                        {/* </Flex> */}
                                     </li>
                                     <li className='cart-list'>
                                         <span>Total</span>

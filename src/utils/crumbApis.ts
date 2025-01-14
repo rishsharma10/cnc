@@ -26,8 +26,13 @@ const tokenPlugin = (req: any) => {
 };
 
 const requests = {
-  del: (url: string) =>
-    superagent.del(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+  // del: (url: string,body:any) =>
+  //   superagent.del(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+  del: (url: string, body: any) =>
+    superagent
+      .del(`${API_ROOT}${url}`, body)
+      .use(tokenPlugin)
+      .then(responseBody),
   delMultiple: (url: string, body: any) =>
     superagent
       .del(`${API_ROOT}${url}`, body)
@@ -62,7 +67,7 @@ const Auth = {
   login: (info: any) => requests.post("v1/login", info),
   signUp: (info: any) => requests.post("v1/register", info),
   validateCoupon: (info: any) => requests.post("v1/validate-coupon", info),
-  updateAddress: (info: any) => requests.post("v1/update-profile-address", info),
+  updateAddress: (info: any) => requests.put("v1/update-profile-address", info),
   profile: () => requests.get(`v1/customer-details`),
   logout: () => requests.put("user/logout", {}),
   changePassword: (info: any) => requests.put("user/change/password", info),
@@ -87,7 +92,7 @@ const Cart = {
   list: () => requests.get("v1/cart"),
   update: (info: any) => requests.put("v1/cart/update", info),
   add: (info: any) => requests.post("v1/cart/add", info),
-  remove: (info: any) => requests.del("v1/cart/remove"),
+  remove: (info: any) => requests.del("v1/cart/remove",info),
 }
 
 const Common = {
