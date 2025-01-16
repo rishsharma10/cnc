@@ -14,7 +14,7 @@ import CartCountCompo from '@/components/CartCountCompo';
 const AddToCart = () => {
     const { Toast, userInfo, cartData, initCart, setUserInfo } = useContext(GlobalContext)
     const router = useRouter()
-    const [state, setState] = useState({ data: cartData.data, count: cartData.count })
+    const [state, setState] = useState({ data: cartData.data, count: cartData.count,sub_total:0 })
     const [show, setShow] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -116,6 +116,7 @@ const AddToCart = () => {
             subtotal: `${CURRENCY}${res?.quantity * res?.product?.customer_buying_price}`,
         }
     })
+    
     console.log(state, 'statetettetetet');
     console.log(cartData, 'cartDatacartData');
 
@@ -154,11 +155,17 @@ const AddToCart = () => {
     const screens = Grid.useBreakpoint()
 
     React.useEffect(() => {
+        const total = cartData?.data?.reduce((acc:any, item:any) => {
+            const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
+            const quantity = item?.quantity; // Get quantity
+            return acc + (price * quantity); // Add to the accumulator
+          }, 0);
         setState({
             data: cartData.data,
-            count: cartData.count
+            count: cartData.count,
+            sub_total:total
         })
-    }, [cartData])
+    }, [cartData,state])
     return (
         <>
             <section className="add-to-cart-section pt-0 bg-white" >
@@ -187,57 +194,57 @@ const AddToCart = () => {
                                 <ul className='list-unstyled mb-5 p-0'>
                                     <li className='cart-list'>
                                         <span>Subtotal</span>
-                                        <span>$36</span>
+                                        <span>{CURRENCY}{state.sub_total}</span>
                                     </li>
                                     <li className='cart-list'>
                                         <span>Shipping</span>
                                         {/* <Flex> */}
                                         {!show ? <><span role='button'>{userInfo?.b_address_line_1 ?? 'Enter your address to view shipping options.'}
-                                        </span><Button onClick={() => setShow(true)} type='text'>Change address</Button></> : <AntForm className='w-100' layout='vertical' size='large' onFinish={handleSubmit}>
+                                        </span><Button onClick={() => setShow(true)} type='text'>Change</Button></> : <AntForm className='w-100' layout='vertical' size='large' onFinish={handleSubmit}>
                                             <Row gutter={[10, 5]}>
-                                                <Col span={12}>
+                                                <Col span={12} xxl={12} xl={12} lg={12} sm={12} md={12} xs={11}>
                                                     <FormItem name='b_first_name' rules={[{ required: true, message: "Please enter first name" }]} label={'First name'}>
                                                         <Input placeholder='Enter first name' />
                                                     </FormItem>
                                                 </Col>
-                                                <Col span={12}>
+                                                <Col span={12} xxl={12} xl={12} lg={12} sm={12} md={12} xs={11}>
                                                     <FormItem name='b_last_name' rules={[{ required: true, message: "Please enter last name" }]} label={'Last name'}>
                                                         <Input placeholder='Enter last name' />
                                                     </FormItem>
                                                 </Col>
-                                                <Col span={18}>
+                                                <Col span={18} xxl={18} xl={18} lg={18} sm={24} md={24} xs={22}>
                                                     <FormItem name='b_address_line_1' rules={[{ required: true, message: "Please enter address" }]} label={'Address'}>
                                                         <Input placeholder='Enter Address' />
                                                     </FormItem>
                                                 </Col>
-                                                <Col span={6}>
-                                                    <FormItem name='b_phone' rules={[{ required: true, message: "Please enter phone number" }]} label={'Phone Number'}>
+                                                <Col span={6} xxl={6} xl={6} lg={6} sm={12} md={12} xs={11}>
+                                                    <FormItem name='b_zipcode' rules={[{ required: true, message: "Please enter pincode" }]} label={'Pincode'}>
+                                                        <Input placeholder='Enter pincode' />
+                                                    </FormItem>
+                                                </Col>  
+                                                <Col span={6} xxl={6} xl={6} lg={6} sm={12} md={12} xs={11}>
+                                                    <FormItem name='b_phone' rules={[{ required: true, message: "Please enter phone number" }]} label={'Phone'}>
                                                         <Input placeholder='Enter phone number' />
                                                     </FormItem>
                                                 </Col>
 
-                                                <Col span={6}>
+                                                <Col span={6} xxl={6} xl={6} lg={6} sm={12} md={12} xs={11}>
                                                     <FormItem name='b_country' rules={[{ required: true, message: "Please enter country" }]} label={'Country'}>
                                                         <Input placeholder='Enter country' />
                                                     </FormItem>
                                                 </Col>
-                                                <Col span={6}>
+                                                <Col span={6} xxl={6} xl={6} lg={6} sm={12} md={12} xs={11}>
                                                     <FormItem name='b_state' rules={[{ required: true, message: "Please enter state" }]} label={'State'}>
                                                         <Input placeholder='Enter state' />
                                                     </FormItem>
                                                 </Col>
-                                                <Col span={6}>
+                                                <Col span={6} xxl={6} xl={6} lg={6} sm={12} md={12} xs={11}>
                                                     <FormItem name='b_city' rules={[{ required: true, message: "Please enter city" }]} label={'City'}>
                                                         <Input placeholder='Enter city' />
                                                     </FormItem>
                                                 </Col>
-                                                <Col span={6}>
-                                                    <FormItem name='b_zipcode' rules={[{ required: true, message: "Please enter pincode" }]} label={'Pincode'}>
-                                                        <Input placeholder='Enter pincode' />
-                                                    </FormItem>
-                                                </Col>
-
-                                                <Flex gap={40} justify='start'>
+                                                
+                                                <Flex gap={10} justify='start'>
                                                     <div className="submit-btn text-center">
                                                         <Button type='default' onClick={() => setShow(false)} className='px-5'>CANCEL</Button>
                                                     </div>
@@ -245,7 +252,6 @@ const AddToCart = () => {
                                                         <Button loading={loading} htmlType='submit' type='primary' className='px-5'>UPDATE</Button>
                                                     </div>
                                                 </Flex>
-
                                             </Row>
                                         </AntForm>}
                                         {/* <Button>Edit</Button> */}
@@ -253,7 +259,7 @@ const AddToCart = () => {
                                     </li>
                                     <li className='cart-list'>
                                         <span>Total</span>
-                                        <span>$36</span>
+                                        <span>{CURRENCY}{state.sub_total}</span>
                                     </li>
 
                                 </ul>

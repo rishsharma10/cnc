@@ -15,6 +15,7 @@ import ProductCard from '@/components/ProductCard'
 import CartCountCompo from '@/components/CartCountCompo'
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@/context/Provider'
+import { count } from 'console'
 
 interface typeProps extends ProductDetails {
   is_cart_local: boolean
@@ -23,7 +24,7 @@ interface typeProps extends ProductDetails {
 }
 const ProductDetail = (props: typeProps) => {
   console.log(props, 'propsspsppsp');
-  const { Toast, userInfo, cartData, isCart } = useContext(GlobalContext)
+  const { Toast, userInfo, cartData,setCartData, isCart } = useContext(GlobalContext)
   const router = useRouter()
   const [state, setState] = useState(props as typeProps)
   const [loading, setLoading] = useState(false)
@@ -111,9 +112,17 @@ const ProductDetail = (props: typeProps) => {
         }
         localStorage.setItem('cart', JSON.stringify(cart));
         if (type == 'INC') {
-          setQuantity(cart_qty_new)
+          setState({
+            ...state,
+            is_cart: true,
+            cart_qty:cart_qty_new
+          })
         } else {
-          setQuantity(cart_qty_new)
+          setState({
+            ...state,
+            is_cart: true,
+            cart_qty:cart_qty_new
+          })
         }
       } else {
         const payload = {
@@ -165,6 +174,7 @@ const ProductDetail = (props: typeProps) => {
         ...state,
         is_cart_local: true
       })
+      setCartData({data:cart,count:cart?.length})
     } catch (error: any) {
       Toast.warning(error.message);
     }
@@ -175,10 +185,14 @@ const ProductDetail = (props: typeProps) => {
     try {
       const payload = {
         id: Number(router.query.id),
-        quantity: Number(quantity),
-        price: state.customer_buying_price,
+        product:{
+          customer_buying_price: state.customer_buying_price,
+          name: state.name,
+          id:Number(router.query.id),
+          feature_image:state?.feature_image??null
+        },
+        quantity: Number(state.cart_qty),
         size: 200,
-        name: state.name,
         grid_size: 'small'
       }
       const cartPayload = {
@@ -257,7 +271,7 @@ const ProductDetail = (props: typeProps) => {
     setState({
       ...state,
       is_cart: isCart(Number(router.query.id)),
-      cart_qty: isCartQuantity(Number(router.query.id)) ?? 0
+      cart_qty: isCartQuantity(Number(router.query.id)) ?? 1
     })
   }, [isCart(Number(router.query.id)), isCartQuantity(Number(router.query.id))])
 
