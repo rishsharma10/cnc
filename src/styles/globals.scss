@@ -3,7 +3,8 @@
 @import "theme";
 @import "typography";
 @import "nprogress/nprogress.css";
-@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 html,
 body,
@@ -11,6 +12,9 @@ body,
 .ant-layout {
   height: 100%;
   background-color: #e8e8e8;
+}
+*{
+  font-family: "Lato", serif !important;
 }
 
 .ant-layout-sider {
@@ -926,7 +930,7 @@ h2,
 h3,
 h4 {
   color: $black;
-  font-family: "Marcellus", serif;
+  font-family: "Poppins", serif !important;
 }
 
 .title {
@@ -956,6 +960,12 @@ a {
 }
 
 .common-bg {
+  background: url('../assets/brand-guide/42.png') no-repeat;
+  background-position: top;
+  background-size:  cover;
+}
+
+.common-bg-2 {
   background: url('../assets/brand-guide/grey-bg.jpg') center/cover no-repeat;
 }
 
@@ -1026,8 +1036,12 @@ a {
 .blog-section {
   .blog-card {
     .blog-image {
-      height: 300px;
-      min-height: 300px;
+      height: 240px;
+      border-radius: 8px;
+      min-height: 240px;
+      img{
+        border-radius: 8px;
+      }
     }
   }
 }
@@ -1183,7 +1197,7 @@ a {
 
 .navbar {
   .nav-link {
-    color: $black ;
+    color: $white ;
     font-size: 16px;
     font-family: "Marcellus", serif;
     text-transform: uppercase;
@@ -1200,12 +1214,12 @@ a {
       left: 0;
       height: 1px;
       width: 0;
-      background-color: $black;
+      background-color: $white;
     }
   }
 
   .nav-link.active {
-    color: $black;
+    color: $white;
 
     &::before {
       width: 60%;
@@ -1341,6 +1355,9 @@ button {
   height: 400px;
   min-height: 400px;
 }
+.story-section{
+  height: 300px;
+}
 
 .about-testimonial-card {
   * {
@@ -1404,8 +1421,18 @@ button {
   .about-banner {
     height: 260px;
     min-height: 260px;
+    border-radius: 8px;
+    img{
+      border-radius: 8px;
+    }
   }
   .preview-image{
     height: 400px;
   }
+}
+
+.full-width-image{
+  height: 300px;
+  border-radius: 8px;
+  overflow: hidden;
 }

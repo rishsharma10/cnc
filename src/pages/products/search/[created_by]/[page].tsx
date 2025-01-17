@@ -1,5 +1,5 @@
 import CommonBanner from '@/components/CommonBanner'
-import { AntForm, Avatar, Button, Col, Dropdown, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs } from '@/lib/AntRegistry'
+import { AntForm, Avatar, Button, Col, Dropdown, Empty, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs } from '@/lib/AntRegistry'
 import React, { ReactElement, useState } from 'react'
 import productImage from '@/assets/images/front-view-cake-slice-with-cream-fresh-red-strawberries-inside-plate-getting-sugar-powder-dark-background.jpg'
 import banner from '@/assets/images/espresso-pouring-from-coffee-machine-cafe.jpg'
@@ -37,7 +37,7 @@ const ProductList = (props: any) => {
             <div className='product-list-box'>
               <ul className='list-unstyled p-0 mb-5'>
                 <h4>Product categories</h4>
-                {Array.isArray(category) && category.map((res, index) => <div role='button' onClick={() => router.push({...router.query,query:{created_by:res?.created_by,page:router.query.page}})} key={res.id}><li className='mb-2'>{res.name}</li></div>)}
+                {Array.isArray(category) && category.map((res, index) => <div role='button' onClick={() => router.push({...router.query,query:{created_by:res?.id,page:router.query.page}})} key={res.id}><li className='mb-2'>{res.name}</li></div>)}
 
               </ul>
 
@@ -87,7 +87,7 @@ const ProductList = (props: any) => {
             <Flex justify='space-between' align='center' gap={12}>
               <p>Showing 1–9 of 16 results</p>
 
-              <Select
+              {/* <Select
                 placeholder="Default sorting"
                 style={{ width: 160 }}
                 options={[
@@ -96,11 +96,11 @@ const ProductList = (props: any) => {
                   { value: 'Yiminghe', label: 'yiminghe' },
                   { value: 'disabled', label: 'Disabled', disabled: true },
                 ]}
-              />
+              /> */}
             </Flex>
             <Row gutter={[20, 20]} className='mt-5'>
               <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col>
-              {Array.isArray(state?.data) && state?.data.map((res:any,index:number) => <ProductCard class='product-related-image' {...res} key={index}/>)}
+              {Array.isArray(state?.data) && state?.data?.length ? state?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard class='product-related-image' {...res} key={index}/></Col>) : <Empty description="OOPS!! NO DATA FOUND"/>}
             </Row>
 
             <div className="d-flex align-items-center justify-content-center mt-5">

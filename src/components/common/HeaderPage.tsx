@@ -47,10 +47,10 @@ const HeaderPage = () => {
 
     const router = useRouter()
     return (
-        <nav className="navbar navbar-expand-lg common-bg">
+        <nav className="navbar py-1 navbar-expand-lg common-bg">
             <div className="container">
-                <Link className="navbar-brand" href="/">
-                    <img src={logo.src} alt="error" height={60} width={60} />
+                <Link className="navbar-brand p-0" href="/">
+                    <img src={logo.src} alt="error" height={80} width={80} />
                 </Link>
                 <button className="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -70,7 +70,7 @@ const HeaderPage = () => {
                             <a className="nav-link">Our story</a>
                         </Link>
                         <Link className="nav-item"  href="/our-blog" legacyBehavior>
-                            <a className="nav-link">Our Blog</a>
+                            <a className="nav-link"> Blog</a>
                         </Link>
                         <Link className="nav-item"  href="/pages/contact-us" legacyBehavior>
                             <a className="nav-link">Contact us</a>

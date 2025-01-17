@@ -274,6 +274,14 @@ const ProductDetail = (props: typeProps) => {
       cart_qty: isCartQuantity(Number(router.query.id)) ?? 1
     })
   }, [isCart(Number(router.query.id)), isCartQuantity(Number(router.query.id))])
+  React.useEffect(() => {
+    setState({
+      ...props,
+      is_cart: isCart(Number(router.query.id)),
+      cart_qty: isCartQuantity(Number(router.query.id)) ?? 1
+    })
+    // setSelectedImage(data?.images.length ? data?.images[0] : '')
+}, [router.query.id])
 
   return (
     <section className='product-list-section pt-0 bg-white'>
@@ -352,7 +360,7 @@ const ProductDetail = (props: typeProps) => {
         </Row> */}
         <Row gutter={[20, 20]} className='mt-5'>
           <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col>
-          {Array.isArray(relatedProduct?.data) && relatedProduct?.data.map((res: any, index: number) => <ProductCard {...res} key={index} />)}
+          {Array.isArray(relatedProduct?.data) && relatedProduct?.data.map((res: any, index: number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res}  /></Col>)}
         </Row>
       </div>
     </section>
@@ -366,19 +374,29 @@ ProductDetail.getLayout = function getLayout(page: ReactElement) {
     </CommonLayout>
   )
 }
+
+const getDetails = async (_id: string) => {
+    let apiRes = await crumbApi.Product.details(_id)
+    return Array.isArray(apiRes?.data) ? apiRes.data[0] : apiRes?.data
+
+}
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const apiRes = await crumbApi.Product.details(String(context.query.id));
-    return { props: apiRes.data[0] ? apiRes.data[0] : apiRes.data };
-  } catch (error) {
-    return {
-      redirect: {
-        destination: `/login`,
-        permanent: false,
-      },
-    };
-  }
-};
+    try {
+        const data = await getDetails(context?.query?.id as string)
+        return {
+            props: { ...data },
+
+        }
+    } catch (error) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+
+        }
+    }
+}
 export default ProductDetail
 
 
