@@ -33,6 +33,7 @@ interface CommonContextType {
     warning: ToastFunction;
   };
   userInfo: any;
+  setCartData:any;
   logout: Function;
   user_info: any;
   setUserInfo: any;
@@ -95,6 +96,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   const [Recorder, setRecorder] = useState<any>(null);
   const [videoUrl, setVideoUrl] = useState<any>(null);
   const [streaming, setStreaming] = useState<any>(false);
+  const [isClient, setIsClient] = useState(false);
   var t0 = useRef<number>(-1);
   const screenRecordingChunks: any = [];
   const [chunks, setChunks] = useState<any>([]);
@@ -203,12 +205,26 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     }
   },[userInfo?.access_token])
 
+  useEffect(() => {
+    if (isClient && localStorage.getItem('cart')) {
+      let data:any = localStorage.getItem('cart');
+      setCartData({
+        data: JSON.parse(data),
+        count: JSON.parse(data)?.length
+      });
+    }
+  }, [isClient]);
+  useEffect(() => {
+    setIsClient(true);  // Set the flag to true once mounted on the client-side
+  }, []);
+
   return (
     <GlobalContext.Provider
       value={
         {
           ...props,
           logout,
+          setCartData,
           userType,
           loading,
           initCart,

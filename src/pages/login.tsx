@@ -8,11 +8,77 @@ import crumbApi from '@/utils/crumbApis'
 import { GlobalContext } from '@/context/Provider'
 import { setCookie } from 'nookies'
 import { COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN } from '@/context/actionTypes'
+type CartItem = {
+    id: number;
+    quantity: number;
+  };
+  
+  type Product = {
+    id: number;
+    quantity: number;
+  };
 const LoginPage = () => {
     const router = useRouter()
-    const {Toast,setUserInfo,userInfo} = useContext(GlobalContext)
+    const {Toast,setUserInfo,initCart,cartData,setCartData} = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
+
+
+    const addToCart = async (product_id: number, quantity: number) => {
+        try {
+          const cartPayload = {
+            product_id: product_id,
+            quantity: quantity
+          }
+          let apiRes = await crumbApi.Cart.add(cartPayload)
+        
+        } catch (error) {
+          console.error('Error adding product to cart:', error);
+        }
+      };
+
+      const updateCart = async (product_id: number, quantity: number) => {
+        const payload = {
+          product_id:product_id,
+          quantity:quantity
+        }
+        try {
+          const apiRes = await crumbApi.Cart.update(payload)
+        } catch (error) {
+          console.error('Error updating cart:', error);
+        }
+      };
+
+
+    const syncCartData = async (localStorageData: CartItem[], newArray: Product[]) => {
+        // Iterate through the new array of products
+        for (const product of newArray) {
+          const localStorageItem = localStorageData.find(item => item.id === product.id);
+      
+          if (localStorageItem) {
+            // If the product exists in localStorage, update the quantity
+            const updatedQuantity = localStorageItem.quantity;
+            await updateCart(product.id, updatedQuantity);
+          } else {
+            // If the product doesn't exist in localStorage, add it to the cart
+            await addToCart(product.id, product.quantity);
+          }
+        }
+      };
+
+
+
+
+
+
+
+
+
+
+
+
+
     const handleSubmit = async (values: any) => {
+      debugger
         console.log(values, 'valuesssss');
         const payload = {
             email:values.email,
@@ -23,6 +89,12 @@ const LoginPage = () => {
             const apiRes = await crumbApi.Auth.login(payload);
             crumbApi.setToken(apiRes.token)
             const apiResUser = await crumbApi.Auth.profile();
+            let localStorageData:any =  localStorage.getItem("cart") ?? []
+            if(localStorageData){
+              let cartData = await crumbApi.Cart.list()
+              await syncCartData(JSON.parse(localStorageData),cartData.cart)
+            }
+            await initCart()
             setUserInfo({
                 ...apiResUser?.customer,
                 access_token:apiRes.token
