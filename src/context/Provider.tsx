@@ -187,7 +187,8 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     }
   }
  const isCart = (pid:any) => {
-    const isInCart = Array.isArray(cartData?.data) && cartData?.data.some((item:any) => item.id === pid);
+  debugger
+    const isInCart = Array.isArray(cartData?.data) && cartData?.data.some((item:any) => item.product_id === pid);
     return isInCart ? true : false;
   }
 

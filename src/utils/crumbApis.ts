@@ -90,9 +90,9 @@ const Category = {
 }
 const Cart = {
   list: () => requests.get("v1/cart"),
-  update: (info: any) => requests.put("v1/cart/update", info),
+  update: (info: any) => requests.post("v1/cart/add", info),
   add: (info: any) => requests.post("v1/cart/add", info),
-  remove: (info: any) => requests.del("v1/cart/remove",info),
+  remove: (info: any) => requests.post("v1/cart/remove",info),
 }
 
 const Common = {

@@ -24,7 +24,7 @@ interface typeProps extends ProductDetails {
 }
 const ProductDetail = (props: typeProps) => {
   console.log(props, 'propsspsppsp');
-  const { Toast, userInfo, cartData,setCartData, isCart } = useContext(GlobalContext)
+  const { Toast, userInfo, cartData,setCartData,initCart, isCart } = useContext(GlobalContext)
   const router = useRouter()
   const [state, setState] = useState(props as typeProps)
   const [loading, setLoading] = useState(false)
@@ -127,14 +127,16 @@ const ProductDetail = (props: typeProps) => {
       } else {
         const payload = {
           product_id: state.id,
-          quantity:cart_qty_new
+          quantity:cart_qty_new,
+          amount:0,
+          coupon_discount:0
         }
         if (type == 'DEC' && cart_qty_new ==0) {
           await removeCart(pid)
         } else {
           const apiRes = await crumbApi.Cart.update(payload)
         }
-        if (type == 'INC' && cart_qty_new ==1) {
+        if (type == 'INC' && (cart_qty_new == 2 && state.is_cart)) {
           await addToCart()
         } else {
           const apiRes = await crumbApi.Cart.update(payload)
@@ -197,13 +199,16 @@ const ProductDetail = (props: typeProps) => {
       }
       const cartPayload = {
         product_id: state.id,
-        quantity: quantity
+        quantity: quantity,
+        amount:0,
+        coupon_discount:0
       }
       setLoading(true)
       if (!userInfo?.access_token) {
         updateCart(payload)
       } else {
         let apiRes = await crumbApi.Cart.add(cartPayload)
+        await initCart()
         setState({
           ...state,
           cart_qty:1,
@@ -219,6 +224,7 @@ const ProductDetail = (props: typeProps) => {
   }
 
   const removeCart = async (id?: number) => {
+    debugger
     setLoading(true)
     try {
 
@@ -238,7 +244,8 @@ const ProductDetail = (props: typeProps) => {
         let apiRes = await crumbApi.Cart.remove({ product_id: Number(id) })
         setState({
           ...state,
-          is_cart: false
+          is_cart: false,
+          cart_qty:1
         })
       }
     } catch (error: any) {
@@ -313,14 +320,14 @@ const ProductDetail = (props: typeProps) => {
               <p>{state?.notes}</p>
 
               <Flex align='center' gap={20} className='my-5'>
-                <CartCountCompo is_cart={state.is_cart} handleIncDec={handleIncDec} quantity={state.cart_qty} pid={Number(router.query.id)} />
+                {/* <CartCountCompo is_cart={state.is_cart} handleIncDec={handleIncDec} quantity={state.cart_qty} pid={Number(router.query.id)} /> */}
                 {userInfo?.access_token ? <Fragment>{state?.is_cart ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
                 </Fragment> :
                   <Fragment>{state?.is_cart_local ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
                   </Fragment>}
 
+              </Flex> 
                 {/* <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>add to cart</Button></Link> */}
-              </Flex>
 
               <ul className='list-unstyled p-0'>
                 <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>SKU</span>: <span className='text-secondary'>{state?.sku}</span></li>
