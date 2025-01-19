@@ -73,24 +73,24 @@ const Home = () => {
   const serviceArray = [
     {
       image: offerItem.src,
-      title: 'Signature Coffee Blends',
-      subTitle: 'Handpicked beans, expertly brewed to bring you the perfect cup every time.',
+      title: 'The Quiet Zone',
+      subTitle: `Find your sanctuary away from the world. A single traveler's paradise where you can savor a 
+perfectly crafted cappuccino alongside our signature entremet.`,
     },
     {
       image: offerItem.src,
-      title: 'Freshly Baked Pastries',
-      subTitle: 'Indulge in our range of delicious, oven-fresh pastries and snacks that pair perfectly with any coffee.',
+      title: 'The Social Hub ',
+      subTitle: `Where stories unfold over perfectly laminated croissants and friendships deepen over 
+house-roasted coffee. Gather at tables crafted by local artisans, where every meal becomes a 
+memory. `,
     },
     {
       image: offerItem.src,
-      title: 'Limited-Edition Flavors',
-      subTitle: 'From seasonal blends to innovative creations, enjoy unique flavors that you won’t find anywhere else.',
-    },
-    {
-      image: offerItem.src,
-      title: 'Specialty Drinks',
-      subTitle: 'Explore our range of crafted drinks, from classic lattes to unique iced beverages that refresh and delight.',
-    },
+      title: 'The Exhibition Kitchen ',
+      subTitle: `Watch art come to life as our pastry team transforms simple ingredients into extraordinary 
+creations. From morning lamination to afternoon chocolate work, witness the magic of craft in 
+motion. `,
+    }
   ]
   const stateData = [
     {
@@ -156,19 +156,24 @@ const Home = () => {
   ]
   const bannerArray = [
     {
-      title: `Pastry Poetry.`,
-      desc: `Find your sanctuary away from the world. A single traveler's paradise where you can savor a
-      perfectly crafted cappuccino alongside our signature entremet.`,
+      title: `Pastry Poetry. Coffee Canvas.`,
+      desc: `Where French technique meets Indian heart, crafting tomorrow's classics today.
+                  In our sunlit corner of Panchkula, a culinary revolution is taking shape. Here, antique copper
+                  pots share space with gleaming espresso machines, while the aroma of Kerala vanilla beans
+                  mingles with French butter. At Copper & Crumb, we're not just making pastries – we're crafting
+                  experiences that bridge continents and generations.`,
       button: `Explore Our Menu`,
       link: `/products/search/1/1`,
       poster: HeroBanner.src,
       video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
     },
     {
-      title: `Coffee Canvas.`,
-      desc: `Where stories unfold over perfectly laminated croissants and friendships deepen over
-      house-roasted coffee. Gather at tables crafted by local artisans, where every meal becomes a
-      memory.
+      title: `Pastry Poetry. Coffee Canvas.`,
+      desc: `Where French technique meets Indian heart, crafting tomorrow's classics today.
+                  In our sunlit corner of Panchkula, a culinary revolution is taking shape. Here, antique copper
+                  pots share space with gleaming espresso machines, while the aroma of Kerala vanilla beans
+                  mingles with French butter. At Copper & Crumb, we're not just making pastries – we're crafting
+                  experiences that bridge continents and generations.
       `,
       button: `Explore Our Menu`,
       link: `/products/search/1/1`,
@@ -202,20 +207,20 @@ const Home = () => {
                     <div className="hero-image h-100">
                       {/* <img src={HeroBanner.src} alt="error" className="img-fluid" /> */}
                       <video className="img-fluid" controls={false} loop muted autoPlay={true} >
-                        <source src={'https://videos.pexels.com/video-files/19005044/19005044-sd_640_360_24fps.mp4'} type="video/mp4" />
+                        <source src={'https://videos.pexels.com/video-files/4819598/4819598-sd_506_960_25fps.mp4'} type="video/mp4" />
                       </video>
                     </div>
                     <div className="hero-content position-absolute top-0 start-0 h-100 w-100 text-center d-flex flex-column align-items-center justify-content-center">
                       <Row justify={"center"}>
-                        <Col span={24}>
+                        <Col span={24} lg={20} xl={16} xxl={14}>
                           {/* <div className="hero-logo mb-3">
                             <img src={logo.src} alt="error" height={screens.sm ? 150 : 100} width={screens.sm ? 140 : 90} className="mx-auto" />
                           </div> */}
                           <h1>{res.title}
                           </h1>
                           <img src={seperator.src} alt="error" className="mt-3 mb-4 mx-auto" />
-                          {/* <p className="mb-4 mb-sm-5">{res.desc}
-                          </p> */}
+                          <p className="mb-4 mb-sm-5">{res.desc}
+                          </p>
                           <span>
                             <Link href={res.link}><Button size="large" type="primary" ghost className="rounded-0 border border-light text-uppercase py-3 h-auto px-5">{res.button}</Button></Link>
                           </span>
@@ -232,8 +237,8 @@ const Home = () => {
 
       <section className="contact-us pt-0 bg-white">
         <div className="container pt-5">
-          <Row gutter={[40, 40]} justify={'space-between'} align={"middle"}>
-            <Col span={24} lg={12} xl={12} xxl={12}>
+          <Row gutter={[40, 40]} justify={'space-between'} align={"top"}>
+            {/* <Col span={24} lg={12} xl={12} xxl={12}>
               <div>
                 <TypographyTitle className="text-uppercase" level={4}>Building Dreams One Layer at a Time
                 </TypographyTitle>
@@ -249,13 +254,13 @@ const Home = () => {
               <div className="story-section">
                 <img src={side_view_man.src} alt="error" className='img-fluid' />
               </div>
-            </Col>
-            <Col span={24} lg={12} xl={12} xxl={12}>
+            </Col> */}
+            <Col span={24} lg={16} xl={16} xxl={16}>
               <div className="story-section">
                 <img src={hand_holding.src} alt="error" className='img-fluid' />
               </div>
             </Col>
-            <Col span={24} lg={12} xl={12} xxl={12}>
+            <Col span={24} lg={8} xl={8} xxl={8}>
               <TypographyTitle className="text-uppercase" level={4}>Our Story Snapshot
               </TypographyTitle>
               <p className='fs-16'>From quiet kitchen experiments during motherhood to the bustling heart of Panchkula's culinary
@@ -267,31 +272,18 @@ const Home = () => {
           </Row>
         </div>
       </section>
-
-
-      <section className="contact-us pt-0 bg-white">
-        <div className="container">
-          <Row gutter={[20, 20]} justify={'space-between'}>
-
-
-
-          </Row>
-        </div>
-      </section>
-
-      {/* ------------------------- Offer Section ------------------------ */}
       <section className="offer-section">
         <div className="container">
-          {/* <Row justify={"center"} className="mb-5">
+          <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={16} xl={14} className="text-center">
-              <h2 className="title">Our Delicious Offer
+              <h2 className="title">Our Spaces
               </h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              <p className="sub-title">At Copper & Crumb, we’re all about bringing you the finest coffee and delightful treats that perfectly complement your coffee experience. Whether you're craving a smooth espresso, a rich pour-over, or a freshly baked pastry, our menu has something for everyone.</p>
+              {/* <p className="sub-title">At Copper & Crumb, we’re all about bringing you the finest coffee and delightful treats that perfectly complement your coffee experience. Whether you're craving a smooth espresso, a rich pour-over, or a freshly baked pastry, our menu has something for everyone.</p> */}
             </Col>
-          </Row> */}
+          </Row>
           <Row gutter={[14, 14]} justify={'center'}>
-            {serviceArray.map((res: any) => <Col key={res} span={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
+            {serviceArray.map((res: any) => <Col key={res} span={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
               <div className="offered-items-container text-center h-100 p-4">
                 <div className="item-image">
                   <img src={res.image} alt="error" />
@@ -303,14 +295,13 @@ const Home = () => {
           </Row>
         </div>
       </section>
-      {/* ------------------------- Cart Section ------------------------ */}
       <section className="cart-section common-bg-2">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Featured Product</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              <p className="sub-title">Experience the finest coffee from the comfort of your home. From signature blends to fresh brews, our online shop brings the Copper & Crumb experience straight to your door. Sip, savor, and enjoy!</p>
+              {/* <p className="sub-title">Experience the finest coffee from the comfort of your home. From signature blends to fresh brews, our online shop brings the Copper & Crumb experience straight to your door. Sip, savor, and enjoy!</p> */}
             </Col>
           </Row>
           <Row gutter={[20, 20]} justify={'center'}>
@@ -319,6 +310,11 @@ const Home = () => {
           </Row>
         </div>
       </section>
+
+      {/* ------------------------- Offer Section ------------------------ */}
+      
+      {/* ------------------------- Cart Section ------------------------ */}
+      
       {/* ------------------------- Blog Section ------------------------ */}
 
 
@@ -357,7 +353,7 @@ const Home = () => {
               <h2 className="title">Signature Creations
               </h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              <p className="sub-title">At Copper & Crumb, we craft unique coffee experiences with our Signature Creations. Each cup is a masterpiece, made with quality ingredients and a dash of creativity to delight your senses.</p>
+              {/* <p className="sub-title">At Copper & Crumb, we craft unique coffee experiences with our Signature Creations. Each cup is a masterpiece, made with quality ingredients and a dash of creativity to delight your senses.</p> */}
             </Col>
           </Row>
           <Row gutter={[20, 20]}>

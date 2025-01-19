@@ -4,10 +4,13 @@ import { Button, Dropdown } from '@/lib/AntRegistry';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@/context/Provider';
-import { Avatar, Badge, MenuProps } from 'antd';
+import { Avatar, Badge, Grid, MenuProps } from 'antd';
 import profile from "@/assets/images/profile.png";
 import crumbApi from '@/utils/crumbApis';
+import { SearchOutlined,ShoppingCartOutlined } from '@ant-design/icons';
+
 const HeaderPage = () => {
+    const screens = Grid.useBreakpoint()
     const {userInfo,logout,cartData} = useContext(GlobalContext)
     console.log(userInfo,'userinfoooooooo');
 
@@ -47,18 +50,20 @@ const HeaderPage = () => {
 
     const router = useRouter()
     return (
-        <nav className="navbar py-1 navbar-expand-lg common-bg">
-            <div className="container">
+        <nav className="navbar py-3 px-4 navbar-expand-lg ">
+            <div className="container-fluid">
                 <Link className="navbar-brand p-0" href="/">
-                    <img src={logo.src} alt="error" height={80} width={80} />
+                {!screens.md ? <img src={logo.src} alt="error" height={50} width={50} /> :<h1 className='logo-text'>Cooper & Crumb</h1>}
+                    {/* <img src={logo.src} alt="error" height={80} width={80} /> */}
+                    {/* <h1 className='logo-text'>Cooper & Crumb</h1> */}
                 </Link>
                 <button className="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse " id="navbarSupportedContent">
-                    <ul className="navbar-nav mb-2 ms-auto gap-2 gap-lg-4 mb-lg-0 align-items-center">
+                    <ul className="navbar-nav mb-2 ms-auto gap-2 gap-lg-3 mb-lg-0 align-items-center">
                         <Link className="nav-item"  href="/" legacyBehavior>
-                            <a className="nav-link active" aria-current="page">Home</a>
+                            <a className="nav-link" aria-current="page">Home</a>
                         </Link>
                         <Link className="nav-item"  href="/products/search/1/1" legacyBehavior>
                             <a className="nav-link">Shop</a>
@@ -77,7 +82,7 @@ const HeaderPage = () => {
                         </Link>
                         <Badge count={cartData.count} showZero={false}>
                         <Link className="nav-item" href="/viewcart" legacyBehavior>
-                            <a className="nav-link" >Cart</a>
+                            <a className="nav-link" ><ShoppingCartOutlined /></a>
                         </Link>
                         </Badge>
                         {/* <li className="nav-item">
@@ -92,9 +97,11 @@ const HeaderPage = () => {
                         <li className="nav-item">
                             <a className="nav-link " href="#">Element</a>
                         </li> */}
+                        <Link className="nav-item"  href="/search" legacyBehavior>
                         <li className="nav-item">
-                            <a className="nav-link " href="#"><i className="fa-solid fa-magnifying-glass"></i></a>
+                            <a className="nav-link " href="/search"><SearchOutlined /></a>
                         </li>
+                        </Link>
                         {/* <Link className="nav-item bg-white"  href="/login"> */}
                         {!userInfo?.access_token ? <Link href={`/login`}><Button className='text-white' type='primary'>SIGN IN</Button></Link> :  <Dropdown menu={{ items }} placement="bottomLeft">
                   <Button type="text" className="h-100 p-0" shape="circle">
