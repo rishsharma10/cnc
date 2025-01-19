@@ -374,7 +374,7 @@ motion. `,
       </section>
 
       {/* /-------------------------- Gallery section ------------------ */}
-      <section className="gallery-section pb-0">
+      <section className="gallery-section">
         <div className="container-fluid px-0">
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
@@ -421,13 +421,15 @@ motion. `,
       </section> */}
 
       {/* ---------------------------- contact-section ---------------- */}
-      <section className="contact-section common-bg">
-        <div className="container">
-          <Row>
-            <Col span={24}>
-              <div className="contact-text d-flex gap-4 align-items-center justify-content-center justify-content-sm-between text-center text-sm-start flex-wrap">
-                <h4 className="m-0">We’d love to hear from you! Reach out with any questions or feedback. Let’s connect!</h4>
-                <Link href={`/pages/contact-us`}><Button type="primary" className="shadow-none h-auto">Contact us</Button></Link>
+      <section className="contact-section pt-0">
+        <div className="container cta-section">
+          <Row justify={"center"}>
+            <Col span={24} lg={18} xl={16} xxl={14}>
+              <div className="contact-text text-center p-4">
+                <h3 className="mb-4">We’d love to hear from you! Reach out with any questions or feedback. Let’s connect!</h3>
+                <Link href={`/pages/contact-us`}>
+                <Button size="large" type="primary" ghost className="rounded-0 border border-light text-uppercase py-3 h-auto px-5">Contact us</Button>
+                </Link>
               </div>
             </Col>
           </Row>

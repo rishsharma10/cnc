@@ -1,11 +1,22 @@
 import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
-import { Col, Flex, Row, TypographyTitle } from '@/lib/AntRegistry'
-import React, { ReactElement } from 'react'
+import { Button, Col, Flex, Row, TypographyText, TypographyTitle } from '@/lib/AntRegistry'
+import React, { ReactElement, useState } from 'react'
 import aboutBanner from '@/assets/brand-guide/title-above.png';
 import banner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg';
 import common_img from '@/assets/images/bun-with-poppy-seeds.jpg'
-import { Grid } from 'antd';
+import coffee_mug from "@/assets/images/coffee_mug.jpg"
+import small_tarlet from "@/assets/images/small-tartlet-dessert-with-whipped-cream-figs-copy-space.jpg"
+import what2 from "@/assets/images/WhatsApp Image 2025-01-11 at 00.47.33.jpeg"
+import platedish from "@/assets/images/WhatsApp Image 2025-01-11 at 00.47.32.jpeg"
+import raspberry from "@/assets/images/raspberry-desert-mint-sweet-cracker-jam-side-view.jpg"
+import hand_holding from "@/assets/images/hand-holding-spoon-pouring-coffee-powder-grinder-grinding-coffee-pouring-into-portafilter.jpg"
+
+
+import serviceImage from '@/assets/images/delicious-coffee-cup-table.jpg'
+import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
+import { Grid, Typography } from 'antd';
+import OurStoryCard from '@/components/OurStoryCard';
 const OurStory = () => {
 
   const story = [
@@ -129,6 +140,28 @@ const OurStory = () => {
     return number % 2 === 0;
   }
 
+  const [rows, setRows] = useState<any>(2);
+  const [expanded, setExpanded] = useState(false);
+
+  let title_desc8 = `Take our butter chicken puff pastry; it's a study in accuracy and love. Creating such delicate
+                  layers of puff pastry to match the depth of North Indian spices. That wasn't an easy feat. It took
+                  us 45 tries to find the right equilibrium, nevertheless we declined to compromise. Our newest
+                  offering takes matters to the next level. Consider a base of nutty pecan sponge, with warmth
+                  and butteriness hinting at the layers above. Then a creamy mascarpone mousse with a delicate
+                  tonka bean perfume that whispers behind the powerful tones of our house-roasted coffee mix.
+                  Finally, a concluding drizzle of pecan praline seeps out with each bite, providing a molten
+                  contrast to the light pastry. This isn't fusion for fusion's sake; it's respect for both traditions
+                  creating something entirely new. French technique meets Indian spice, tropical bean meets
+                  roasted nut - an orchestra of tastes that widens culinary boundaries. And it all starts out with
+                  respect. Respect for the centuries-long mastered croissant. Gratitude for the butter chicken
+                  recipe carried down through the centuries. Respect for the farmers who farm our sustainable
+                  coffee and the artisans who create our tables. Every taste tells a story in which the ancient and
+                  new, regional and global, coexist in delightful harmony. Copper & Crumb doesn't simply serve
+                  desserts. We're establishing a platform for cultural conversation in which the foundations of
+                  tradition coexist with the spirit of innovation. This is more than just fusion; it's a celebration of the
+                  human experience, with each flavor infused with the passion, perseverance, and reverence that
+                  brought it to life.`
+
   const screens = Grid.useBreakpoint()
   return (
     <section className="contact-us pt-0 bg-white">
@@ -138,7 +171,7 @@ const OurStory = () => {
           <Col span={24} xl={16}>
             <div className="our-story-col-1">
               <div className="our-story-image">
-                <img src={banner.src} alt="error" className='img-fluid' />
+                <img src={coffee_mug.src} alt="error" className='img-fluid' />
               </div>
               <div className="out-story-content-1 out-story-content">
                 <TypographyTitle level={4}>Building Dreams One Layer at a Time</TypographyTitle>
@@ -155,7 +188,7 @@ const OurStory = () => {
               <Col span={24} >
                 <div className="our-story-right-col">
                   <div className="our-story-image" style={{ height: 200 }}>
-                    <img src={banner.src} alt="error" className='img-fluid' />
+                    <img src={hand_holding.src} alt="error" className='img-fluid' />
                   </div>
 
                   <div className="out-story-content-1 out-story-content">
@@ -186,21 +219,38 @@ const OurStory = () => {
               </div>
             </div>
           </Col> */}
+          {/* <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={serviceImage.src} title={`Exploring Fusion: More Than Just Recipes`} desc={title_desc8}/> */}
+
           <Col span={24} xl={8}>
             <Row gutter={[20, 20]}>
               <Col span={24} >
                 <div className="our-story-right-col">
                   <div className="our-story-image" style={{ height: 200 }}>
-                    <img src={banner.src} alt="error" className='img-fluid' />
+                    <img src={raspberry.src} alt="error" className='img-fluid' />
                   </div>
 
                   <div className="out-story-content-1 out-story-content">
-                    <TypographyTitle level={4}>Sustainable Practices and Community Development</TypographyTitle>
-                    <p>Our involvement extends beyond the kitchen walls. We collaborate with local farmers to provide
+                    <TypographyTitle level={4}>Sustainable Practices and Community Development </TypographyTitle>
+                    <Typography.Paragraph
+                      // key={2}
+                      // ellipsis={{
+                      //   rows,
+                      //   expandable: 'collapsible',
+                      //   expanded,
+                      //   // onExpand: (_: any, info: any) => setExpanded(info.expanded),
+                      // }}
+                      >Our involvement extends beyond the kitchen walls. We collaborate with local farmers to provide
                       a consistent supply of ethically sourced seasonal fruits while supporting sustainability. We
                       procure heritage wheat varieties from local farmers, which assures preservation of local
                       methods of cultivation while establishing the exceptional taste of our desserts. We work with
-                      local artisans to preserve traditional craftsmanship.</p>
+                      local artisans to preserve traditional craftsmanship.
+                      {/* <Button
+                        type="link"
+                        onClick={() => setExpanded((prev:any) => !prev)
+
+                        }
+                      >{expanded ? "Hide" : "Show"}</Button> */}
+                    </Typography.Paragraph>
                   </div>
                 </div>
               </Col>
@@ -211,17 +261,25 @@ const OurStory = () => {
               <Col span={24} >
                 <div className="our-story-right-col">
                   <div className="our-story-image" style={{ height: 200 }}>
-                    <img src={banner.src} alt="error" className='img-fluid' />
+                    <img src={platedish.src} alt="error" className='img-fluid' />
                   </div>
 
                   <div className="out-story-content-1 out-story-content">
                     <TypographyTitle level={4}>An Enduring Impression</TypographyTitle>
-                    <p>We are a movement, not just a café. We know how tough it is for women to break into
+                    <Typography.Paragraph
+                      // key={1}
+                      // ellipsis={{
+                      //   rows,
+                      //   expandable: 'collapsible',
+                      //   expanded,
+                      //   onExpand: (_: any, info: any) => setExpanded(info.expanded),
+                      // }}
+                      >We are a movement, not just a café. We know how tough it is for women to break into
                       professional kitchens—both of us lived that story. That’s why we have instituted an
                       apprenticeship program that gives special attention to women in the culinary arts. Watching
                       them master everything from lamination to tempering chocolate reminds us why we started this
                       in the first place. Some of them had never held a piping bag before. Today they're crafting
-                      perfect entremets. That's the real flavor of success.</p>
+                      perfect entremets. That's the real flavor of success.</Typography.Paragraph>
                   </div>
                 </div>
               </Col>
@@ -232,18 +290,25 @@ const OurStory = () => {
               <Col span={24} >
                 <div className="our-story-right-col">
                   <div className="our-story-image" style={{ height: 200 }}>
-                    <img src={banner.src} alt="error" className='img-fluid' />
+                    <img src={what2.src} alt="error" className='img-fluid' />
                   </div>
 
                   <div className="out-story-content-1 out-story-content">
                     <TypographyTitle level={4}> Let&apos;s Write the Next Chapter Together.</TypographyTitle>
-                    <p>Every time you visit Copper & Crumb, you become part of a bigger cause. Whether you're
+                    <Typography.Paragraph
+                      // ellipsis={{
+                      //   rows,
+                      //   expandable: 'collapsible',
+                      //   expanded,
+                      //   onExpand: (_: any, info: any) => setExpanded(info.expanded),
+                      // }}
+                      >Every time you visit Copper & Crumb, you become part of a bigger cause. Whether you're
                       seeking solitude with an exquisite cup of coffee, gathering with friends over mind-blowing
                       pastries, or simply observing our artists in action, you become a part of this transformation's
                       story. Like a perfect setting, the most beautiful events in life emerge layer by layer, each addition
                       improving the whole experience. This world, where old and modern coexist, where crumb and
                       copper meet, where each creation tells a story of persistence, awaits the telling of your own
-                      story.</p>
+                      story.</Typography.Paragraph>
                   </div>
                 </div>
               </Col>
@@ -252,7 +317,7 @@ const OurStory = () => {
           <Col span={24} xl={24}>
             <div className="our-story-col-1">
               <div className="our-story-image">
-                <img src={banner.src} alt="error" className='img-fluid' />
+                <img src={small_tarlet.src} alt="error" className='img-fluid' />
               </div>
               <div className="out-story-content-1 out-story-content">
                 <TypographyTitle level={4}>A Haven for Narratives</TypographyTitle>
@@ -270,15 +335,8 @@ const OurStory = () => {
               </div>
             </div>
           </Col>
-          <Col span={24} lg={12} xl={12} xxl={12}>
-            <div className="our-story-right-col">
-              <div className="our-story-image" style={{ height: 200 }}>
-                <img src={banner.src} alt="error" className='img-fluid' />
-              </div>
-
-              <div className="out-story-content-1 out-story-content">
-                <TypographyTitle level={4}>A Dream's Beginnings</TypographyTitle>
-                <p>Dreams simmered like sweet caramel for Kannupriya Garg during the quiet hours of
+          <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={serviceImage.src} title={`Exploring Fusion: More Than Just Recipes`} desc={title_desc8} />
+          <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={blogImage.src} title={`A Dream's Beginnings`} desc={`Dreams simmered like sweet caramel for Kannupriya Garg during the quiet hours of
                   motherhood, and it was the beginning of her journey. She turned her kitchen into an
                   experimental space while her children slept. Each failed attempt at the perfect entremet wasn't a
                   setback; it was a step forward on the path to mastery. Chef Zareen came to India from the
@@ -286,39 +344,7 @@ const OurStory = () => {
                   vision for connecting cultures. As she taught Kannu the intricate techniques of French pastries,
                   she would often comment, "Every layer tells a story," as her hands would gracefully glide
                   through the air. "The base speaks of foundation, the Crémeux of passion, and the glaze—that
-                  final, perfect mirror—reflects not just light but the journey of transformation.</p>
-              </div>
-            </div>
-          </Col>
-          <Col span={24} lg={12} xl={12} xxl={12}>
-            <div className="our-story-right-col">
-              <div className="our-story-image" style={{ height: 200 }}>
-                <img src={banner.src} alt="error" className='img-fluid' />
-              </div>
-
-              <div className="out-story-content-1 out-story-content">
-                <TypographyTitle level={4}>Exploring Fusion: More Than Just Recipes</TypographyTitle>
-                <p>Take our butter chicken puff pastry; it's a study in accuracy and love. Creating such delicate
-                  layers of puff pastry to match the depth of North Indian spices. That wasn't an easy feat. It took
-                  us 45 tries to find the right equilibrium, nevertheless we declined to compromise. Our newest
-                  offering takes matters to the next level. Consider a base of nutty pecan sponge, with warmth
-                  and butteriness hinting at the layers above. Then a creamy mascarpone mousse with a delicate
-                  tonka bean perfume that whispers behind the powerful tones of our house-roasted coffee mix.
-                  Finally, a concluding drizzle of pecan praline seeps out with each bite, providing a molten
-                  contrast to the light pastry. This isn't fusion for fusion's sake; it's respect for both traditions
-                  creating something entirely new. French technique meets Indian spice, tropical bean meets
-                  roasted nut - an orchestra of tastes that widens culinary boundaries. And it all starts out with
-                  respect. Respect for the centuries-long mastered croissant. Gratitude for the butter chicken
-                  recipe carried down through the centuries. Respect for the farmers who farm our sustainable
-                  coffee and the artisans who create our tables. Every taste tells a story in which the ancient and
-                  new, regional and global, coexist in delightful harmony. Copper & Crumb doesn't simply serve
-                  desserts. We're establishing a platform for cultural conversation in which the foundations of
-                  tradition coexist with the spirit of innovation. This is more than just fusion; it's a celebration of the
-                  human experience, with each flavor infused with the passion, perseverance, and reverence that
-                  brought it to life.</p>
-              </div>
-            </div>
-          </Col>
+                  final, perfect mirror—reflects not just light but the journey of transformation.`} />
 
         </Row>
       </div>

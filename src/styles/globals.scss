@@ -16,7 +16,7 @@ body,
 #__next,
 .ant-layout {
   height: 100%;
-  background-color: #e8e8e8;
+  background-color: #f4f4f4;
 }
 *{
   font-family: "Lato", serif !important;
@@ -625,5 +625,16 @@ button {
   border-radius: 12px;
   img{
     border-radius: 12px;
+  }
+}
+.cta-section{
+  background: linear-gradient(#000000b6, #000000b6),url('../assets/images/assortment-crispy-tartlet-with-filling.jpg') center/cover;
+  border-radius: 30px;
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  *{
+    color: $white;
   }
 }
