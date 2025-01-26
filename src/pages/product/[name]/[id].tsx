@@ -3,7 +3,7 @@ import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
 import { AntForm, Avatar, Button, Checkbox, Col, Dropdown, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs, TextArea } from '@/lib/AntRegistry'
 import React, { ReactElement, useState, useContext, Fragment } from 'react'
-import productImage from '@/assets/brand-guide/product-img-5.png'
+import productImage from '@/assets/images/product-placeholder-wp.jpg'
 import banner from '@/assets/images/espresso-pouring-from-coffee-machine-cafe.jpg'
 import Link from 'next/link'
 import { GetServerSideProps } from "next";
@@ -298,11 +298,11 @@ const ProductDetail = (props: typeProps) => {
           <Col span={24} lg={11} xl={12} xxl={12}>
             <div className="product-images">
               <div className="preview-image mb-4">
-                <img src={state?.feature_image ? `${BUCKET_ROOT}${state?.feature_image}` : productImage.src} alt="error" className='h-100 w-100' />
+                <img onError={(e:any) => e.target.src = productImage.src} src={state?.feature_image ? `${BUCKET_ROOT}${state?.feature_image}` : productImage.src} alt="error" className='h-100 w-100' />
               </div>
               <div className="preview-image-list">
                 {[state.image_1, state.image_2].map((res, index) => <div key={index} className="list-image">
-                  <img src={res ? `${BUCKET_ROOT}${res}` : productImage.src} alt="error" className='h-100 ' />
+                  <img src={res ? `${BUCKET_ROOT}${res}` : productImage.src} alt="error" className='h-100 ' onError={(e:any) => e.target.src = productImage.src}/>
                 </div>)}
               </div>
             </div>
@@ -333,13 +333,14 @@ const ProductDetail = (props: typeProps) => {
                 <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>SKU</span>: <span className='text-secondary'>{state?.sku}</span></li>
                 <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Category</span>: <span className='text-secondary'>Fresh Coffee</span></li>
                 <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Tags</span>: <span className='text-secondary'>{`${state?.tag_1}, ${state?.tag_2}, ${state?.tag_3}`}</span></li>
-                <li className='product-desc-list'><span className='fw-semibold text-uppercase'>Share</span>:
+                {/* <li className='product-desc-list'><span className='fw-semibold text-uppercase'>Share</span>:
                   <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
                     <li><Link href={'/'}><i className="fa-brands fa-facebook"></i></Link></li>
                     <li><Link href={'/'}><i className="fa-brands fa-square-instagram"></i></Link></li>
                     <li><Link href={'/'}><i className="fa-brands fa-twitter"></i></Link></li>
                     <li><Link href={'/'}><i className="fa-brands fa-linkedin"></i></Link></li>
-                  </ul></li>
+                  </ul>
+                  </li> */}
               </ul>
 
               <div className="product-details-tab mt-5">

@@ -111,6 +111,7 @@ motion. `,
     },
   ]
   const [state, setState] = useState({ data: [], count: 0 })
+  const [popularProducts, setPopularProducts] = useState({ products: [], count: 0 })
 
 
   const initProductList = async () => {
@@ -121,10 +122,19 @@ motion. `,
 
     }
   }
+  const initProductListBestSelling = async () => {
+    try {
+      let apiRes = await crumbApi.Product.popular()
+      setPopularProducts(apiRes)
+    } catch (error) {
+
+    }
+  }
   console.log(state, 'statetttt');
 
   React.useEffect(() => {
     initProductList()
+    initProductListBestSelling()
   }, [])
 
   const screens = Grid.useBreakpoint()
@@ -167,19 +177,19 @@ motion. `,
       poster: HeroBanner.src,
       video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
     },
-    {
-      title: `Pastry Poetry. Coffee Canvas.`,
-      desc: `Where French technique meets Indian heart, crafting tomorrow's classics today.
-                  In our sunlit corner of Panchkula, a culinary revolution is taking shape. Here, antique copper
-                  pots share space with gleaming espresso machines, while the aroma of Kerala vanilla beans
-                  mingles with French butter. At Copper & Crumb, we're not just making pastries – we're crafting
-                  experiences that bridge continents and generations.
-      `,
-      button: `Explore Our Menu`,
-      link: `/products/search/1/1`,
-      poster: blogImage.src,
-      video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
-    },
+    // {
+    //   title: `Pastry Poetry. Coffee Canvas.`,
+    //   desc: `Where French technique meets Indian heart, crafting tomorrow's classics today.
+    //               In our sunlit corner of Panchkula, a culinary revolution is taking shape. Here, antique copper
+    //               pots share space with gleaming espresso machines, while the aroma of Kerala vanilla beans
+    //               mingles with French butter. At Copper & Crumb, we're not just making pastries – we're crafting
+    //               experiences that bridge continents and generations.
+    //   `,
+    //   button: `Explore Our Menu`,
+    //   link: `/products/search/1/1`,
+    //   poster: blogImage.src,
+    //   video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
+    // },
     // {
     //   title: `The Exhibition Kitchen`,
     //   desc: `Watch art come to life as our pastry team transforms simple ingredients into extraordinary
@@ -201,7 +211,7 @@ motion. `,
         <div className="container-fluid h-100">
           <Row gutter={[24, 24]} className="h-100">
             <Col span={24} className="h-100 px-0">
-              <Carousel arrows={true} dots={false} autoplay={false}>
+              <Carousel arrows={false} dots={false} autoplay={false}>
                 {bannerArray.map((res, index) => <div key={index} className="position-relative">
                   <div className="hero-banner h-100">
                     <div className="hero-image h-100">
@@ -255,12 +265,12 @@ motion. `,
                 <img src={side_view_man.src} alt="error" className='img-fluid' />
               </div>
             </Col> */}
-            <Col span={24} lg={16} xl={16} xxl={16}>
+            <Col span={24} lg={14} xl={14} xxl={14}>
               <div className="story-section">
                 <img src={hand_holding.src} alt="error" className='img-fluid' />
               </div>
             </Col>
-            <Col span={24} lg={8} xl={8} xxl={8}>
+            <Col span={24} lg={9} xl={9} xxl={9}>
               <TypographyTitle className="text-uppercase" level={4}>Our Story Snapshot
               </TypographyTitle>
               <p className='fs-16'>From quiet kitchen experiments during motherhood to the bustling heart of Panchkula's culinary
@@ -272,7 +282,50 @@ motion. `,
           </Row>
         </div>
       </section>
-      <section className="offer-section">
+
+      <section className="blog-section common-bg-2">
+        <div className="container">
+          <Row justify={"center"} className="mb-5">
+            <Col span={24} md={20} lg={14} xl={12} className="text-center">
+              <h2 className="title">Signature Creations
+              </h2>
+              <img src={titleSeperator.src} alt="error" className="title-seperator" />
+              {/* <p className="sub-title">At Copper & Crumb, we craft unique coffee experiences with our Signature Creations. Each cup is a masterpiece, made with quality ingredients and a dash of creativity to delight your senses.</p> */}
+            </Col>
+          </Row>
+          <Row gutter={[20, 20]}>
+            {itemData.map((res, index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
+              <div className="blog-card">
+                <div className="blog-image">
+                  <img src={res.image} alt="error" className="img-fluid" />
+                </div>
+                <div className="blog-content mt-4">
+                  <h4>{res.title}</h4>
+                  <p className="mt-3 mb-3">{res.subTitle}</p>
+                  {/* <Link href={'#'}>Read More</Link> */}
+                </div>
+              </div>
+            </Col>)}
+          </Row>
+        </div>
+      </section>
+     
+      <section className="cart-section ">
+        <div className="container">
+          <Row justify={"center"} className="mb-5">
+            <Col span={24} md={20} lg={14} xl={12} className="text-center">
+              <h2 className="title">Featured Product</h2>
+              <img src={titleSeperator.src} alt="error" className="title-seperator" />
+              {/* <p className="sub-title">Experience the finest coffee from the comfort of your home. From signature blends to fresh brews, our online shop brings the Copper & Crumb experience straight to your door. Sip, savor, and enjoy!</p> */}
+            </Col>
+          </Row>
+          <Row gutter={[20, 20]} justify={'center'}>
+
+            {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res} /></Col>)}
+          </Row>
+        </div>
+      </section>
+      <section className="offer-section common-bg-2">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={16} xl={14} className="text-center">
@@ -295,29 +348,6 @@ motion. `,
           </Row>
         </div>
       </section>
-      <section className="cart-section common-bg-2">
-        <div className="container">
-          <Row justify={"center"} className="mb-5">
-            <Col span={24} md={20} lg={14} xl={12} className="text-center">
-              <h2 className="title">Featured Product</h2>
-              <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              {/* <p className="sub-title">Experience the finest coffee from the comfort of your home. From signature blends to fresh brews, our online shop brings the Copper & Crumb experience straight to your door. Sip, savor, and enjoy!</p> */}
-            </Col>
-          </Row>
-          <Row gutter={[20, 20]} justify={'center'}>
-           
-            {Array.isArray(state?.data) && state?.data.map((res: any, index: number) =><Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res} /></Col>)}
-          </Row>
-        </div>
-      </section>
-
-      {/* ------------------------- Offer Section ------------------------ */}
-      
-      {/* ------------------------- Cart Section ------------------------ */}
-      
-      {/* ------------------------- Blog Section ------------------------ */}
-
-
       {/* --------------------- Fixed Banner Section ---------------------- */}
       <section className="fixed-banner-section">
         <div className="container h-100">
@@ -346,33 +376,6 @@ motion. `,
         </div>
       </section> */}
 
-      <section className="blog-section common-bg-2">
-        <div className="container">
-          <Row justify={"center"} className="mb-5">
-            <Col span={24} md={20} lg={14} xl={12} className="text-center">
-              <h2 className="title">Signature Creations
-              </h2>
-              <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              {/* <p className="sub-title">At Copper & Crumb, we craft unique coffee experiences with our Signature Creations. Each cup is a masterpiece, made with quality ingredients and a dash of creativity to delight your senses.</p> */}
-            </Col>
-          </Row>
-          <Row gutter={[20, 20]}>
-            {itemData.map((res, index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
-              <div className="blog-card">
-                <div className="blog-image">
-                  <img src={res.image} alt="error" className="img-fluid" />
-                </div>
-                <div className="blog-content mt-4">
-                  <h4>{res.title}</h4>
-                  <p className="mt-3 mb-3">{res.subTitle}</p>
-                  {/* <Link href={'#'}>Read More</Link> */}
-                </div>
-              </div>
-            </Col>)}
-          </Row>
-        </div>
-      </section>
-
       {/* /-------------------------- Gallery section ------------------ */}
       <section className="gallery-section">
         <div className="container-fluid px-0">
@@ -384,8 +387,8 @@ motion. `,
             </Col>
           </Row>
           <Row gutter={[20, 20]} className="mx-0">
-           <Col span={24}>
-              <Carousel dots={false} autoplay slidesToShow={4} slidesToScroll={1} draggable={true} responsive={responsive}>
+            <Col span={24}>
+              <Carousel dots={false} autoplay slidesToShow={4.8} infinite={true} slidesToScroll={1} draggable={true} responsive={responsive}>
                 {/* {[...Array(6)].map(() => <div>
                   <div className="gallery-card">
                     <div className="gallery-image">
@@ -397,7 +400,7 @@ motion. `,
                     </div>
                   </div>
                 </div>)} */}
-                {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)}
+                {Array.isArray(popularProducts?.products) && popularProducts?.products.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)}
               </Carousel>
 
             </Col>
@@ -425,10 +428,10 @@ motion. `,
         <div className="container cta-section">
           <Row justify={"center"}>
             <Col span={24} lg={18} xl={16} xxl={14}>
-              <div className="contact-text text-center p-4">
+              <div className="contact-text text-center p-sm-4">
                 <h3 className="mb-4">We’d love to hear from you! Reach out with any questions or feedback. Let’s connect!</h3>
                 <Link href={`/pages/contact-us`}>
-                <Button size="large" type="primary" ghost className="rounded-0 border border-light text-uppercase py-3 h-auto px-5">Contact us</Button>
+                  <Button size="large" type="primary" ghost className="rounded-0 border border-light text-uppercase py-3 h-auto px-5">Contact us</Button>
                 </Link>
               </div>
             </Col>

@@ -11,6 +11,7 @@ import logo from "@/assets/brand-guide/logo.png"
 import { Router } from 'next/router';
 import { Fragment, ReactElement, ReactNode } from "react";
 import Script from "next/script";
+import ScrollToTop from "@/components/ScrollToTop";
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement,) => ReactNode
 }
@@ -46,7 +47,7 @@ const MyApp = ({ Component, pageProps, ...props }: AppPropsWithLayout) => {
       }
     `}</style> */}
       </Head>
-      {getLayout(<Component {...pageProps} />)}
+      {getLayout(<><Component {...pageProps} /><ScrollToTop/></>)}
     </GlobalProvider >
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

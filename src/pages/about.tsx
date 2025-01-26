@@ -37,18 +37,40 @@ const About = () => {
     },
   ]
   const aboutCoffee = [
+    // {
+    //   image: blog3.src,
+    //   title: 'Our Philosophy',
+    //   desc: `In a world of mass-produced goods, we choose the path of artisanal genuineness. Every
+    //   morning starts with the soothing sound of butter folded into the dough, each fold an
+    //   introspective reflection on excellence. Our commitment to handcrafting extends beyond the
+    //   cooking area – from sourcing heritage wheat varieties from local farmers to collaborating with
+    //   neighborhood artisans for our furniture.`,
+    //   listData: [
+
+    //   ]
+    // },
     {
       image: blog3.src,
-      title: 'Our Philosophy',
-      desc: `In a world of mass-produced goods, we choose the path of artisanal genuineness. Every
-      morning starts with the soothing sound of butter folded into the dough, each fold an
-      introspective reflection on excellence. Our commitment to handcrafting extends beyond the
-      cooking area – from sourcing heritage wheat varieties from local farmers to collaborating with
-      neighborhood artisans for our furniture.`,
+      title: 'Our Vision',
+      desc: ` Looking forward, Copper & Crumb is more than just a cafe & patisserie; it's a movement
+                    honoring the possibilities of what happens when civilizations interact respectfully and creatively.
+                    Every day we strive to:`,
       listData: [
-
+        {
+          list: 'Respect conventional techniques while pushing the frontier of culinary fusion.'
+        },
+        {
+          list: 'Create prospects for women working in professional kitchens.'
+        },
+        {
+          list: 'Advocacy of environmentally friendly farming methods.'
+        },
+        {
+          list: 'Create a community around shared goals of creativity and workmanship.'
+        },
       ]
     },
+
     {
       image: blog2.src,
       title: 'Our Impact',
@@ -103,13 +125,15 @@ const About = () => {
                   <img src={blogImage.src} alt="error" className="img-fluid" />
                 </div>
                 <div className="blog-content mt-4">
-                  <h4>Our Vision</h4>
+                  <h4>Our Philosophy</h4>
                   <p className="mt-2 mb-3 text-dark">
-                    Looking forward, Copper & Crumb is more than just a cafe & patisserie; it's a movement
-                    honoring the possibilities of what happens when civilizations interact respectfully and creatively.
-                    Every day we strive to:
+                    In a world of mass-produced goods, we choose the path of artisanal genuineness. Every
+                    morning starts with the soothing sound of butter folded into the dough, each fold an
+                    introspective reflection on excellence. Our commitment to handcrafting extends beyond the
+                    cooking area – from sourcing heritage wheat varieties from local farmers to collaborating with
+                    neighborhood artisans for our furniture.
                   </p>
-                  <ol className='ps-3'>
+                  {/* <ol className='ps-3'>
                     <li>
                       Respect conventional techniques while pushing the frontier of culinary fusion.
                     </li>
@@ -122,7 +146,7 @@ const About = () => {
                     <li className='mt-2'>
                       Create a community around shared goals of creativity and workmanship.
                     </li>
-                  </ol>
+                  </ol> */}
                   {/* <Link href={'#'}>Read More</Link> */}
                 </div>
               </Col>
@@ -217,7 +241,7 @@ const About = () => {
           <Row justify={'center'}>
             <Col span={24} lg={20} xl={18} xxl={16}>
               <Carousel draggable={false}>
-                {data2.map((res:any) => <div key={res} className="about-testimonial-card pb-5">
+                {data2.map((res: any) => <div key={res} className="about-testimonial-card pb-5">
                   <h4 className="title mb-3">Together, Creating Magic</h4>
                   <div className='mb-4 mb-sm-5'><img src={titleImage.src} alt="error" style={{ filter: 'sepia' }} className='mx-auto' /></div>
                   <p className='fs-6'>{res.desc}</p>
@@ -243,13 +267,15 @@ const About = () => {
         </div>
       </section>
       {/* ---------------------------- contact-section ---------------- */}
-      <section className="contact-section common-bg">
-        <div className="container">
-          <Row>
-            <Col span={24}>
-              <div className="contact-text d-flex gap-4 align-items-center justify-content-center justify-content-sm-between text-center text-sm-start flex-wrap">
-                <h4 className="m-0">We’d love to hear from you! Reach out with any questions or feedback. Let’s connect!</h4>
-                <Link href={`/pages/contact-us`}><Button type="primary" className="shadow-none h-auto">Contact us</Button></Link>
+      <section className="contact-section pt-0">
+        <div className="container cta-section">
+          <Row justify={"center"}>
+            <Col span={24} lg={18} xl={16} xxl={14}>
+              <div className="contact-text text-center p-sm-4">
+                <h3 className="mb-4">We&apos;d love to hear from you! Reach out with any questions or feedback. Let&apos;s connect!</h3>
+                <Link href={`/pages/contact-us`}>
+                  <Button size="large" type="primary" ghost className="rounded-0 border border-light text-uppercase py-3 h-auto px-5">Contact us</Button>
+                </Link>
               </div>
             </Col>
           </Row>

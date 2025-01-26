@@ -16,14 +16,20 @@ const HeaderPage = () => {
 
 
     const items: MenuProps["items"] = [
-        // {
-        //   key: "2",
-        //   label: (
-        //     <Link href={`/profile`} className="fw-medium">
-        //       Profile
-        //     </Link>
-        //   ),
-        // },
+        {
+          key: "2",
+          label: (
+            <Button
+              type="text"
+              onClick={() => router.push(`https://copper-crumb.wloper.com/customer/dashboard`)}
+              size="small"
+              className="p-0 fw-medium bg-transparent rounded-0 h-100"
+            >
+            PROFILE
+            </Button>
+          ),
+        },
+        {type:"divider"},
         // {
         //   key: "1",
         //   label: (
@@ -53,9 +59,9 @@ const HeaderPage = () => {
         <nav className="navbar py-3 px-4 navbar-expand-lg ">
             <div className="container-fluid">
                 <Link className="navbar-brand p-0" href="/">
-                {!screens.md ? <img src={logo.src} alt="error" height={50} width={50} /> :<h1 className='logo-text'>Cooper & Crumb</h1>}
+                {!screens.md ? <img src={logo.src} alt="error" height={50} width={50} /> :<h1 className='logo-text'>Copper & Crumb</h1>}
                     {/* <img src={logo.src} alt="error" height={80} width={80} /> */}
-                    {/* <h1 className='logo-text'>Cooper & Crumb</h1> */}
+                    {/* <h1 className='logo-text'>Copper & Crumb</h1> */}
                 </Link>
                 <button className="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>

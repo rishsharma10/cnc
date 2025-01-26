@@ -17,6 +17,7 @@ import serviceImage from '@/assets/images/delicious-coffee-cup-table.jpg'
 import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import { Grid, Typography } from 'antd';
 import OurStoryCard from '@/components/OurStoryCard';
+import ScrollToTop from '@/components/ScrollToTop';
 const OurStory = () => {
 
   const story = [
@@ -168,7 +169,7 @@ const OurStory = () => {
       <CommonBanner title="Our story" image={common_img.src} />
       <div className="container mt-sm-5 pt-5">
         <Row gutter={[20, 20]} justify={'center'}>
-          <Col span={24} xl={16}>
+          <Col span={24} xl={24}>
             <div className="our-story-col-1">
               <div className="our-story-image">
                 <img src={coffee_mug.src} alt="error" className='img-fluid' />
@@ -183,25 +184,21 @@ const OurStory = () => {
               </div>
             </div>
           </Col>
-          <Col span={24} xl={8}>
-            <Row gutter={[20, 20]}>
-              <Col span={24} >
-                <div className="our-story-right-col">
-                  <div className="our-story-image" style={{ height: 200 }}>
-                    <img src={hand_holding.src} alt="error" className='img-fluid' />
-                  </div>
+          <Col span={24} xl={12}>
+            <div className="our-story-right-col">
+              <div className="our-story-image" style={{ height: 200 }}>
+                <img src={hand_holding.src} alt="error" className='img-fluid' />
+              </div>
 
-                  <div className="out-story-content-1 out-story-content">
-                    <TypographyTitle level={4}>Creating Greatness with Alchemy</TypographyTitle>
-                    <p>Their collaboration with Beanrove Coffee Roasters completed the perfect triangle, founded on
-                      shared values of sustainability and fair trade. Their coffee obsession matched our pastry
-                      perfectionism. Every cup of coffee is an adventure in discovery, and every pastry is a story of
-                      cultural fusion; together, they're creating something unprecedented: a venue where French
-                      patisserie technique meets Indian culinary wisdom.</p>
-                  </div>
-                </div>
-              </Col>
-            </Row>
+              <div className="out-story-content-1 out-story-content">
+                <TypographyTitle level={4}>Creating Greatness with Alchemy</TypographyTitle>
+                <p>Their collaboration with Beanrove Coffee Roasters completed the perfect triangle, founded on
+                  shared values of sustainability and fair trade. Their coffee obsession matched our pastry
+                  perfectionism. Every cup of coffee is an adventure in discovery, and every pastry is a story of
+                  cultural fusion; together, they're creating something unprecedented: a venue where French
+                  patisserie technique meets Indian culinary wisdom.</p>
+              </div>
+            </div>
           </Col>
 
           {/* <Col span={24} xl={16}>
@@ -221,71 +218,63 @@ const OurStory = () => {
           </Col> */}
           {/* <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={serviceImage.src} title={`Exploring Fusion: More Than Just Recipes`} desc={title_desc8}/> */}
 
-          <Col span={24} xl={8}>
-            <Row gutter={[20, 20]}>
-              <Col span={24} >
-                <div className="our-story-right-col">
-                  <div className="our-story-image" style={{ height: 200 }}>
-                    <img src={raspberry.src} alt="error" className='img-fluid' />
-                  </div>
+          <Col span={24} xl={12}>
+            <div className="our-story-right-col">
+              <div className="our-story-image" style={{ height: 200 }}>
+                <img src={raspberry.src} alt="error" className='img-fluid' />
+              </div>
 
-                  <div className="out-story-content-1 out-story-content">
-                    <TypographyTitle level={4}>Sustainable Practices and Community Development </TypographyTitle>
-                    <Typography.Paragraph
-                      // key={2}
-                      // ellipsis={{
-                      //   rows,
-                      //   expandable: 'collapsible',
-                      //   expanded,
-                      //   // onExpand: (_: any, info: any) => setExpanded(info.expanded),
-                      // }}
-                      >Our involvement extends beyond the kitchen walls. We collaborate with local farmers to provide
-                      a consistent supply of ethically sourced seasonal fruits while supporting sustainability. We
-                      procure heritage wheat varieties from local farmers, which assures preservation of local
-                      methods of cultivation while establishing the exceptional taste of our desserts. We work with
-                      local artisans to preserve traditional craftsmanship.
-                      {/* <Button
+              <div className="out-story-content-1 out-story-content">
+                <TypographyTitle level={4}>Sustainable Practices and Community Development </TypographyTitle>
+                <Typography.Paragraph
+                // key={2}
+                // ellipsis={{
+                //   rows,
+                //   expandable: 'collapsible',
+                //   expanded,
+                //   // onExpand: (_: any, info: any) => setExpanded(info.expanded),
+                // }}
+                >Our involvement extends beyond the kitchen walls. We collaborate with local farmers to provide
+                  a consistent supply of ethically sourced seasonal fruits while supporting sustainability. We
+                  procure heritage wheat varieties from local farmers, which assures preservation of local
+                  methods of cultivation while establishing the exceptional taste of our desserts. We work with
+                  local artisans to preserve traditional craftsmanship.
+                  {/* <Button
                         type="link"
                         onClick={() => setExpanded((prev:any) => !prev)
 
                         }
                       >{expanded ? "Hide" : "Show"}</Button> */}
-                    </Typography.Paragraph>
-                  </div>
-                </div>
-              </Col>
-            </Row>
+                </Typography.Paragraph>
+              </div>
+            </div>
           </Col>
-          <Col span={24} xl={8}>
-            <Row gutter={[20, 20]}>
-              <Col span={24} >
-                <div className="our-story-right-col">
-                  <div className="our-story-image" style={{ height: 200 }}>
-                    <img src={platedish.src} alt="error" className='img-fluid' />
-                  </div>
+          <Col span={24} xl={12}>
+            <div className="our-story-right-col">
+              <div className="our-story-image" style={{ height: 200 }}>
+                <img src={platedish.src} alt="error" className='img-fluid' />
+              </div>
 
-                  <div className="out-story-content-1 out-story-content">
-                    <TypographyTitle level={4}>An Enduring Impression</TypographyTitle>
-                    <Typography.Paragraph
-                      // key={1}
-                      // ellipsis={{
-                      //   rows,
-                      //   expandable: 'collapsible',
-                      //   expanded,
-                      //   onExpand: (_: any, info: any) => setExpanded(info.expanded),
-                      // }}
-                      >We are a movement, not just a café. We know how tough it is for women to break into
-                      professional kitchens—both of us lived that story. That’s why we have instituted an
-                      apprenticeship program that gives special attention to women in the culinary arts. Watching
-                      them master everything from lamination to tempering chocolate reminds us why we started this
-                      in the first place. Some of them had never held a piping bag before. Today they're crafting
-                      perfect entremets. That's the real flavor of success.</Typography.Paragraph>
-                  </div>
-                </div>
-              </Col>
-            </Row>
+              <div className="out-story-content-1 out-story-content">
+                <TypographyTitle level={4}>An Enduring Impression</TypographyTitle>
+                <Typography.Paragraph
+                // key={1}
+                // ellipsis={{
+                //   rows,
+                //   expandable: 'collapsible',
+                //   expanded,
+                //   onExpand: (_: any, info: any) => setExpanded(info.expanded),
+                // }}
+                >We are a movement, not just a café. We know how tough it is for women to break into
+                  professional kitchens—both of us lived that story. That’s why we have instituted an
+                  apprenticeship program that gives special attention to women in the culinary arts. Watching
+                  them master everything from lamination to tempering chocolate reminds us why we started this
+                  in the first place. Some of them had never held a piping bag before. Today they're crafting
+                  perfect entremets. That's the real flavor of success.</Typography.Paragraph>
+              </div>
+            </div>
           </Col>
-          <Col span={24} xl={8}>
+          <Col span={24} xl={12}>
             <Row gutter={[20, 20]}>
               <Col span={24} >
                 <div className="our-story-right-col">
@@ -296,13 +285,13 @@ const OurStory = () => {
                   <div className="out-story-content-1 out-story-content">
                     <TypographyTitle level={4}> Let&apos;s Write the Next Chapter Together.</TypographyTitle>
                     <Typography.Paragraph
-                      // ellipsis={{
-                      //   rows,
-                      //   expandable: 'collapsible',
-                      //   expanded,
-                      //   onExpand: (_: any, info: any) => setExpanded(info.expanded),
-                      // }}
-                      >Every time you visit Copper & Crumb, you become part of a bigger cause. Whether you're
+                    // ellipsis={{
+                    //   rows,
+                    //   expandable: 'collapsible',
+                    //   expanded,
+                    //   onExpand: (_: any, info: any) => setExpanded(info.expanded),
+                    // }}
+                    >Every time you visit Copper & Crumb, you become part of a bigger cause. Whether you're
                       seeking solitude with an exquisite cup of coffee, gathering with friends over mind-blowing
                       pastries, or simply observing our artists in action, you become a part of this transformation's
                       story. Like a perfect setting, the most beautiful events in life emerge layer by layer, each addition
@@ -314,7 +303,7 @@ const OurStory = () => {
               </Col>
             </Row>
           </Col>
-          <Col span={24} xl={24}>
+          {/* <Col span={24} xl={24}>
             <div className="our-story-col-1">
               <div className="our-story-image">
                 <img src={small_tarlet.src} alt="error" className='img-fluid' />
@@ -334,7 +323,29 @@ const OurStory = () => {
                 </p>
               </div>
             </div>
-          </Col>
+          </Col> */}
+           {/* <section className="about-testimonial fixed-banner-section h-auto">
+        <div className="container ">
+          <Row justify={'center'}> */}
+            <Col span={24}>
+               <div className="pt-5 pb-4 fixed-banner-section h-auto rounded-4">
+               <div className="about-testimonial-card px-4 pt-5 mt-5" >
+                  <h4 className="text-start mb-3 mt-5">A Haven for Narratives</h4>
+                  <p className='fs-6 text-start'>In March of 2024, an unexpected gift arrived in the form of a vacant storefront that became a
+                  canvas for bigger dreams. In today's world, Copper & Crumb is a living example of thoughtful
+                  design and intentional production. Three distinct sensations infuse our space: Indulge in a single
+                  traveler's paradise at The Quiet Zone, where you may unwind with a handcrafted cappuccino
+                  and a Parisian-Indian slice of entremet. In the Social Zone, people meet around tables made by
+                  neighborhood craftspeople to share more than simply pastries—they share stories and laughs.
+                  Visit our Exhibition Zone in the morning and you'll catch our pastry team in action—hands
+                  dusted with flour, rolling pins in constant motion, the satisfying crackle of laminated dough being
+                  folded. It's where French technique meets Indian heart, right before your eyes</p>
+                </div>
+               </div>
+            </Col>
+          {/* </Row>
+        </div>
+      </section> */}
           <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={serviceImage.src} title={`Exploring Fusion: More Than Just Recipes`} desc={title_desc8} />
           <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={blogImage.src} title={`A Dream's Beginnings`} desc={`Dreams simmered like sweet caramel for Kannupriya Garg during the quiet hours of
                   motherhood, and it was the beginning of her journey. She turned her kitchen into an

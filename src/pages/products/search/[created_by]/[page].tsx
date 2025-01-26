@@ -30,13 +30,13 @@ const ProductList = (props: any) => {
 
   return (
     <section className='product-list-section pt-0 bg-white'>
-      <CommonBanner title={"PRoduct List"} />
+      <CommonBanner title={"Our PRoduct"} />
       <div className="container mt-sm-5 pt-5">
         <Row gutter={[24, 24]} justify={'space-between'}>
           <Col span={24} lg={6} xl={6} xxl={6}>
             <div className='product-list-box'>
               <ul className='list-unstyled p-0 mb-5'>
-                <h4>Product categories</h4>
+                <h4>categories</h4>
                 {Array.isArray(category) && category.map((res, index) => <div role='button' onClick={() => router.push({...router.query,query:{created_by:res?.id,page:router.query.page}})} key={res.id}><li className='mb-2'>{res.name}</li></div>)}
 
               </ul>
@@ -99,8 +99,8 @@ const ProductList = (props: any) => {
               /> */}
             </Flex>
             <Row gutter={[20, 20]} className='mt-5'>
-              <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col>
-              {Array.isArray(state?.data) && state?.data?.length ? state?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard class='product-related-image' {...res} key={index}/></Col>) : <Empty description="OOPS!! NO DATA FOUND"/>}
+              {/* <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col> */}
+              {Array.isArray(state?.data) && state?.data?.length ? state?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={6}> <ProductCard class='product-related-image' {...res} key={index}/></Col>) : <Empty description="OOPS!! NO DATA FOUND"/>}
             </Row>
 
             <div className="d-flex align-items-center justify-content-center mt-5">

@@ -12,13 +12,27 @@ const SignupPage = () => {
     const router = useRouter()
     const { Toast,setUserInfo,userInfo } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
+
+
+    const randomNumbers:any = [];
+    function getRandomInt(min:number, max:number) {
+        return Math?.floor(Math?.random() * (max - min + 1)) + min;
+      }
+      
+      
+      for (let i = 0; i < 10; i++) {
+        randomNumbers?.push(getRandomInt(1, 100));  // Generate random number between 1 and 100
+      }
+      
+
+
     const handleSubmit = async (values: any) => {
         console.log(values, 'valuesssss');
         const payload = {
             first_name: values.first_name,
             last_name: values.last_name,
             email: values.email,
-            phone: "12345678965650",
+            phone: `${randomNumbers}`,
             password: values.password,
             password_confirmation:values?.confirm_password
         }

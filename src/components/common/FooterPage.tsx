@@ -35,8 +35,8 @@ nostrud exercitation ullamco laboris.”</p> */}
                             <div className="about-content">
                                 <h4 className="mb-3">Contact</h4>
                                 <ul className="list-unstyled mb-5 p-0">
-                                    <li>KAABIZ BAKES PRIVATE LIMITED</li>
-                                    <li>GST NO. 062400171112TRN</li>
+                                    <li className='text-uppercase'>Copper & crumb</li>
+                                    {/* <li>GST NO. 062400171112TRN</li> */}
                                     <li>+91 9915708181</li>
                                     <li>Sco 6 sector 16, PANCHKULA 134109</li>
                                     <li>sales@copperandcrumb.in</li>
@@ -47,10 +47,10 @@ nostrud exercitation ullamco laboris.”</p> */}
                             <div className="about-content">
                                 <h4 className='mb-3'>POLICIES</h4>
                                 <ul className="list-unstyled m-0 p-0 gap-4">
-                                    <li><Link href={'/pages/privacy-policy'}>Privacy policy</Link></li>
-                                    <li><Link href={'/pages/return-policy'}>Return policy</Link></li>
-                                    <li><Link href={'/pages/terms-and-conditions'}>Terms & Conditions</Link></li>
-                                    <li><Link href={'/pages/contact-us'}>Contact Us</Link></li>
+                                    <li> <div className="line"></div> <Link href={'/pages/privacy-policy'}>Privacy policy</Link></li>
+                                    <li><div className="line"></div><Link href={'/pages/return-policy'}>Return policy</Link></li>
+                                    <li><div className="line"></div><Link href={'/pages/terms-and-conditions'}>Terms & Conditions</Link></li>
+                                    <li><div className="line"></div><Link href={'/pages/contact-us'}>Contact Us</Link></li>
                                 </ul>
                             </div>
                         </Col>

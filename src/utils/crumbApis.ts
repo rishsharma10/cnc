@@ -82,6 +82,7 @@ const Auth = {
 };
 const Product = {
   list: () => requests.get("v1/products"),
+  popular: () => requests.get("v1/popular-products"),
   details: (id: any) => requests.get(`v1/product/${id}`),
 }
 const Category = {

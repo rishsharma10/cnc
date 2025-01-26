@@ -18,7 +18,8 @@ body,
   height: 100%;
   background-color: #f4f4f4;
 }
-*{
+
+* {
   font-family: "Lato", serif !important;
 }
 
@@ -59,14 +60,16 @@ h4 {
   font-family: 'karlieserifCondensed' !important;
   letter-spacing: 1px;
 }
-.logo-text{
+
+.logo-text {
   font-family: 'karlieserifCondensed' !important;
   text-transform: uppercase;
-  margin: 0; 
+  margin: 0;
   color: $black;
   font-size: 30px;
   line-height: 38px;
 }
+
 .title {
   text-transform: uppercase;
   font-size: 46px;
@@ -96,7 +99,7 @@ a {
 .common-bg {
   background: url('../assets/brand-guide/42.png') no-repeat;
   background-position: top;
-  background-size:  cover;
+  background-size: cover;
 }
 
 .common-bg-2 {
@@ -107,7 +110,7 @@ a {
   position: relative;
   height: 100vh;
 
- 
+
   .ant-carousel .slick-list .slick-slide>div>div,
   .ant-carousel,
   .slick-slider,
@@ -124,8 +127,9 @@ a {
     height: 100%;
   }
 
-  .hero-image{
+  .hero-image {
     position: relative;
+
     &::before {
       position: absolute;
       content: '';
@@ -178,7 +182,8 @@ a {
       height: 240px;
       border-radius: 8px;
       min-height: 240px;
-      img{
+
+      img {
         border-radius: 8px;
       }
     }
@@ -303,11 +308,28 @@ a {
 
     li {
       margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: 0.3s;
+
+      &:hover {
+        .line {
+          width: 14px;
+        }
+      }
     }
 
-    // a {
-    //   font-weight: lighter;
-    // }
+    a {
+      font-size: 14px;
+    }
+
+    .line {
+      transition: 0.3s;
+      width: 0;
+      height: 1px;
+      background-color: $white;
+    }
 
     ::placeholder {
       color: $white;
@@ -330,13 +352,14 @@ a {
     letter-spacing: 1px;
 
     &:hover {
-      color: $black;
+      color: $white;
     }
   }
 }
 
 .navbar {
   background-color: $white;
+
   .nav-link {
     color: $black ;
     font-size: 16px;
@@ -391,7 +414,7 @@ a {
   justify-content: center;
   position: relative;
 
-  &::before{
+  &::before {
     height: 100%;
     width: 100%;
     content: '';
@@ -497,8 +520,13 @@ button {
   height: 400px;
   min-height: 400px;
 }
-.story-section{
+
+.story-section {
   height: 300px;
+  border-radius: 8px;
+  img{
+    border-radius: 8px;
+  }
 }
 
 .about-testimonial-card {
@@ -564,26 +592,29 @@ button {
     height: 260px;
     min-height: 260px;
     border-radius: 8px;
-    img{
+
+    img {
       border-radius: 8px;
     }
   }
-  .preview-image{
+
+  .preview-image {
     height: 400px;
   }
 }
 
-.full-width-image{
+.full-width-image {
   height: 300px;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.our-story-col-1{
+.our-story-col-1 {
   height: 450px;
   border-radius: 12px;
   position: relative;
-  &::before{
+
+  &::before {
     position: absolute;
     content: '';
     background-color: rgba(0, 0, 0, 0.54);
@@ -594,47 +625,59 @@ button {
     z-index: 1;
     margin: auto;
   }
-  img{
+
+  img {
     border-radius: 12px;
     position: absolute;
     inset: 0;
   }
-  .out-story-content-1{
+
+  .out-story-content-1 {
     position: absolute;
     padding: 20px;
     bottom: 0;
     left: 0;
     z-index: 1;
-    *{
+
+    * {
       color: $white;
     }
   }
 }
 
-.out-story-content{
+.out-story-content {
   margin-top: 10px;
-  h4{
+
+  h4 {
     font-size: 20px;
   }
-  p{
+
+  p {
     font-size: 14px;
     text-align: justify;
   }
 }
-.our-story-image{
+
+.our-story-image {
   border-radius: 12px;
-  img{
+
+  img {
     border-radius: 12px;
   }
 }
-.cta-section{
-  background: linear-gradient(#000000b6, #000000b6),url('../assets/images/assortment-crispy-tartlet-with-filling.jpg') center/cover;
+
+.cta-section {
+  background: linear-gradient(#000000b6, #000000b6), url('../assets/images/assortment-crispy-tartlet-with-filling.jpg') center/cover;
   border-radius: 30px;
   min-height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
-  *{
+
+  * {
     color: $white;
+  }
+  @media (max-width:575px) {
+    border-radius: 0;
   }
 }

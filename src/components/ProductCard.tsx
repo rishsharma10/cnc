@@ -1,7 +1,7 @@
 import { ProductDetails } from '@/interface/product/ProductDetails'
 import { Button, Col } from '@/lib/AntRegistry'
 import { stringReplace } from '@/utils/crumbValidation'
-import productImage from '@/assets/brand-guide/product-img-5.png'
+import productImage from '@/assets/images/product-placeholder-wp.jpg'
 import Link from 'next/link'
 import React from 'react'
 import { CURRENCY } from '@/utils/crumbApis'
@@ -17,7 +17,7 @@ const ProductCard = (props: newDetails) => {
             <div className={`cart-card ${props?.slider ? "m-2":""}`}>
                 <div className="cart-image text-center">
                     <div className={props?.class ?props?.class : "product-image"}>
-                        <img src={props?.thumb_url ?? productImage.src} alt="error" />
+                        <img src={props?.thumb_url ?? productImage.src} alt="error" onError={(e:any) => e.target.src = productImage.src} />
 
                     </div>
                     {/* <div className="cart-overlay">
