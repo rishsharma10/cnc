@@ -14,25 +14,13 @@ const SignupPage = () => {
     const [loading, setLoading] = useState(false)
 
 
-    const randomNumbers:any = [];
-    function getRandomInt(min:number, max:number) {
-        return Math?.floor(Math?.random() * (max - min + 1)) + min;
-      }
-      
-      
-      for (let i = 0; i < 10; i++) {
-        randomNumbers?.push(getRandomInt(1, 100));  // Generate random number between 1 and 100
-      }
-      
-
-
     const handleSubmit = async (values: any) => {
         console.log(values, 'valuesssss');
         const payload = {
             first_name: values.first_name,
             last_name: values.last_name,
             email: values.email,
-            phone: `${randomNumbers}`,
+            phone: values.phone,
             password: values.password,
             password_confirmation:values?.confirm_password
         }
@@ -87,6 +75,9 @@ const SignupPage = () => {
                                         },
                                     ]}>
                                         <Input placeholder='Enter Email' />
+                                    </FormItem>
+                                    <FormItem name='phone' rules={[{ required: true, message: "Please enter phone number" }]} label={'Phone number'}>
+                                        <Input placeholder='Enter phone number' />
                                     </FormItem>
                                     <FormItem name={`password`} label={'Password'} rules={[{ required: true, message: "Please enter password" }]}>
                                         <InputPassword placeholder='Enter Password' />

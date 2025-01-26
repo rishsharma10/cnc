@@ -1,10 +1,30 @@
 import { AntForm, Button, Col, Divider, FormItem, Input, Row } from '@/lib/AntRegistry'
 import Link from 'next/link'
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '@/assets/brand-guide/logo.png';
 import CrumbIcons from '../CrumbIcons';
 import { FacebookOutlined, InstagramOutlined, WhatsAppOutlined } from '@ant-design/icons';
+import crumbApi from '@/utils/crumbApis';
+import { GlobalContext } from '@/context/Provider';
+import { Form } from 'antd';
 const FooterPage = () => {
+    const [form] = Form.useForm()
+    const { Toast } = useContext(GlobalContext)
+    const [loading, setLoading] = useState(false)
+    const handleSubmit = async (values: any) => {
+        try {
+            setLoading(true)
+            let apiRes = await crumbApi.Auth.newsletter(values)
+            form.resetFields()
+            Toast.success("Success! You're now subscribed to our newsletter.")
+        } catch (error) {
+            Toast.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
     return (
         <>
             <footer className="footer-section footer">
@@ -22,10 +42,10 @@ incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 nostrud exercitation ullamco laboris.”</p> */}
 
 
-                                <AntForm className='mb-4'>
+                                <AntForm className='mb-4' onFinish={handleSubmit}>
                                     <h4 className="mb-3">News As Fresh As Our Coffee</h4>
-                                    <FormItem>
-                                        <Input className="border border-light py-0 pe-0" placeholder="Your E-mail Address..." suffix={<Button className="bg-white py-3 h-100 px-4"><CrumbIcons.Email /></Button>} />
+                                    <FormItem name={`email`} rules={[{ required: true, message: 'Please enter email' }]}>
+                                        <Input className="border border-light py-0 pe-0" placeholder="Your E-mail Address..." suffix={<Button htmlType='submit' loading={loading} className="bg-white py-3 h-100 px-4"><CrumbIcons.Email /></Button>} />
                                     </FormItem>
                                 </AntForm>
                             </div>
@@ -65,7 +85,7 @@ nostrud exercitation ullamco laboris.”</p> */}
                                     <li><Link href={'/'}><FacebookOutlined /></Link></li>
                                     <li><Link href={'/'}><InstagramOutlined /></Link></li>
                                     <li><Link href={'/'}><WhatsAppOutlined /></Link></li>
-                            </ul>
+                                </ul>
 
                             </div>
                         </Col>

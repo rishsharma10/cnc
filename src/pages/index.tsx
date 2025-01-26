@@ -173,7 +173,7 @@ motion. `,
                   mingles with French butter. At Copper & Crumb, we're not just making pastries – we're crafting
                   experiences that bridge continents and generations.`,
       button: `Explore Our Menu`,
-      link: `/products/search/1/1`,
+      link: `/products/search/all/1`,
       poster: HeroBanner.src,
       video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
     },

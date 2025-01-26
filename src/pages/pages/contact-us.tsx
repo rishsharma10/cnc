@@ -1,10 +1,31 @@
 import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
+import { GlobalContext } from '@/context/Provider'
 import { AntForm, Button, Col, FormItem, Input, Row, TextArea } from '@/lib/AntRegistry'
+import crumbApi from '@/utils/crumbApis'
+import { Form } from 'antd'
 import Link from 'next/link'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useContext, useState } from 'react'
 
 const Contact = () => {
+  const [form] = Form.useForm()
+const {Toast} = useContext(GlobalContext)
+  const [loading, setLoading] = useState(false)
+  const handleSubmit = async (values:any) => {
+    const payload = {
+...values
+    }
+    try {
+      setLoading(true)
+      let apiRes = await crumbApi.Auth.customerContact(payload)
+      form.resetFields()
+      Toast.success(`Thanks for reaching out! We’ll get back to you within 24 hours.`)
+    } catch (error) {
+      Toast.error(error)
+    }finally{
+      setLoading(false)
+    }
+  }
   return (
     <section className="contact-us pt-0 bg-white">
       <CommonBanner title="Contact us" />
@@ -18,47 +39,47 @@ const Contact = () => {
 
               <ul className='mt-4 mb-5 ps-3'>
                 <li className='mb-2 text-secondary fs-16'>Share your thoughts to help us improve.
-</li>
+                </li>
                 <li className='mb-2 text-secondary fs-16'>Let’s create something amazing together.</li>
                 <li className='mb-2 text-secondary fs-16'>Got questions? We’re here to assist.</li>
                 <li className='text-secondary fs-16'>Experience Copper & Crumb in person.</li>
               </ul>
 
-              <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
+              {/* <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
                 <li><Link href={'/'}><i className="fa-brands fa-facebook text-secondary fs-6"></i></Link></li>
                 <li><Link href={'/'}><i className="fa-brands fa-square-instagram text-secondary fs-6"></i></Link></li>
                 <li><Link href={'/'}><i className="fa-brands fa-twitter text-secondary fs-6"></i></Link></li>
                 <li><Link href={'/'}><i className="fa-brands fa-linkedin text-secondary fs-6"></i></Link></li>
-              </ul>
+              </ul> */}
             </div>
           </Col>
 
           <Col span={24} lg={12} xl={12} xxl={12}>
             <div className="contact-form">
-              <AntForm size='large'>
+              <AntForm size='large' onFinish={handleSubmit} form={form}>
                 <Row gutter={[20, 8]}>
                   <Col span={24} md={12} lg={12} xl={12} xxl={12}>
-                    <FormItem>
+                    <FormItem name={`name`} rules={[{message:'Please enter name',required:true}]}>
                       <Input placeholder='YOUR NAME' />
                     </FormItem>
                   </Col>
                   <Col span={24} md={12} lg={12} xl={12} xxl={12}>
-                    <FormItem>
+                    <FormItem name={`email`} rules={[{message:'Please enter email',required:true}]}>
                       <Input placeholder='YOUR EMAIL' />
                     </FormItem>
                   </Col>
                   <Col span={24}>
-                    <FormItem>
+                    <FormItem name={`subject`} rules={[{message:'Please enter subject',required:true}]}>
                       <Input placeholder='SUBJECT' />
                     </FormItem>
                   </Col>
                   <Col span={24}>
-                    <FormItem>
+                    <FormItem name={`message`} rules={[{message:'Please enter message',required:true}]}>
                       <TextArea placeholder='Message here...' rows={5} />
                     </FormItem>
                   </Col>
                   <Col span={24}>
-                    <Button type='primary' className='px-5'>Send message</Button>
+                    <Button loading={loading} htmlType='submit' type='primary' className='px-5'>Send message</Button>
                   </Col>
                 </Row>
               </AntForm>

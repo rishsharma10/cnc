@@ -77,8 +77,8 @@ const Auth = {
   verifyOtp: (info: any) => requests.post("user/otp/verify", info),
   verifyEmail: (info: any) => requests.post("user/verify/email", info),
   verifyPhone: (info: any) => requests.post("user/verify/phone", info),
-  resetPassword: (info: any) => requests.put("user/reset/password", info),
-  edit: (info: any) => requests.put("user/profile", info),
+  customerContact: (info: any) => requests.post("v1/customer/contact", info),
+  newsletter: (info: any) => requests.post("v1/newsletter/subscribe", info),
 };
 const Product = {
   list: () => requests.get("v1/products"),

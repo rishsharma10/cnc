@@ -9,23 +9,36 @@ import CommonLayout from '@/components/common/CommonLayout'
 import crumbApi from '@/utils/crumbApis'
 import { useRouter } from 'next/router';
 import ProductCard from '@/components/ProductCard'
+import NoDataFound from '@/components/common/NodataFound'
 const ProductList = (props: any) => {
   const router = useRouter()
-  const [category, SetCategory] = useState(props.data)
+  const obj = {
+    "id": 'all',
+    "name": "All Products",
+}
+const [category, SetCategory] = useState([obj, ...props.data]);
   const [state, setState] = useState({data:[],count:0})
   console.log(props, 'proppsspsp');
+  console.log(category,'category');
+  
 
   const initProductList = async () => {
+
     try {
-      let apiRes = await crumbApi.Category.productList(Number(router.query.created_by))
-      setState(apiRes)
+      if(router.query.created_by == 'all'){
+        let apiRes = await crumbApi.Product.list()
+        setState({data:apiRes.data,count:apiRes?.data?.length})
+      }else{
+        let apiRes = await crumbApi.Category.productList(Number(router.query.created_by))
+        setState({data:apiRes.data,count:apiRes?.data?.length})  
+      }
     } catch (error) {
 
     }
   }
   React.useEffect(() => {
     initProductList()
-  },[router.query.created_by,router.query.page])
+  },[router.query.created_by])
 
 
   return (
@@ -37,7 +50,7 @@ const ProductList = (props: any) => {
             <div className='product-list-box'>
               <ul className='list-unstyled p-0 mb-5'>
                 <h4>categories</h4>
-                {Array.isArray(category) && category.map((res, index) => <div role='button' onClick={() => router.push({...router.query,query:{created_by:res?.id,page:router.query.page}})} key={res.id}><li className='mb-2'>{res.name}</li></div>)}
+                {Array.isArray(category) && category.map((res, index) => <div role='button' onClick={() => router.push({...router.query,query:{created_by:res?.id,page:router.query.page}})} key={res.id}><li className={`mb-2 fs-16 ${res.id == router.query.created_by ? "text-black" : "text-muted"}`}>{res.name}</li></div>)}
 
               </ul>
 
@@ -84,8 +97,8 @@ const ProductList = (props: any) => {
             </div>
           </Col>
           <Col span={24} lg={18} xl={18} xxl={18}>
-            <Flex justify='space-between' align='center' gap={12}>
-              <p>Showing 1–9 of 16 results</p>
+            {/* <Flex justify='space-between' align='center' gap={12}> */}
+              {/* <p>Showing {state.count}–{state.count} of {state.count} results</p> */}
 
               {/* <Select
                 placeholder="Default sorting"
@@ -97,17 +110,17 @@ const ProductList = (props: any) => {
                   { value: 'disabled', label: 'Disabled', disabled: true },
                 ]}
               /> */}
-            </Flex>
+            {/* </Flex> */}
             <Row gutter={[20, 20]} className='mt-5'>
               {/* <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col> */}
-              {Array.isArray(state?.data) && state?.data?.length ? state?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={6}> <ProductCard class='product-related-image' {...res} key={index}/></Col>) : <Empty description="OOPS!! NO DATA FOUND"/>}
+              {Array.isArray(state?.data) && state?.data?.length ? state?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={6}> <ProductCard class='product-related-image' {...res} key={index}/></Col>) : ""}
             </Row>
 
-            <div className="d-flex align-items-center justify-content-center mt-5">
+            {/* <div className="d-flex align-items-center justify-content-center mt-5">
               <Pagination />
-            </div>
+            </div> */}
+          {state?.data?.length !==0 ? "": <div><NoDataFound/></div>}
           </Col>
-
         </Row>
       </div>
     </section>

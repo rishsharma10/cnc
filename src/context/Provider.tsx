@@ -120,14 +120,51 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     return newString;
   };
 
+  // const error = (error: any) => {
+  //   let errorBody = error?.response?.body;
+  //   let message = errorBody?.message;
+  //   let error_message = errorBody?.error_description;
+
+  //   if (message === "Unauthorized") {
+  //     router.replace("/");
+  //   }
+  //   messageApi.open({
+  //     type: "error",
+  //     content: message
+  //       ? message
+  //       : typeof error_message == "string"
+  //       ? error_message
+  //       : error_message
+  //       ? JSON.stringify(error_message)
+  //       : JSON.stringify(error),
+  //     duration: 3,
+  //   });
+  //   setTimeout(messageApi.destroy, 3000);
+  // };
+
+
   const error = (error: any) => {
     let errorBody = error?.response?.body;
     let message = errorBody?.message;
     let error_message = errorBody?.error_description;
-
+  
+    // Check for specific dynamic error keys (like "email" in the response body)
+    if (errorBody?.errors) {
+      // Dynamically process any error messages from the "errors" object
+      const errorKeys = Object.keys(errorBody.errors);
+      let errorMessages = errorKeys.map(key => {
+        return `${key.charAt(0).toUpperCase() + key.slice(1)}: ${errorBody.errors[key].join(", ")}`;
+      });
+  
+      message = errorMessages.join(" | ");  // Join error messages with a separator for clarity
+    }
+  
+    // If unauthorized, redirect to home
     if (message === "Unauthorized") {
       router.replace("/");
     }
+  
+    // Display error message using messageApi
     messageApi.open({
       type: "error",
       content: message
@@ -139,8 +176,10 @@ function GlobalProvider(props: GlobleContextProviderProps) {
         : JSON.stringify(error),
       duration: 3,
     });
+  
     setTimeout(messageApi.destroy, 3000);
   };
+  
 
   const warning = (warning: any) => {
     messageApi.open({
