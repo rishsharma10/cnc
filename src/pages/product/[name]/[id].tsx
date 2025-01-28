@@ -46,50 +46,50 @@ const ProductDetail = (props: typeProps) => {
         <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Dimensions</span>: <span className='text-secondary'>{`${state?.dimension_d ?? 0} × ${state?.dimension_l ?? 0} × ${state?.dimension_w ?? 0} cm`}</span></li>
       </ul>,
     },
-    {
-      key: '3',
-      label: 'Review (1)',
-      children: <div className='product-review'>
-        <h4>1 review for {state.name}</h4>
-        {/* review card */}
-        <Flex className="review-user-card my-4" gap={12}>
-          <Avatar src={banner.src} size={60} style={{ minWidth: 60 }} />
-          <div className="content">
-            <Rate value={4} className='fs-6' />
-            <Flex align='center' className='my-1' gap={6}>
-              <span className='fw-medium'>Janet Hopkins</span>
-              -
-              <span>18/04/2018</span>
-            </Flex>
-            <p className='m-0'>Nice coffee</p>
-          </div>
-        </Flex>
+    // {
+    //   key: '3',
+    //   label: 'Review (1)',
+    //   children: <div className='product-review'>
+    //     <h4>1 review for {state.name}</h4>
+    //     {/* review card */}
+    //     <Flex className="review-user-card my-4" gap={12}>
+    //       <Avatar src={banner.src} size={60} style={{ minWidth: 60 }} />
+    //       <div className="content">
+    //         <Rate value={4} className='fs-6' />
+    //         <Flex align='center' className='my-1' gap={6}>
+    //           <span className='fw-medium'>Janet Hopkins</span>
+    //           -
+    //           <span>18/04/2018</span>
+    //         </Flex>
+    //         <p className='m-0'>Nice coffee</p>
+    //       </div>
+    //     </Flex>
 
-        {/* review form */}
-        <div className="review-form">
-          <p className='mb-1'>Add a review</p>
-          <p className='mb-1'>Your email address will not be published. Required fields are marked *</p>
-          <p className='mb-1'>Your rating *</p>
-          <Rate value={3} className='fs-6' />
+    //     {/* review form */}
+    //     <div className="review-form">
+    //       <p className='mb-1'>Add a review</p>
+    //       <p className='mb-1'>Your email address will not be published. Required fields are marked *</p>
+    //       <p className='mb-1'>Your rating *</p>
+    //       <Rate value={3} className='fs-6' />
 
-          <AntForm layout='vertical' size='large'>
-            <FormItem label="Your review *">
-              <TextArea rows={6} />
-            </FormItem>
-            <FormItem label="Name *">
-              <Input />
-            </FormItem>
-            <FormItem label="Email *">
-              <Input />
-            </FormItem>
+    //       <AntForm layout='vertical' size='large'>
+    //         <FormItem label="Your review *">
+    //           <TextArea rows={6} />
+    //         </FormItem>
+    //         <FormItem label="Name *">
+    //           <Input />
+    //         </FormItem>
+    //         <FormItem label="Email *">
+    //           <Input />
+    //         </FormItem>
 
-            <Checkbox>Save my name, email, and website in this browser for the next time I comment.</Checkbox>
+    //         <Checkbox>Save my name, email, and website in this browser for the next time I comment.</Checkbox>
 
-            <Button type='primary' className='px-5 mt-2'>Submit</Button>
-          </AntForm>
-        </div>
-      </div>,
-    },
+    //         <Button type='primary' className='px-5 mt-2'>Submit</Button>
+    //       </AntForm>
+    //     </div>
+    //   </div>,
+    // },
   ];
   const handleIncDec = async (pid: number, type: string, cart_qty_new: number, index?: number) => {
     debugger
@@ -257,13 +257,16 @@ const ProductDetail = (props: typeProps) => {
 
 
   const initProductList = async () => {
+    debugger
     try {
       let apiRes = await crumbApi.Product.list()
-      setRelatedProduct(apiRes)
+      let data = apiRes.data.filter((res:any) => res.id !== router.query.id)
+      setRelatedProduct({data:data,count:data?.length})
     } catch (error) {
 
     }
   }
+  
   const isCartQuantity = (pid: any) => {
     debugger
     const isInCart = Array.isArray(cartData?.data) && cartData?.data.find((item: any) => item.id === pid);
@@ -273,7 +276,7 @@ const ProductDetail = (props: typeProps) => {
 
   React.useEffect(() => {
     initProductList()
-  }, [])
+  }, [router.query.id])
   React.useEffect(() => {
     setState({
       ...state,
@@ -314,8 +317,9 @@ const ProductDetail = (props: typeProps) => {
               </h4>
               <p className='fs-5'>{CURRENCY}{Number(state.customer_buying_price).toFixed(2)}</p>
 
-              <Flex className='rate mb-4' gap={6}><Rate className='fs-5' value={3} />
-                <span className='text-secondary'>(1 customer review)</span></Flex>
+              {/* <Flex className='rate mb-4' gap={6}><Rate className='fs-5' value={3} />
+                <span className='text-secondary'>(1 customer review)</span>
+                </Flex> */}
 
               <p>{state?.notes}</p>
 

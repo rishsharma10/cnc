@@ -89,11 +89,11 @@ const LoginPage = () => {
             const apiRes = await crumbApi.Auth.login(payload);
             crumbApi.setToken(apiRes.token)
             const apiResUser = await crumbApi.Auth.profile();
-            let localStorageData:any =  localStorage.getItem("cart") ?? []
-            if(localStorageData){
-              let cartData = await crumbApi.Cart.list()
-              await syncCartData(JSON.parse(localStorageData),cartData.cart)
-            }
+            // let localStorageData:any =  localStorage.getItem("cart") ?? []
+            // if(localStorageData){
+            //   let cartData = await crumbApi.Cart.list()
+            //   await syncCartData(JSON.parse(localStorageData),cartData.cart)
+            // }
             await initCart()
             setUserInfo({
                 ...apiResUser?.customer,
