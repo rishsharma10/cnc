@@ -1,4 +1,4 @@
-import { AntForm, Button, Col, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
+import { AntForm, Button, Col, Flex, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
 import { Form } from 'antd'
 import React, { useContext, useState } from 'react'
 import logo from '@/assets/brand-guide/logo.png'
@@ -138,7 +138,10 @@ const LoginPage = () => {
                                     <FormItem name={`password`} label={'Password'} rules={[{ required: true, message: "Please enter password" }]}>
                                         <InputPassword placeholder='Enter Password' />
                                     </FormItem>
-                                    <Link href={`/signup`}><TypographyText>Create an account ? Sign up</TypographyText></Link>
+                                    <Flex gap={6}>
+
+                                    <TypographyText>Create an account ?</TypographyText> <Link href={`/signup`}><p className='text-uppercase text-primary'>Sign up</p></Link>
+                                    </Flex>
                                     <div className="submit-btn text-center mt-5">
                                         <Button loading={loading} htmlType='submit' type='primary' className='px-5'>LOGIN</Button>
                                     </div>

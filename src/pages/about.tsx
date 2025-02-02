@@ -188,11 +188,11 @@ const About = () => {
             </Col>
             <Col span={24} lg={12} xl={12} xxl={12}>
               <div className="about-banner mb-3">
-                <img src={image1.src} alt="error" className='img-fluid' />
+                <img src={image1.src} alt="error" className='img-fluid rounded-3' />
               </div>
               <TypographyTitle level={5}>Kannupriya: (Founder & Vision Director)
               </TypographyTitle>
-              <p className='m-0 text-secondary'>In the quiet moments of motherhood, while her children slept, Kannupriya's kitchen became an
+              <p className='m-0 text-secondary text-justify'>In the quiet moments of motherhood, while her children slept, Kannupriya's kitchen became an
                 alchemist's laboratory. What started as a pursuit of the perfect entremet evolved into a vision for
                 transforming India's patisserie landscape. Her journey wasn't marked by formal culinary training,
                 but by something equally valuable—an unwavering dedication to mastery and an intuitive
@@ -209,11 +209,11 @@ const About = () => {
             </Col>
             <Col span={24} lg={12} xl={12} xxl={12}>
               <div className="about-banner mb-3">
-                <img src={image2.src} alt="error" className='img-fluid' />
+                <img src={image2.src} alt="error" className='img-fluid rounded-3' />
               </div>
               <TypographyTitle level={5}>Chef Zareen: Master Pastry Chef & Culinary Director
               </TypographyTitle>
-              <p className='m-0 text-secondary'>From the prestigious kitchens of Le Cordon Bleu London to the vibrant streets of Panchkula,
+              <p className='m-0 text-secondary text-justify'>From the prestigious kitchens of Le Cordon Bleu London to the vibrant streets of Panchkula,
                 Chef Zareen's journey is a testament to the transformative power of culinary arts. Her
                 accolades, including leading Team India to 4th position at the 7th World Tapas Competition,
                 speak to her technical mastery. However, it's her philosophy about food that truly sets her apart.

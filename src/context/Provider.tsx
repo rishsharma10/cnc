@@ -40,6 +40,8 @@ interface CommonContextType {
   setUserType: any;
   capitalizeFirstLetter: any;
   userType: any;
+  setCollapsed: any;
+  collapsed: any;
   Video: {
     startRecording: any;
     stopRecording: any;
@@ -91,7 +93,8 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   const [colorPrimary, setColorPrimary] = React.useState(
     props?.theme?.colorPrimary || "#3F4032"
   );
-  const [recording, setRecording] = useState(false);
+  const [collapsed, setCollapsed] = useState(false)
+
   const screenRecording = useRef<any>(null);
   const [Recorder, setRecorder] = useState<any>(null);
   const [videoUrl, setVideoUrl] = useState<any>(null);
@@ -257,6 +260,15 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   useEffect(() => {
     setIsClient(true);  // Set the flag to true once mounted on the client-side
   }, []);
+  useEffect(() => {
+    const handleRouteChangeComplete = () => {
+      setCollapsed(false);
+    };
+    router.events.on("routeChangeComplete", handleRouteChangeComplete);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChangeComplete);
+    };
+  }, [router.events]);
 
   return (
     <GlobalContext.Provider
@@ -265,6 +277,8 @@ function GlobalProvider(props: GlobleContextProviderProps) {
           ...props,
           logout,
           setCartData,
+          collapsed,
+          setCollapsed,
           userType,
           loading,
           initCart,

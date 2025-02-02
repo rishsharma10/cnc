@@ -10,6 +10,8 @@ import crumbApi from '@/utils/crumbApis'
 import { useRouter } from 'next/router';
 import ProductCard from '@/components/ProductCard'
 import NoDataFound from '@/components/common/NodataFound'
+import { Skeleton } from 'antd'
+import ProductSkeleton from '@/components/ProductSeleton'
 const ProductList = (props: any) => {
   const router = useRouter()
   const obj = {
@@ -17,6 +19,7 @@ const ProductList = (props: any) => {
     "name": "All Products",
 }
 const [category, SetCategory] = useState([obj, ...props.data]);
+const [loading, setLoading] = useState(false)
   const [state, setState] = useState({data:[],count:0})
   console.log(props, 'proppsspsp');
   console.log(category,'category');
@@ -25,6 +28,7 @@ const [category, SetCategory] = useState([obj, ...props.data]);
   const initProductList = async () => {
 
     try {
+      setLoading(true)
       if(router.query.created_by == 'all'){
         let apiRes = await crumbApi.Product.list()
         setState({data:apiRes.data,count:apiRes?.data?.length})
@@ -34,6 +38,8 @@ const [category, SetCategory] = useState([obj, ...props.data]);
       }
     } catch (error) {
 
+    }finally{
+      setLoading(false);
     }
   }
   React.useEffect(() => {
@@ -113,7 +119,9 @@ const [category, SetCategory] = useState([obj, ...props.data]);
             {/* </Flex> */}
             <Row gutter={[20, 20]} className='mt-5'>
               {/* <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col> */}
-              {Array.isArray(state?.data) && state?.data?.length ? state?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={6}> <ProductCard class='product-related-image' {...res} key={index}/></Col>) : ""}
+              {!loading ? Array.isArray(state?.data) && state?.data?.length ? state?.data.map((res:any,index:number) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={6}> <ProductCard class='product-related-image' {...res} key={index}/></Col>) : "" : 
+              <ProductSkeleton/>
+              }
             </Row>
 
             {/* <div className="d-flex align-items-center justify-content-center mt-5">

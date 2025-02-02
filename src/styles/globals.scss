@@ -453,9 +453,18 @@ a {
 
     span:first-child {
       font-weight: 600;
-      width: 25%;
+      // width: 25%;
+      min-width: 200px;
     }
 
+  }
+  @media (max-width:575px) {
+    .cart-list {
+      span:first-child {
+        min-width: 100px;
+      }
+  
+    }
   }
 }
 
@@ -689,4 +698,7 @@ button {
 height: 100% !important;
 width: 100% !important;
   }
+}
+.text-justify{
+  text-align: justify;
 }

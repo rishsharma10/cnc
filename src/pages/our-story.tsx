@@ -226,7 +226,7 @@ const OurStory = () => {
 
               <div className="out-story-content-1 out-story-content">
                 <TypographyTitle level={4}>Sustainable Practices and Community Development </TypographyTitle>
-                <Typography.Paragraph
+                <p
                 // key={2}
                 // ellipsis={{
                 //   rows,
@@ -245,7 +245,7 @@ const OurStory = () => {
 
                         }
                       >{expanded ? "Hide" : "Show"}</Button> */}
-                </Typography.Paragraph>
+                </p>
               </div>
             </div>
           </Col>
@@ -257,7 +257,7 @@ const OurStory = () => {
 
               <div className="out-story-content-1 out-story-content">
                 <TypographyTitle level={4}>An Enduring Impression</TypographyTitle>
-                <Typography.Paragraph
+                <p
                 // key={1}
                 // ellipsis={{
                 //   rows,
@@ -270,7 +270,7 @@ const OurStory = () => {
                   apprenticeship program that gives special attention to women in the culinary arts. Watching
                   them master everything from lamination to tempering chocolate reminds us why we started this
                   in the first place. Some of them had never held a piping bag before. Today they're crafting
-                  perfect entremets. That's the real flavor of success.</Typography.Paragraph>
+                  perfect entremets. That's the real flavor of success.</p>
               </div>
             </div>
           </Col>
@@ -284,7 +284,7 @@ const OurStory = () => {
 
                   <div className="out-story-content-1 out-story-content">
                     <TypographyTitle level={4}> Let&apos;s Write the Next Chapter Together.</TypographyTitle>
-                    <Typography.Paragraph
+                    <p
                     // ellipsis={{
                     //   rows,
                     //   expandable: 'collapsible',
@@ -297,7 +297,7 @@ const OurStory = () => {
                       story. Like a perfect setting, the most beautiful events in life emerge layer by layer, each addition
                       improving the whole experience. This world, where old and modern coexist, where crumb and
                       copper meet, where each creation tells a story of persistence, awaits the telling of your own
-                      story.</Typography.Paragraph>
+                      story.</p>
                   </div>
                 </div>
               </Col>

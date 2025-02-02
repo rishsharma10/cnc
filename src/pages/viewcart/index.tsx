@@ -8,21 +8,24 @@ import CommonBanner from '@/components/CommonBanner';
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@/context/Provider'
 import banner_img from "@/assets/images/plate_dish.jpg"
-import { Grid } from 'antd';
+import { Grid, Spin } from 'antd';
 import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis';
 import CartCountCompo from '@/components/CartCountCompo';
 import EmptyCart from '@/components/common/EmptyCart';
+import {EditFilled} from '@ant-design/icons'
 const AddToCart = () => {
     const { Toast, userInfo, cartData, initCart, setUserInfo } = useContext(GlobalContext)
     const router = useRouter()
     const [state, setState] = useState({ data: cartData.data, count: cartData.count, sub_total: 0 })
     const [show, setShow] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [loadingUpdateCart, setLoadingUpdateCart] = useState(false)
 
 
 
     const handleIncDec = async (pid: number, type: string, qty: number, index: number) => {
         debugger
+        setLoadingUpdateCart(true)
         try {
 
             if (!userInfo?.access_token) {
@@ -79,21 +82,26 @@ const AddToCart = () => {
                         data
                     })
                 }
+                Toast.success(`Cart quantity updated to ${qty}`)
             }
         } catch (error) {
             Toast.error(error)
+        }
+        finally{
+            setLoadingUpdateCart(false)
         }
     }
     const handleRemoveCart = async (id: number, index: number) => {
         debugger
         try {
-            setLoading(true)
+            setLoadingUpdateCart(true)
             let apiRes = await crumbApi.Cart.remove({ product_id: id })
             await initCart()
+            Toast.success(`Item successfully removed from your cart!`)
         } catch (error) {
 
         } finally {
-            setLoading(false)
+            setLoadingUpdateCart(false)
         }
     }
     const [couponLoading, setCouponLoading] = useState(false)
@@ -137,7 +145,7 @@ const AddToCart = () => {
     const dataSource: any = Array.isArray(state.data) && state.data.map((res, index) => {
         return {
             key: index,
-            cross: <Button loading={loading} onClick={() => handleRemoveCart(Number(res?.product?.id), index)} shape='circle' className='border-0'>x</Button>,
+            cross: <Button onClick={() => handleRemoveCart(Number(res?.product?.id), index)} shape='circle' className='border-0'>x</Button>,
             product: <Flex align='center' gap={8}><Avatar src={res?.product?.feature_image ? `${BUCKET_ROOT}${res?.product?.feature_image}` : productImage.src} shape='square' size={100} /><span>{res?.product?.name}</span></Flex>,
             price: `${CURRENCY}${res?.product?.customer_buying_price}`,
             quantity: <CartCountCompo is_cart={res?.quantity > 1 ? true : false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product?.id)} />,
@@ -212,10 +220,13 @@ const AddToCart = () => {
                 <div className="container mt-5">
                     <Row gutter={[20, 20]}>
                         <Col span={24}>
+                            <Spin spinning={loadingUpdateCart}>
+
                             <div className="cart-content mb-4">
                                 {state.count !==0 ? <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{ x: '100%' }} /> : <EmptyCart/>}
                                 
                             </div>
+                            </Spin>
                             {state.count !== 0 &&
                                 <Fragment>
                                     <div className="coupon">
@@ -240,8 +251,8 @@ const AddToCart = () => {
                                             <li className='cart-list'>
                                                 <span>Shipping</span>
                                                 {/* <Flex> */}
-                                                {!show ? <><span role='button'>{userInfo?.b_address_line_1 ?? 'Enter your address to view shipping options.'}
-                                                </span><Button onClick={() => setShow(true)} type='text'>Change</Button></> : <AntForm className='w-100' layout='vertical' size='large' onFinish={handleSubmit}>
+                                                {!show ? <><span role='button' className='text-wrap'>{userInfo?.b_address_line_1 ?? 'Enter your address to view shipping options.'}
+                                                <Button onClick={() => setShow(true)} type='text' className='fs-5'><EditFilled /></Button></span></> : <AntForm className='w-100' layout='vertical' size='large' onFinish={handleSubmit}>
                                                     <Row gutter={[10, 5]}>
                                                         <Col span={12} xxl={12} xl={12} lg={12} sm={12} md={12} xs={11}>
                                                             <FormItem name='b_first_name' rules={[{ required: true, message: "Please enter first name" }]} label={'First name'}>

@@ -1,4 +1,4 @@
-import { AntForm, Button, Col, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
+import { AntForm, Button, Col, Flex, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
 import { Form } from 'antd'
 import React, { useContext, useState } from 'react'
 import logo from '@/assets/brand-guide/logo.png'
@@ -99,7 +99,11 @@ const SignupPage = () => {
                                     ]}>
                                         <InputPassword placeholder='Enter Confirm Password' />
                                     </FormItem>
-                                    <Link href={`/login`}><TypographyText>Already have an account ? Login</TypographyText></Link>
+                                    {/* <Link href={`/login`}><TypographyText> Login</TypographyText></Link> */}
+                                    <Flex gap={6}>
+
+                                    <TypographyText>Already have an account ?</TypographyText> <Link href={`/login`}><p className='text-uppercase text-primary'>Login</p></Link>
+                                    </Flex>
                                     <div className="submit-btn text-center mt-2">
                                         <Button loading={loading} htmlType='submit' type='primary' className='px-5'>Sign Up</Button>
                                     </div>

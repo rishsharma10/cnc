@@ -273,7 +273,7 @@ motion. `,
             <Col span={24} lg={9} xl={9} xxl={9}>
               <TypographyTitle className="text-uppercase" level={4}>Our Story Snapshot
               </TypographyTitle>
-              <p className='fs-16'>From quiet kitchen experiments during motherhood to the bustling heart of Panchkula's culinary
+              <p className='fs-16 text-justify'>From quiet kitchen experiments during motherhood to the bustling heart of Panchkula's culinary
                 scene, Copper & Crumb represents the vision of two women who dared to dream differently.
                 Here, antique copper pots share space with modern espresso machines, while Kerala vanilla
                 beans infuse the air alongside French butter.</p>
@@ -301,7 +301,7 @@ motion. `,
                 </div>
                 <div className="blog-content mt-4">
                   <h4>{res.title}</h4>
-                  <p className="mt-3 mb-3">{res.subTitle}</p>
+                  <p className="mt-3 mb-3 text-justify">{res.subTitle}</p>
                   {/* <Link href={'#'}>Read More</Link> */}
                 </div>
               </div>
@@ -342,7 +342,7 @@ motion. `,
                   <img src={res.image} alt="error" />
                 </div>
                 <h4 className="mt-3 mb-3">{res.title}</h4>
-                <p className="text-secondary">{res.subTitle}</p>
+                <p className="text-secondary ">{res.subTitle}</p>
               </div>
             </Col>)}
           </Row>

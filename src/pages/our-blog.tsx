@@ -11,7 +11,7 @@ const OurBlog = () => {
     const itemData = [
         {
             image: HeroBanner.src,
-            title: `Tips for Making the Best Coffee at Home
+            title: `Tips for Making the Best Coffee
           `,
             subTitle: `At Copper & Crumb, we believe every cup of coffee should be an experience. Explore our tips on brewing the perfect cup, whether you're using a French press, pour-over, or espresso machine.`,
         },
@@ -23,7 +23,7 @@ const OurBlog = () => {
         },
         {
             image: blogImage.src,
-            title: `The Faces Behind Your Favorite Coffee`,
+            title: `The People Behind Your Coffee`,
             subTitle: `Get to know the talented baristas who craft your favorite coffee beverages. From expert techniques to their passion for the craft, meet the heart and soul of Copper & Crumb.
           `,
         },
@@ -62,7 +62,7 @@ const OurBlog = () => {
                                 </div>
                                 <div className="blog-content mt-4">
                                     <h4>{res.title}</h4>
-                                    <p className="mt-3 mb-3 text-secondary">{res.subTitle}</p>
+                                    <p className="mt-3 mb-3 text-secondary text-justify">{res.subTitle}</p>
                                     {/* <Link href={'#'}>Read More</Link> */}
                                 </div>
                             </div>
