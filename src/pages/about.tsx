@@ -1,7 +1,7 @@
 import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
 import { Button, Col, Row, TypographyText, TypographyTitle } from '@/lib/AntRegistry'
-import React, { ReactElement } from 'react'
+import React, { Fragment, ReactElement } from 'react'
 import aboutBanner from '@/assets/brand-guide/title-above.png';
 import blog2 from '@/assets/images/delicious-coffee-cup-table.jpg';
 import titleImage from '@/assets/brand-guide/title-separator.png';
@@ -13,6 +13,7 @@ import image2 from "@/assets/images/WhatsApp Image 2025-01-11 at 00.47.33.jpeg"
 import imageabout from "@/assets/images/layered-fruit-cake-cake-with-strawberries-raspberry-sauce-cream-stone-background-patisserie-desserts.jpg"
 import imageabout2 from "@/assets/images/adult-harvesting-coffee.jpg"
 import Link from 'next/link';
+import Head from 'next/head';
 const About = () => {
   const stateData = [
     {
@@ -107,7 +108,11 @@ const About = () => {
     }
   ]
   return (
-    <>
+    <Fragment>
+    <Head>
+      <title>{`About us`} at Copper & Crumb</title>
+      <meta name='desription' content={`About copper & crumb`}/>
+      </Head>
       <section className="about-us pt-0 bg-white">
         <CommonBanner title="About us" image={imageabout2.src} />
         <section className="blog-section common-bg-2">
@@ -281,7 +286,7 @@ const About = () => {
           </Row>
         </div>
       </section>
-    </>
+    </Fragment>
   )
 }
 About.getLayout = function getLayout(page: ReactElement) {

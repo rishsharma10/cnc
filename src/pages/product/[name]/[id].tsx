@@ -16,6 +16,7 @@ import CartCountCompo from '@/components/CartCountCompo'
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@/context/Provider'
 import { count } from 'console'
+import Head from 'next/head'
 
 interface typeProps extends ProductDetails {
   is_cart_local: boolean
@@ -260,7 +261,7 @@ const ProductDetail = (props: typeProps) => {
     debugger
     try {
       let apiRes = await crumbApi.Product.list()
-      let data = apiRes.data.filter((res:any) => res.id !== router.query.id)
+      let data = apiRes.data.filter((res:any) => Number(res.id) !== Number(router.query.id))
       setRelatedProduct({data:data,count:data?.length})
     } catch (error) {
 
@@ -294,6 +295,12 @@ const ProductDetail = (props: typeProps) => {
 }, [router.query.id])
 
   return (
+    <Fragment>
+      <Head>
+      <title>{props?.name} at Copper & Crumb</title>
+      <meta name='desription' content={props?.desc}/>
+      <meta property='og:image' content={`${BUCKET_ROOT}${state?.feature_image}`}/>
+      </Head>
     <section className='product-list-section pt-0 bg-white'>
       <CommonBanner title={"PRoduct Details"} image={state?.thumb_url} />
       <div className="container mt-sm-5 pt-5">
@@ -376,6 +383,7 @@ const ProductDetail = (props: typeProps) => {
         </Row>
       </div>
     </section>
+    </Fragment>
   )
 }
 

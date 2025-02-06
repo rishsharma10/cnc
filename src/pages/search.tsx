@@ -1,11 +1,12 @@
 import CommonLayout from '@/components/common/CommonLayout'
 import { AntForm, Button, Col, FormItem, Input, Row } from '@/lib/AntRegistry'
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { Fragment, ReactElement, useEffect, useState } from 'react'
 import { SearchOutlined } from '@ant-design/icons';
 import crumbApi from '@/utils/crumbApis';
 import ProductCard from '@/components/ProductCard';
 import ProductSkeleton from '@/components/ProductSeleton';
 import { useDebounce } from '@/utils/CommonFunction';
+import Head from 'next/head';
 const Search = () => {
   const [state, setState] = useState({ data: [], count: 0 })
   const [loading, setLoading] = useState(false)
@@ -35,7 +36,11 @@ initProductList()
   },[value])
   
   return (
-    <>
+    <Fragment>
+      <Head>
+        <title>{`Search Product`} at Copper & Crumb</title>
+        <meta name='desription' content={`Search Product at copper & crumb`} />
+      </Head>
       <section className="search-section">
         <div className="container">
           <Row gutter={[20, 20]} justify={'center'}>
@@ -62,7 +67,7 @@ initProductList()
             </Row>
         </div>
       </section>
-    </>
+    </Fragment>
   )
 }
 Search.getLayout = function getLayout(page: ReactElement) {

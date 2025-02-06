@@ -13,6 +13,7 @@ import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis';
 import CartCountCompo from '@/components/CartCountCompo';
 import EmptyCart from '@/components/common/EmptyCart';
 import { EditFilled } from '@ant-design/icons'
+import Head from 'next/head';
 const AddToCart = () => {
     const { Toast, userInfo, cartData, initCart, setUserInfo } = useContext(GlobalContext)
     const router = useRouter()
@@ -279,7 +280,11 @@ const AddToCart = () => {
     //     })
     // }, [cartData])
     return (
-        <>
+        <Fragment>
+            <Head>
+      <title>{`Viewcart`} at Copper & Crumb</title>
+      <meta name='desription' content={`Viewcart`}/>
+      </Head>
             <section className="add-to-cart-section pt-0 bg-white" >
                 <CommonBanner title={"Cart"} image={banner_img.src} />
                 <div className="container mt-5">
@@ -395,7 +400,7 @@ const AddToCart = () => {
                     </Row>
                 </div>
             </section>
-        </>
+        </Fragment>
     )
 }
 

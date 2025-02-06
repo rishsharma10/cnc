@@ -1,6 +1,6 @@
 import { AntForm, Button, Col, Flex, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
 import { Form } from 'antd'
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import logo from '@/assets/brand-guide/logo.png'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -8,6 +8,7 @@ import crumbApi from '@/utils/crumbApis'
 import { GlobalContext } from '@/context/Provider'
 import { setCookie } from 'nookies'
 import { COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN } from '@/context/actionTypes'
+import Head from 'next/head'
 const SignupPage = () => {
     const router = useRouter()
     const { Toast,setUserInfo,userInfo } = useContext(GlobalContext)
@@ -46,6 +47,11 @@ const SignupPage = () => {
 
     }
     return (
+        <Fragment>
+            <Head>
+        <title>{`Signup`} at Copper & Crumb</title>
+        <meta name='desription' content={`Signup at copper & crumb`} />
+      </Head>
         <section>
             <div className="container">
                 <Row align={'middle'} justify={'center'}>
@@ -114,6 +120,8 @@ const SignupPage = () => {
                 </Row>
             </div>
         </section>
+        </Fragment>
+
     )
 }
 

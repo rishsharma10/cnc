@@ -1,11 +1,12 @@
 import CommonLayout from '@/components/common/CommonLayout'
 import { Col, Flex, Row, TypographyTitle } from '@/lib/AntRegistry'
-import React, { ReactElement } from 'react'
+import React, { Fragment, ReactElement } from 'react'
 import HeroBanner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg'
 import titleSeperator from '@/assets/images/freshly-baked-sweet-buns-puff-pastry.jpg'
 import serviceImage from '@/assets/images/delicious-coffee-cup-table.jpg'
 import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import CommonBanner from '@/components/CommonBanner'
+import Head from 'next/head'
 const OurBlog = () => {
 
     const itemData = [
@@ -47,30 +48,37 @@ const OurBlog = () => {
         },
     ]
     return (
-        <section className="blog-section pt-0 bg-white">
-            <CommonBanner title="Our Blog" image={titleSeperator.src} />
-            <div className="container mt-sm-5 pt-5">
-                <Row gutter={[20, 20]} justify={'center'}>
-                    <Col span={24} lg={16} xl={14} xxl={12} className='text-center mb-4'>
-                        <h4 className="title mb-4">Copper & Crumb</h4>
-                    </Col>
-                    <Row gutter={[20, 20]}>
-                        {itemData.map((res, index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
-                            <div className="blog-card">
-                                <div className="blog-image">
-                                    <img src={res.image} alt="error" className="img-fluid" />
+        <Fragment>
+            <Head>
+                <title>{`Our Blog`} at Copper & Crumb</title>
+                <meta name='desription' content={`Our Blog at copper & crumb`} />
+            </Head>
+            <section className="blog-section pt-0 bg-white">
+                <CommonBanner title="Our Blog" image={titleSeperator.src} />
+                <div className="container mt-sm-5 pt-5">
+                    <Row gutter={[20, 20]} justify={'center'}>
+                        <Col span={24} lg={16} xl={14} xxl={12} className='text-center mb-4'>
+                            <h4 className="title mb-4">Copper & Crumb</h4>
+                        </Col>
+                        <Row gutter={[20, 20]}>
+                            {itemData.map((res, index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
+                                <div className="blog-card">
+                                    <div className="blog-image">
+                                        <img src={res.image} alt="error" className="img-fluid" />
+                                    </div>
+                                    <div className="blog-content mt-4">
+                                        <h4>{res.title}</h4>
+                                        <p className="mt-3 mb-3 text-secondary text-justify">{res.subTitle}</p>
+                                        {/* <Link href={'#'}>Read More</Link> */}
+                                    </div>
                                 </div>
-                                <div className="blog-content mt-4">
-                                    <h4>{res.title}</h4>
-                                    <p className="mt-3 mb-3 text-secondary text-justify">{res.subTitle}</p>
-                                    {/* <Link href={'#'}>Read More</Link> */}
-                                </div>
-                            </div>
-                        </Col>)}
+                            </Col>)}
+                        </Row>
                     </Row>
-                </Row>
-            </div>
-        </section>
+                </div>
+            </section>
+        </Fragment>
+
     )
 }
 OurBlog.getLayout = function getLayout(page: ReactElement) {

@@ -1,6 +1,6 @@
 import { AntForm, Button, Col, Flex, FormItem, Input, InputPassword, Row, TypographyText } from '@/lib/AntRegistry'
 import { Form } from 'antd'
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import logo from '@/assets/brand-guide/logo.png'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -8,6 +8,7 @@ import crumbApi from '@/utils/crumbApis'
 import { GlobalContext } from '@/context/Provider'
 import { setCookie } from 'nookies'
 import { COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN } from '@/context/actionTypes'
+import Head from 'next/head'
 type CartItem = {
   id: number;
   quantity: number;
@@ -26,8 +27,8 @@ const LoginPage = () => {
   const addToCart = async (product_id: number, quantity: number) => {
     try {
       const cartPayload = {
-        amount:0,
-        coupon_discount:0,
+        amount: 0,
+        coupon_discount: 0,
         product_id: product_id,
         quantity: quantity
       }
@@ -155,47 +156,54 @@ const LoginPage = () => {
 
   }
   return (
-    <section className='h-100 py-3'>
-      <div className="container-fluid h-100">
-        <Row align={'middle'} className='h-100 overflow-auto' justify={'center'}>
-          <Col span={24} md={20} lg={18} xl={16} xxl={16}>
-            <div className="d-flex align-items-center w-100 auth-page p-0">
-              <div className="auth-banner w-100 d-none d-md-block">
-              </div>
-              <div className="p-4 w-100 h-100 bg-white">
-                <div className="logo text-center mb-5">
-                  <Link href={'/'}><img src={logo.src} alt="error" height={120} width={120} /></Link>
+    <Fragment>
+      <Head>
+        <title>{`Login`} at Copper & Crumb</title>
+        <meta name='desription' content={`Login at copper & crumb`} />
+      </Head>
+      <section className='h-100 py-3'>
+        <div className="container-fluid h-100">
+          <Row align={'middle'} className='h-100 overflow-auto' justify={'center'}>
+            <Col span={24} md={20} lg={18} xl={16} xxl={16}>
+              <div className="d-flex align-items-center w-100 auth-page p-0">
+                <div className="auth-banner w-100 d-none d-md-block">
                 </div>
-                <Form layout='vertical' size='large' onFinish={handleSubmit}>
-                  <FormItem name={`email`} label={'Email'} rules={[
-                    {
-                      required: true,
-                      message: "Please enter your email address",
-                    },
-                    {
-                      type: 'email',
-                      message: 'Please enter valid email address',
-                    },
-                  ]}>
-                    <Input placeholder='Enter Email' />
-                  </FormItem>
-                  <FormItem name={`password`} label={'Password'} rules={[{ required: true, message: "Please enter password" }]}>
-                    <InputPassword placeholder='Enter Password' />
-                  </FormItem>
-                  <Flex gap={6}>
-
-                    <TypographyText>Create an account ?</TypographyText> <Link href={`/signup`}><p className='text-uppercase text-primary'>Sign up</p></Link>
-                  </Flex>
-                  <div className="submit-btn text-center mt-5">
-                    <Button loading={loading} htmlType='submit' type='primary' className='px-5'>LOGIN</Button>
+                <div className="p-4 w-100 h-100 bg-white">
+                  <div className="logo text-center mb-5">
+                    <Link href={'/'}><img src={logo.src} alt="error" height={120} width={120} /></Link>
                   </div>
-                </Form>
+                  <Form layout='vertical' size='large' onFinish={handleSubmit}>
+                    <FormItem name={`email`} label={'Email'} rules={[
+                      {
+                        required: true,
+                        message: "Please enter your email address",
+                      },
+                      {
+                        type: 'email',
+                        message: 'Please enter valid email address',
+                      },
+                    ]}>
+                      <Input placeholder='Enter Email' />
+                    </FormItem>
+                    <FormItem name={`password`} label={'Password'} rules={[{ required: true, message: "Please enter password" }]}>
+                      <InputPassword placeholder='Enter Password' />
+                    </FormItem>
+                    <Flex gap={6}>
+
+                      <TypographyText>Create an account ?</TypographyText> <Link href={`/signup`}><p className='text-uppercase text-primary'>Sign up</p></Link>
+                    </Flex>
+                    <div className="submit-btn text-center mt-5">
+                      <Button loading={loading} htmlType='submit' type='primary' className='px-5'>LOGIN</Button>
+                    </div>
+                  </Form>
+                </div>
               </div>
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </section>
+            </Col>
+          </Row>
+        </div>
+      </section>
+    </Fragment>
+
   )
 }
 

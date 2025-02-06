@@ -185,7 +185,20 @@ th {
   padding: 0px 20px !important;
   font-size: 14px !important;
 }
-
+.ant-select-selector{
+  border-radius: 10px !important;
+  // border-color: $gradient-secondary;
+  &:focus {
+    outline: none !important;
+    border-color: none !important;
+    border: none !important;
+  }
+  &:hover {
+    outline: none !important;
+    border-color: none !important;
+    border: none !important;
+  }
+}
 .ant-select-dropdown {
   background: $white !important;
   border-radius: 8px !important;

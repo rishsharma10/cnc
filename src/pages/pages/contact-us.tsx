@@ -4,8 +4,9 @@ import { GlobalContext } from '@/context/Provider'
 import { AntForm, Button, Col, FormItem, Input, Row, TextArea } from '@/lib/AntRegistry'
 import crumbApi from '@/utils/crumbApis'
 import { Form } from 'antd'
+import Head from 'next/head'
 import Link from 'next/link'
-import React, { ReactElement, useContext, useState } from 'react'
+import React, { Fragment, ReactElement, useContext, useState } from 'react'
 
 const Contact = () => {
   const [form] = Form.useForm()
@@ -27,6 +28,11 @@ const {Toast} = useContext(GlobalContext)
     }
   }
   return (
+    <Fragment>
+      <Head>
+        <title>{`Contact us`} at Copper & Crumb</title>
+        <meta name='desription' content={`Contact us at copper & crumb`} />
+      </Head>
     <section className="contact-us pt-0 bg-white">
       <CommonBanner title="Contact us" />
 
@@ -88,6 +94,8 @@ const {Toast} = useContext(GlobalContext)
         </Row>
       </div>
     </section>
+    </Fragment>
+
   )
 }
 Contact.getLayout = function getLayout(page: ReactElement) {
