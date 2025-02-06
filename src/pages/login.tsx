@@ -49,22 +49,50 @@ const LoginPage = () => {
       };
 
 
-    const syncCartData = async (localStorageData: CartItem[], newArray:any) => {
-      debugger
-        // Iterate through the new array of products
-        for (const product of newArray) {
-          const localStorageItem = localStorageData.find(item => item.id === product.id);
+    // const syncCartData = async (localStorageData: CartItem[], newArray:any) => {
+    //   debugger
+    //     // Iterate through the new array of products
+    //     for (const product of newArray) {
+    //       const localStorageItem = localStorageData.find(item => item.id === product.id);
       
-          if (localStorageItem) {
-            // If the product exists in localStorage, update the quantity
-            const updatedQuantity = localStorageItem.quantity;
-            await updateCart(product.product_id, updatedQuantity);
-          } else {
-            // If the product doesn't exist in localStorage, add it to the cart
-            await addToCart(product.product_id, product.quantity);
-          }
+    //       if (localStorageItem) {
+    //         // If the product exists in localStorage, update the quantity
+    //         const updatedQuantity = localStorageItem.quantity;
+    //         await updateCart(product.product_id, updatedQuantity);
+    //       } else {
+    //         // If the product doesn't exist in localStorage, add it to the cart
+    //         await addToCart(product.product_id, product.quantity);
+    //       }
+    //     }
+    //   };
+
+
+    const syncCartData = async (localStorageData: CartItem[], newArray: any) => {
+      debugger;
+      
+      // Iterate through the new array of products
+      for (const product of newArray) {
+        const localStorageItem = localStorageData.find(item => item.id === product.id);
+        
+        if (localStorageItem) {
+          // If the product exists in localStorage, update the quantity
+          const updatedQuantity = localStorageItem.quantity;
+          await updateCart(product.product_id, updatedQuantity);
+        } else {
+          // If the product doesn't exist in localStorage, add it to the cart
+          await addToCart(product.product_id, product.quantity);
         }
-      };
+      }
+    
+      // Handle the elements in localStorageData that are not in newArray
+      const unmatchedItems:any = localStorageData.filter((item:any) => !newArray.some((product:any) => product.id === item.id));
+    
+      // Add unmatched items to the cart
+      for (const item of unmatchedItems) {
+        await addToCart(item.product_id, item.quantity);
+      }
+    };
+    
 
 
 

@@ -146,8 +146,9 @@ const AddToCart = () => {
     }
     const [couponLoading, setCouponLoading] = useState(false)
     const applyCoupon = async ({ code }: any) => {
+        debugger
         const productIds = Array.isArray(state.data)
-            ? state.data.map((res: any) => res.product_id)
+            ? state.data.map((res: any) =>  res[userInfo?.access_token? "product_id" : "id"])
             : [];
         const payload = {
             code,
@@ -155,7 +156,7 @@ const AddToCart = () => {
         }
         try {
             setCouponLoading(true)
-            let apiRes = crumbApi.Auth.validateCoupon(payload)
+            let apiRes = await crumbApi.Auth.validateCoupon(payload)
             Toast.success("Coupon applied successfully")
         } catch (error) {
             Toast.error(error)
