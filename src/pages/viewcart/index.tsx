@@ -12,7 +12,7 @@ import { Grid, Spin } from 'antd';
 import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis';
 import CartCountCompo from '@/components/CartCountCompo';
 import EmptyCart from '@/components/common/EmptyCart';
-import {EditFilled} from '@ant-design/icons'
+import { EditFilled } from '@ant-design/icons'
 const AddToCart = () => {
     const { Toast, userInfo, cartData, initCart, setUserInfo } = useContext(GlobalContext)
     const router = useRouter()
@@ -44,6 +44,23 @@ const AddToCart = () => {
                     // Toast.warning('Item not found in cart');
                 }
                 localStorage.setItem('cart', JSON.stringify(cart));
+                const data = state.data
+                data[index].quantity = qty
+                // setState({
+                //     ...state,
+                //     data
+                // })
+                const total = state?.data?.reduce((acc: any, item: any) => {
+                    const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
+                    const quantity = item?.quantity; // Get quantity
+                    return acc + (price * quantity); // Add to the accumulator
+                }, 0);
+                setState({
+                    ...state,
+                    data,
+                    count:state?.data?.length,
+                    sub_total: total
+                })
                 // if (type == 'INC') {
                 //   setQuantity(quantity + 1)
                 // } else {
@@ -87,16 +104,39 @@ const AddToCart = () => {
         } catch (error) {
             Toast.error(error)
         }
-        finally{
+        finally {
             setLoadingUpdateCart(false)
         }
     }
+    console.log(state, 'staetttete');
+
     const handleRemoveCart = async (id: number, index: number) => {
         debugger
         try {
             setLoadingUpdateCart(true)
-            let apiRes = await crumbApi.Cart.remove({ product_id: id })
-            await initCart()
+            if (!userInfo?.access_token) {
+                const newData = [...state.data];
+                newData.splice(index, 1);
+                setState(prevState => ({ ...prevState, data: newData }));
+                let localData = localStorage.getItem('cart')
+                let data = JSON.parse(String(localData));
+                data.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(data));
+                const total = data?.reduce((acc: any, item: any) => {
+                    const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
+                    const quantity = item?.quantity; // Get quantity
+                    return acc + (price * quantity); // Add to the accumulator
+                }, 0);
+                setState({
+                    ...state,
+                    data,
+                    count: state?.data?.length,
+                    sub_total: total
+                })
+            } else {
+                let apiRes = await crumbApi.Cart.remove({ product_id: id })
+                await initCart()
+            }
             Toast.success(`Item successfully removed from your cart!`)
         } catch (error) {
 
@@ -222,12 +262,12 @@ const AddToCart = () => {
                         <Col span={24}>
                             <Spin spinning={loadingUpdateCart}>
 
-                            <div className="cart-content mb-4">
-                                {state.count !==0 ? <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{ x: '100%' }} /> : <EmptyCart/>}
-                                
-                            </div>
+                                <div className="cart-content mb-4">
+                                    {state?.data?.length !== 0 ? <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{ x: '100%' }} /> : <EmptyCart />}
+
+                                </div>
                             </Spin>
-                            {state.count !== 0 &&
+                            {state?.data?.length !== 0 &&
                                 <Fragment>
                                     <div className="coupon">
                                         <AntForm size='large' className='d-flex flex-wrap align-items-center gap-3 ' onFinish={applyCoupon}>
@@ -249,10 +289,10 @@ const AddToCart = () => {
                                                 <span>{CURRENCY}{state.sub_total}</span>
                                             </li>
                                             <li className='cart-list'>
-                                                <span>Shipping</span>
+                                                {!show && <span>Shipping</span>}
                                                 {/* <Flex> */}
                                                 {!show ? <><span role='button' className='text-wrap'>{userInfo?.b_address_line_1 ?? 'Enter your address to view shipping options.'}
-                                                <Button onClick={() => setShow(true)} type='text' className='fs-5'><EditFilled /></Button></span></> : <AntForm className='w-100' layout='vertical' size='large' onFinish={handleSubmit}>
+                                                    <Button onClick={() => setShow(true)} type='text' className='fs-5'><EditFilled /></Button></span></> : <AntForm className='w-100' layout='vertical' size='large' onFinish={handleSubmit}>
                                                     <Row gutter={[10, 5]}>
                                                         <Col span={12} xxl={12} xl={12} lg={12} sm={12} md={12} xs={11}>
                                                             <FormItem name='b_first_name' rules={[{ required: true, message: "Please enter first name" }]} label={'First name'}>

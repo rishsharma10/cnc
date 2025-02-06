@@ -49,7 +49,8 @@ const LoginPage = () => {
       };
 
 
-    const syncCartData = async (localStorageData: CartItem[], newArray: Product[]) => {
+    const syncCartData = async (localStorageData: CartItem[], newArray:any) => {
+      debugger
         // Iterate through the new array of products
         for (const product of newArray) {
           const localStorageItem = localStorageData.find(item => item.id === product.id);
@@ -57,10 +58,10 @@ const LoginPage = () => {
           if (localStorageItem) {
             // If the product exists in localStorage, update the quantity
             const updatedQuantity = localStorageItem.quantity;
-            await updateCart(product.id, updatedQuantity);
+            await updateCart(product.product_id, updatedQuantity);
           } else {
             // If the product doesn't exist in localStorage, add it to the cart
-            await addToCart(product.id, product.quantity);
+            await addToCart(product.product_id, product.quantity);
           }
         }
       };
@@ -89,11 +90,13 @@ const LoginPage = () => {
             const apiRes = await crumbApi.Auth.login(payload);
             crumbApi.setToken(apiRes.token)
             const apiResUser = await crumbApi.Auth.profile();
-            // let localStorageData:any =  localStorage.getItem("cart") ?? []
-            // if(localStorageData){
-            //   let cartData = await crumbApi.Cart.list()
-            //   await syncCartData(JSON.parse(localStorageData),cartData.cart)
-            // }
+            let localStorageData:any =  localStorage.getItem("cart")
+            let parseData = JSON.parse(String(localStorageData)) ?? []
+            if(parseData?.length){
+              let cartData = await crumbApi.Cart.list()
+              await syncCartData(parseData,cartData.cart)
+              localStorage.setItem("cart",JSON.stringify([]))
+            }
             await initCart()
             setUserInfo({
                 ...apiResUser?.customer,
