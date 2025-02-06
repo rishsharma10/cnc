@@ -8,7 +8,7 @@ import CommonBanner from '@/components/CommonBanner';
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@/context/Provider'
 import banner_img from "@/assets/images/plate_dish.jpg"
-import { Grid, Spin } from 'antd';
+import { Form, Grid, Spin } from 'antd';
 import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis';
 import CartCountCompo from '@/components/CartCountCompo';
 import EmptyCart from '@/components/common/EmptyCart';
@@ -16,6 +16,7 @@ import { EditFilled } from '@ant-design/icons'
 const AddToCart = () => {
     const { Toast, userInfo, cartData, initCart, setUserInfo } = useContext(GlobalContext)
     const router = useRouter()
+    const [form] = Form.useForm()
     const [state, setState] = useState({ data: cartData.data, count: cartData.count, sub_total: 0 })
     const [show, setShow] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -58,7 +59,7 @@ const AddToCart = () => {
                 setState({
                     ...state,
                     data,
-                    count:state?.data?.length,
+                    count: state?.data?.length,
                     sub_total: total
                 })
                 // if (type == 'INC') {
@@ -99,6 +100,7 @@ const AddToCart = () => {
                         data
                     })
                 }
+                setCoupon({is_applied:false,discount:0})
                 Toast.success(`Cart quantity updated to ${qty}`)
             }
         } catch (error) {
@@ -137,6 +139,7 @@ const AddToCart = () => {
                 let apiRes = await crumbApi.Cart.remove({ product_id: id })
                 await initCart()
             }
+            setCoupon({is_applied:false,discount:0})
             Toast.success(`Item successfully removed from your cart!`)
         } catch (error) {
 
@@ -145,18 +148,37 @@ const AddToCart = () => {
         }
     }
     const [couponLoading, setCouponLoading] = useState(false)
+    const [coupon, setCoupon] = useState({
+        is_applied: false,
+        discount: 0
+    })
+    let discount = coupon.is_applied ? Number(coupon.discount) : 0
     const applyCoupon = async ({ code }: any) => {
+        if (coupon.is_applied) {
+            form.resetFields()
+            return setCoupon({ is_applied: false, discount: 0 })
+        }
         debugger
         const productIds = Array.isArray(state.data)
-            ? state.data.map((res: any) =>  res[userInfo?.access_token? "product_id" : "id"])
+            ? state.data.map((res: any) => res[userInfo?.access_token ? "product_id" : "id"])
             : [];
         const payload = {
             code,
-            product_ids: productIds
+            product_ids: JSON.stringify(productIds)
         }
         try {
             setCouponLoading(true)
             let apiRes = await crumbApi.Auth.validateCoupon(payload)
+            if (apiRes?.error) {
+                return Toast.warning(apiRes?.error)
+            }
+            let percent = 'percent'
+            let fixed = 'fixed'
+            let amount = apiRes?.coupon?.discount_type == percent ? (state.sub_total / 100) * Number(apiRes?.coupon?.discount) : apiRes?.coupon?.discount
+            setCoupon({
+                is_applied: true,
+                discount: Number(amount)
+            })
             Toast.success("Coupon applied successfully")
         } catch (error) {
             Toast.error(error)
@@ -164,6 +186,8 @@ const AddToCart = () => {
             setCouponLoading(false)
         }
     }
+    console.log(coupon, 'couponnnn');
+
     const handleSubmit = async (values: any) => {
         const payload = {
             ...values,
@@ -271,15 +295,21 @@ const AddToCart = () => {
                             {state?.data?.length !== 0 &&
                                 <Fragment>
                                     <div className="coupon">
-                                        <AntForm size='large' className='d-flex flex-wrap align-items-center gap-3 ' onFinish={applyCoupon}>
+                                        <AntForm size='large' form={form} className='d-flex flex-wrap align-items-center gap-3' onFinish={applyCoupon}>
                                             <FormItem name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]} className={screens.sm ? 'w-25 m-0' : 'w-100 m-0'}>
-                                                <Input placeholder='Coupon Code' />
+                                                <Input placeholder='Coupon Code' disabled={coupon.is_applied} />
                                             </FormItem>
 
-                                            <Button loading={couponLoading} type='primary' htmlType='submit' block={screens.sm ? false : true} className='px-5 text-uppercase'>Apply Coupon</Button>
+                                            <Button loading={couponLoading} type='primary' htmlType='submit' block={screens.sm ? false : true} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply Coupon"}</Button>
                                             {/* <Button type='primary' block={screens.sm ? false : true} className='px-5 text-uppercase'>Update cart</Button> */}
                                         </AntForm>
                                     </div>
+                                    {coupon?.is_applied && <div className='mt-3 shadow-lg' style={{ padding: '10px', color: 'black', maxWidth: '400px' }}>
+                                        <h6>🎉 <span className='fw-bold'>{form.getFieldValue("code")}</span> Applied Successfully!</h6>
+                                        <p>
+                                            You saved <strong>{CURRENCY}{Number(coupon.discount).toFixed(2)}</strong> off your order. Enjoy your shopping!
+                                        </p>
+                                    </div>}
 
                                     <div className="cart-total mt-5">
                                         <h2 className='title'>Cart TOtal</h2>
@@ -352,7 +382,7 @@ const AddToCart = () => {
                                             </li>
                                             <li className='cart-list'>
                                                 <span>Total</span>
-                                                <span>{CURRENCY}{state.sub_total}</span>
+                                                <span>{CURRENCY}{Number(state.sub_total) - discount}</span>
                                             </li>
 
                                         </ul>
