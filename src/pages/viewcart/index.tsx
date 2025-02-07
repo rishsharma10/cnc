@@ -2,7 +2,6 @@ import CommonLayout from '@/components/common/CommonLayout'
 import { AntForm, Avatar, Button, Col, Flex, FormItem, Input, Row, Table } from '@/lib/AntRegistry'
 import React, { ReactElement, useState, useContext, Fragment } from 'react'
 import CrumbIcons from '@/components/CrumbIcons'
-import productImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg';
 import Link from 'next/link'
 import CommonBanner from '@/components/CommonBanner';
 import { useRouter } from 'next/router';
@@ -14,6 +13,10 @@ import CartCountCompo from '@/components/CartCountCompo';
 import EmptyCart from '@/components/common/EmptyCart';
 import { EditFilled } from '@ant-design/icons'
 import Head from 'next/head';
+import productImage from '@/assets/images/product-placeholder-wp.jpg'
+import { stringReplace } from '@/utils/crumbValidation'
+
+
 const AddToCart = () => {
     const { Toast, userInfo, cartData, initCart, setUserInfo } = useContext(GlobalContext)
     const router = useRouter()
@@ -212,7 +215,7 @@ const AddToCart = () => {
         return {
             key: index,
             cross: <Button onClick={() => handleRemoveCart(Number(res?.product?.id), index)} shape='circle' className='border-0'>x</Button>,
-            product: <Flex align='center' gap={8}><Avatar src={res?.product?.feature_image ? `${BUCKET_ROOT}${res?.product?.feature_image}` : productImage.src} shape='square' size={100} /><span>{res?.product?.name}</span></Flex>,
+            product: <Link href={`/product/${stringReplace(res?.product?.name)}/${res?.product?.id}`}><Flex align='center' gap={8}><Avatar src={res?.product?.feature_image ? `${BUCKET_ROOT}${res?.product?.feature_image}` : productImage.src} shape='square' size={100} /><span>{res?.product?.name}</span></Flex></Link>,
             price: `${CURRENCY}${res?.product?.customer_buying_price}`,
             quantity: <CartCountCompo is_cart={res?.quantity > 1 ? true : false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product?.id)} />,
             subtotal: `${CURRENCY}${res?.quantity * res?.product?.customer_buying_price}`,
@@ -328,7 +331,7 @@ const AddToCart = () => {
                                                 {!show && <span>Shipping</span>}
                                                 {/* <Flex> */}
                                                 {!show ? <><span role='button' className='text-wrap'>{userInfo?.b_address_line_1 ?? 'Enter your address to view shipping options.'}
-                                                    <Button onClick={() => setShow(true)} type='text' className='fs-5'><EditFilled /></Button></span></> : <AntForm className='w-100' layout='vertical' size='large' onFinish={handleSubmit}>
+                                                    <Button onClick={() => setShow(true)} type='text' className='fs-5'><EditFilled /></Button></span></> : <AntForm className='w-100' layout='vertical' size={!screens.md ? "middle" : 'large'} onFinish={handleSubmit}>
                                                     <Row gutter={[10, 5]}>
                                                         <Col span={12} xxl={12} xl={12} lg={12} sm={12} md={12} xs={11}>
                                                             <FormItem name='b_first_name' rules={[{ required: true, message: "Please enter first name" }]} label={'First name'}>
@@ -366,20 +369,21 @@ const AddToCart = () => {
                                                                 <Input placeholder='Enter state' />
                                                             </FormItem>
                                                         </Col>
-                                                        <Col span={6} xxl={6} xl={6} lg={6} sm={12} md={12} xs={11}>
+                                                        <Col span={6} xxl={6} xl={6} lg={6} sm={24} md={24} xs={22}>
                                                             <FormItem name='b_city' rules={[{ required: true, message: "Please enter city" }]} label={'City'}>
                                                                 <Input placeholder='Enter city' />
                                                             </FormItem>
                                                         </Col>
-
-                                                        <Flex gap={10} justify='start'>
+                                                        <Col span={6} xxl={6} xl={6} lg={6} sm={24} md={24} xs={22}>
+                                                        <Flex gap={20} justify='start'>
                                                             <div className="submit-btn text-center">
-                                                                <Button type='default' onClick={() => setShow(false)} className='px-5'>CANCEL</Button>
+                                                                <Button type='default' onClick={() => setShow(false)} className='px-4'>CANCEL</Button>
                                                             </div>
                                                             <div className="submit-btn text-center">
-                                                                <Button loading={loading} htmlType='submit' type='primary' className='px-5'>UPDATE</Button>
+                                                                <Button loading={loading} htmlType='submit' type='primary' className='px-4'>UPDATE</Button>
                                                             </div>
                                                         </Flex>
+                                                        </Col>
                                                     </Row>
                                                 </AntForm>}
                                                 {/* <Button>Edit</Button> */}

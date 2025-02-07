@@ -2,9 +2,10 @@ import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
 import { GlobalContext } from '@/context/Provider'
 import { AntForm, Button, Col, FormItem, Input, Row, TextArea } from '@/lib/AntRegistry'
-import crumbApi from '@/utils/crumbApis'
+import crumbApi, { FACEBOOK_LINK, INSTAGRAM_LINK, WHATSPP_LINK } from '@/utils/crumbApis'
 import { Form } from 'antd'
 import Head from 'next/head'
+import { FacebookOutlined, InstagramOutlined, WhatsAppOutlined } from '@ant-design/icons';
 import Link from 'next/link'
 import React, { Fragment, ReactElement, useContext, useState } from 'react'
 
@@ -51,12 +52,11 @@ const {Toast} = useContext(GlobalContext)
                 <li className='text-secondary fs-16'>Experience Copper & Crumb in person.</li>
               </ul>
 
-              {/* <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
-                <li><Link href={'/'}><i className="fa-brands fa-facebook text-secondary fs-6"></i></Link></li>
-                <li><Link href={'/'}><i className="fa-brands fa-square-instagram text-secondary fs-6"></i></Link></li>
-                <li><Link href={'/'}><i className="fa-brands fa-twitter text-secondary fs-6"></i></Link></li>
-                <li><Link href={'/'}><i className="fa-brands fa-linkedin text-secondary fs-6"></i></Link></li>
-              </ul> */}
+              <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
+                                    <li><Link target='_blank' href={FACEBOOK_LINK}><FacebookOutlined /></Link></li>
+                                    <li><Link target='_blank' href={INSTAGRAM_LINK}><InstagramOutlined /></Link></li>
+                                    <li><Link target='_blank' href={WHATSPP_LINK}><WhatsAppOutlined /></Link></li>
+                                </ul>
             </div>
           </Col>
 

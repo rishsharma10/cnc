@@ -1,22 +1,19 @@
 
 import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
-import { AntForm, Avatar, Button, Checkbox, Col, Dropdown, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs, TextArea } from '@/lib/AntRegistry'
+import { AntForm, Avatar, Button, Checkbox, Col, Dropdown, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs, TextArea, TypographyText } from '@/lib/AntRegistry'
 import React, { ReactElement, useState, useContext, Fragment } from 'react'
 import productImage from '@/assets/images/product-placeholder-wp.jpg'
-import banner from '@/assets/images/espresso-pouring-from-coffee-machine-cafe.jpg'
 import Link from 'next/link'
 import { GetServerSideProps } from "next";
-import { MenuProps, TabsProps } from 'antd'
+import { MenuProps, TabsProps, Tag } from 'antd'
 import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis'
 import { ProductDetails } from '@/interface/product/ProductDetails'
-import { stringReplace } from '@/utils/crumbValidation'
 import ProductCard from '@/components/ProductCard'
-import CartCountCompo from '@/components/CartCountCompo'
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@/context/Provider'
-import { count } from 'console'
 import Head from 'next/head'
+import ShareProduct from '@/components/common/ShareModal'
 
 interface typeProps extends ProductDetails {
   is_cart_local: boolean
@@ -37,7 +34,7 @@ const ProductDetail = (props: typeProps) => {
     {
       key: '1',
       label: 'Description',
-      children: <p>{state?.desc}</p>,
+      children: <p className='text-justify'>{state?.desc}</p>,
     },
     {
       key: '2',
@@ -308,27 +305,31 @@ const ProductDetail = (props: typeProps) => {
           <Col span={24} lg={11} xl={12} xxl={12}>
             <div className="product-images">
               <div className="preview-image mb-4">
-                <img onError={(e:any) => e.target.src = productImage.src} src={state?.feature_image ? `${BUCKET_ROOT}${state?.feature_image}` : productImage.src} alt="error" className='h-100 w-100' />
+                <img onError={(e:any) => e.target.src = productImage.src} src={state?.feature_image ? `${BUCKET_ROOT}${state?.feature_image}` : productImage.src} alt="error" className='h-100 w-100 rounded-3' />
               </div>
               <div className="preview-image-list">
                 {[state.image_1, state.image_2].map((res, index) => <div key={index} className="list-image">
-                  <img src={res ? `${BUCKET_ROOT}${res}` : productImage.src} alt="error" className='h-100 ' onError={(e:any) => e.target.src = productImage.src}/>
+                  <img src={res ? `${BUCKET_ROOT}${res}` : productImage.src} alt="error" className='h-100 rounded-3' onError={(e:any) => e.target.src = productImage.src}/>
                 </div>)}
               </div>
             </div>
           </Col>
           <Col span={24} lg={11} xl={11} xxl={11}>
             <div className="product-details">
+              <Flex align='top' justify='space-between'>
               <h4 className="title fs-1">
                 {state.name}
               </h4>
-              <p className='fs-5'>{CURRENCY}{Number(state.customer_buying_price).toFixed(2)}</p>
+              <ShareProduct title={`Share Product`} name={state.name} img={state?.feature_image ?  `${BUCKET_ROOT}${state?.feature_image}` : null}/>
+              </Flex>
+              <p className='fs-4 fw-bold mb-3'>{CURRENCY}{Number(state.customer_buying_price).toFixed(2)}</p>
 
               {/* <Flex className='rate mb-4' gap={6}><Rate className='fs-5' value={3} />
                 <span className='text-secondary'>(1 customer review)</span>
                 </Flex> */}
 
-              <p>{state?.notes}</p>
+              <p className='fw-semibold fs-16' style={{color:"#f50"}}>{state?.notes}</p>
+              <p className='mt-2 fs-14 text-justify'>{state.desc}</p>
 
               <Flex align='center' gap={20} className='my-5'>
                 {/* <CartCountCompo is_cart={state.is_cart} handleIncDec={handleIncDec} quantity={state.cart_qty} pid={Number(router.query.id)} /> */}
@@ -343,7 +344,19 @@ const ProductDetail = (props: typeProps) => {
               <ul className='list-unstyled p-0'>
                 <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>SKU</span>: <span className='text-secondary'>{state?.sku}</span></li>
                 <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Category</span>: <span className='text-secondary'>Fresh Coffee</span></li>
-                <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Tags</span>: <span className='text-secondary'>{`${state?.tag_1}, ${state?.tag_2}, ${state?.tag_3}`}</span></li>
+                <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Tags</span>: <span className='text-secondary'>{
+                  <>
+                  <Tag bordered={true} className='rounded' color="magenta">
+                  {state.tag_1}
+                </Tag>
+                <Tag bordered={true} className='rounded' color="orange">
+                {state.tag_2}
+              </Tag>
+              <Tag bordered={true} className='rounded' color="geekblue">
+              {state.tag_3}
+            </Tag>
+            </>
+                  }</span></li>
                 {/* <li className='product-desc-list'><span className='fw-semibold text-uppercase'>Share</span>:
                   <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
                     <li><Link href={'/'}><i className="fa-brands fa-facebook"></i></Link></li>
@@ -378,7 +391,7 @@ const ProductDetail = (props: typeProps) => {
           </Col>)}
         </Row> */}
         <Row gutter={[20, 20]} className='mt-5'>
-          <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col>
+          <Col span={24} className='mb-2'><h4 className='title fs-2'>You may also like.</h4></Col>
           {Array.isArray(relatedProduct?.data) && relatedProduct?.data.map((res: any, index: number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res}  /></Col>)}
         </Row>
       </div>

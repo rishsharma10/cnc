@@ -649,3 +649,26 @@ ul.notification-dropdown-menu {
     color: $white !important;
   }
 }
+.share-boat-image {
+  height: 70px;
+  width: 75px;
+  border-radius: 5px;
+  overflow: hidden;
+
+  img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+  }
+}
+.boat-sharing {
+  .btn {
+      border: 1px solid $primary;
+      font-weight: 600;
+      border-radius: 15px;
+
+      &:hover {
+          background: rgb(246, 246, 246);
+      }
+  }
+}

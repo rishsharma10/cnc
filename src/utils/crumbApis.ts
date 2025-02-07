@@ -4,7 +4,12 @@ const superagent = SuperagentPromise(_superagent, global.Promise);
 
 export const API_ROOT = "https://copper-crumb.wloper.com/api/";
 export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
-export const CURRENCY ='₹'
+export const CURRENCY = '₹'
+
+export const PHONE_NUMBER_LINK = `919915708181`
+export const INSTAGRAM_LINK = 'https://www.instagram.com/copperandcrumb.in/'
+export const FACEBOOK_LINK = 'https://www.facebook.com'
+export const WHATSPP_LINK = `https://api.whatsapp.com/send/?phone=${PHONE_NUMBER_LINK}&text=Hi, I have a quick question. Could you please help me with this? Thanks!&type=phone_number&app_absent=0`
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}/medium/`;
 const API_FILE_ROOT_ORIGINAL = `${BUCKET_ROOT}/original/`;
@@ -93,7 +98,7 @@ const Cart = {
   list: () => requests.get("v1/cart"),
   update: (info: any) => requests.post("v1/cart/add", info),
   add: (info: any) => requests.post("v1/cart/add", info),
-  remove: (info: any) => requests.post("v1/cart/remove",info),
+  remove: (info: any) => requests.post("v1/cart/remove", info),
 }
 
 const Common = {
@@ -132,7 +137,7 @@ const FILES = {
         ? filename
         : `${API_FILE_ROOT_SMALL}${filename}`
       : alt,
-  document:(filename: string, alt?: any) =>
+  document: (filename: string, alt?: any) =>
     filename
       ? filename?.startsWith("http")
         ? filename
