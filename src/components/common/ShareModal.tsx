@@ -92,7 +92,7 @@ const ShareProduct = (props: any) => {
                     </div> */}
                     <div className="col-sm-6">
                         <div className="social-button">
-                            <a rel="noreferrer" target="_blank" href={`https://www.twitter.com/share?text=${`I absolutely loved ❤️ this product! ${props.name} It's amazing, and I highly recommend checking it out ASAP. Don't miss`}&url=https://${typeof window !== "undefined" && (window?.location?.origin?.includes("staging") || window?.location?.origin?.includes("localhost")) ? `${STAGING_URL}${router.asPath}` : `${LIVE_URL}${router.asPath}`}`} className='btn w-100 py-3 text-start'>
+                            <a rel="noreferrer" target="_blank" href={`https://www.twitter.com/share?text=${`I absolutely loved ❤️ this product! ${props.name} It's amazing, and I highly recommend checking it out ASAP. Don't miss :`}&url=${typeof window !== "undefined" && (window?.location?.origin?.includes("staging") || window?.location?.origin?.includes("localhost")) ? `${STAGING_URL}${router.asPath}` : `${LIVE_URL}${router.asPath}`}`} className='btn w-100 py-3 text-start'>
                                 <CrumbIcons.ShareTwitter />
                                 <span className='ms-2'>Twitter</span>
                             </a>
