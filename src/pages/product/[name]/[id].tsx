@@ -320,7 +320,7 @@ const ProductDetail = (props: typeProps) => {
               <h4 className="title fs-1">
                 {state.name}
               </h4>
-              <ShareProduct title={`Share Product`} name={state.name} img={state?.feature_image ?  `${BUCKET_ROOT}${state?.feature_image}` : null}/>
+              <ShareProduct title={`Share Product`} price={state?.customer_buying_price} name={state.name} img={state?.feature_image ?  `${BUCKET_ROOT}${state?.feature_image}` : null}/>
               </Flex>
               <p className='fs-4 fw-bold mb-3'>{CURRENCY}{Number(state.customer_buying_price).toFixed(2)}</p>
 

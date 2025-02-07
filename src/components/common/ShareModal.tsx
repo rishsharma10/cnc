@@ -1,10 +1,11 @@
 import CrumbIcons from '@/assets/icons/CrumbIcons';
 import { GlobalContext } from '@/context/Provider';
-import crumbApi, { PHONE_NUMBER_LINK } from '@/utils/crumbApis';
+import crumbApi, { CURRENCY, PHONE_NUMBER_LINK } from '@/utils/crumbApis';
 import { Button, ConfigProvider, Grid, Modal } from 'antd'
 import { useRouter } from 'next/router';
 import { useState, useContext } from 'react';
 import productImage from '@/assets/images/product-placeholder-wp.jpg'
+import { TypographyTitle } from '@/lib/AntRegistry';
 
 const STAGING_URL = "https://coppercrumb.vercel.app"
 const LIVE_URL = "https://coppercrumb.vercel.app"
@@ -42,6 +43,8 @@ const ShareProduct = (props: any) => {
                             </div>
                             <div className="share-boat-desc">
                                 <p>{props?.name}</p>
+                        <TypographyTitle level={5}>{CURRENCY}{props?.price}</TypographyTitle>
+
                             </div>
                         </div>
                     </div>
@@ -56,7 +59,7 @@ const ShareProduct = (props: any) => {
                     </div>
                     <div className="col-sm-6">
                         <div className="social-button">
-                            <a className='btn w-100 py-3 text-start' href={`mailto:?subject=Copperandcrumb&body=${typeof window !== "undefined" && (window?.location?.origin?.includes("staging") || window?.location?.origin?.includes("localhost")) ? `${STAGING_URL}${router.asPath}` : `${LIVE_URL}${router.asPath}`}`} >
+                            <a className='btn w-100 py-3 text-start' href={`mailto:?subject=Check this out on copperandcrumb&body=${typeof window !== "undefined" && (window?.location?.origin?.includes("staging") || window?.location?.origin?.includes("localhost")) ? `${STAGING_URL}${router.asPath}` : `${LIVE_URL}${router.asPath}`}`} >
                                 <CrumbIcons.ShareGmail />
                                 <span className='ms-2'>Email</span>
                             </a>
@@ -64,10 +67,10 @@ const ShareProduct = (props: any) => {
                     </div>
                     <div className="col-sm-6">
                         <div className="social-button">
-                            <button onClick={() => typeof window !== "undefined" && (window?.location?.origin?.includes("staging") || window?.location?.origin?.includes("localhost")) ? (window as any).open(`https://wa.me/${PHONE_NUMBER_LINK}?text=Checkout this Coffee ${props?.name} on Copper and Crumb : ${STAGING_URL}${router.asPath}`) : (window as any).open(`https://wa.me/${PHONE_NUMBER_LINK}?text=Checkout this Coffee ${props?.name} on Copper and Crumb : ${STAGING_URL}${router.asPath}`)} className='btn w-100 py-3 text-start'>
+                            <a onClick={() => typeof window !== "undefined" && (window?.location?.origin?.includes("staging") || window?.location?.origin?.includes("localhost")) ? (window as any).open(`https://wa.me?text=Checkout this Coffee ${props?.name} on Copper and Crumb : ${STAGING_URL}${router.asPath}`) : (window as any).open(`https://wa.me?text=Checkout this Coffee ${props?.name} on Copper and Crumb : ${STAGING_URL}${router.asPath}`)} className='btn w-100 py-3 text-start'>
                                 <CrumbIcons.ShareWhatsApp />
                                 <span className='ms-2'>WhatsApp</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                     {/* <div className="col-sm-6">
@@ -89,7 +92,7 @@ const ShareProduct = (props: any) => {
                     </div> */}
                     <div className="col-sm-6">
                         <div className="social-button">
-                            <a rel="noreferrer" target="_blank" href={`https://www.twitter.com/share?url=https://${typeof window !== "undefined" && (window?.location?.origin?.includes("staging") || window?.location?.origin?.includes("localhost")) ? `${STAGING_URL}${router.asPath}` : `${LIVE_URL}${router.asPath}`}`} className='btn w-100 py-3 text-start'>
+                            <a rel="noreferrer" target="_blank" href={`https://www.twitter.com/share?text=${`I love this product ${props.name} from copper & crumb`}url=https://${typeof window !== "undefined" && (window?.location?.origin?.includes("staging") || window?.location?.origin?.includes("localhost")) ? `${STAGING_URL}${router.asPath}` : `${LIVE_URL}${router.asPath}`}`} className='btn w-100 py-3 text-start'>
                                 <CrumbIcons.ShareTwitter />
                                 <span className='ms-2'>Twitter</span>
                             </a>
