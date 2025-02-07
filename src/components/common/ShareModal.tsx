@@ -11,6 +11,8 @@ const STAGING_URL = "https://coppercrumb.vercel.app"
 const LIVE_URL = "https://coppercrumb.vercel.app"
 
 const ShareProduct = (props: any) => {
+    console.log(props,'proppspsp');
+    
     const screens = Grid.useBreakpoint()
     const [modal2Open, setModal2Open] = useState(false);
     const { Toast } = useContext(GlobalContext)
@@ -39,7 +41,7 @@ const ShareProduct = (props: any) => {
                     <div className="col-12 py-2">
                         <div className="share-boat d-flex align-items-center gap-3">
                             <div className="share-boat-image">
-                                <img src={props?.img ?  crumbApi.FILES.imageOriginal(props?.img, productImage.src) : productImage.src} alt='img' className='img-fluid' />
+                                <img onError={(e:any) => e.target.src = productImage.src} src={props?.img ?  crumbApi.FILES.imageOriginal(props?.img, productImage.src) : productImage.src} alt='img' className='img-fluid' />
                             </div>
                             <div className="share-boat-desc">
                                 <p>{props?.name}</p>

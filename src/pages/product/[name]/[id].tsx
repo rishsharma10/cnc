@@ -291,6 +291,42 @@ const ProductDetail = (props: typeProps) => {
     // setSelectedImage(data?.images.length ? data?.images[0] : '')
 }, [router.query.id])
 
+const arrGrindSize = [
+  {
+    value:'WHOLE_BEANS',
+    label:'Whole Beans'
+  },
+  {
+    value:'COARSE_GRIND',
+    label:'Coarse Grind'
+  },
+  {
+    value:'MEDIUM_GRIND',
+    label:'Medium Grind'
+  },
+  {
+    value:'FINE_GRIND',
+    label:'Fine Grind'
+  },
+]
+const quantityArr = [
+  { value: 1, label: '1' },
+  { value: 2, label: '2' },
+  { value: 3, label: '3' },
+  { value: 4, label: '4' },
+  { value: 5, label: '5' },
+  { value: 6, label: '6' },
+  { value: 7, label: '7' },
+  { value: 8, label: '8' },
+  { value: 9, label: '9' },
+  { value: 10, label: '10' },
+];
+
+
+const [grindSize, setGrindSize] = useState(arrGrindSize[0]?.value)
+const [size, setSize] = useState(250)
+const [buyQuantity, setBuyQuantity] = useState(1)
+
   return (
     <Fragment>
       <Head>
@@ -322,24 +358,71 @@ const ProductDetail = (props: typeProps) => {
               </h4>
               <ShareProduct title={`Share Product`} price={state?.customer_buying_price} name={state.name} img={state?.feature_image ?  `${BUCKET_ROOT}${state?.feature_image}` : null}/>
               </Flex>
-              <p className='fs-4 fw-bold mb-3'>{CURRENCY}{Number(state.customer_buying_price).toFixed(2)}</p>
+              
 
               {/* <Flex className='rate mb-4' gap={6}><Rate className='fs-5' value={3} />
                 <span className='text-secondary'>(1 customer review)</span>
                 </Flex> */}
 
               <p className='fw-semibold fs-16' style={{color:"#f50"}}>{state?.notes}</p>
-              <p className='mt-2 fs-14 text-justify'>{state.desc}</p>
+              <p className='mt-2 fs-14 text-justify mb-4'>{state.desc}</p>
 
-              <Flex align='center' gap={20} className='my-5'>
+              <Row gutter={[12,0]}>
+                <Col span={24} xxl={24} xl={24}>
+                <FormItem label='GRIND SIZE' layout='vertical'>
+                 <Select
+                 value={grindSize}
+                 onChange={(val:any) => setGrindSize(val)}
+                options={arrGrindSize?.map((res,i) => {
+                  return {
+                    value:res.value,
+                    label:res.label
+                  }
+                })}
+                />
+                </FormItem>
+                </Col>
+                <Col span={24} xxl={12} xl={12} md={12} sm={12} xs={12}>
+                <FormItem label='SIZE' layout='vertical'>
+                 <Select
+                value={size}
+                onChange={(val:any) => setSize(val)}
+                options={[
+                  { value:250, label: '250g' },
+                  { value:500, label: '500g' },
+                ]}
+                />
+                </FormItem>
+                </Col>
+                <Col span={24} xxl={12} xl={12} md={12} sm={12} xs={12}>
+                <FormItem label='QUANTITY' layout='vertical'>
+                 <Select
+                 value={buyQuantity}
+                 onChange={(val:any) => setBuyQuantity(val)}
+                // style={{ width: 160 }}
+                options={quantityArr?.map((res:any,i:number) => {
+                  return {
+                    value:res.value,
+                    label:res.label
+                  }
+                })}
+                />
+                </FormItem>
+                </Col>
+              </Row>
+              <Flex align='baseline' gap={20}>
+              <p className='fs-3 fw-bold mt-2'>{CURRENCY}{Number(state.customer_buying_price).toFixed(2)}</p>
+              <del className='fs-6 text-grey mt-2'>{CURRENCY}{Number(state.price).toFixed(2)}</del>
+              </Flex>
+              <Flex align='center' gap={20} className='my-3'>
                 {/* <CartCountCompo is_cart={state.is_cart} handleIncDec={handleIncDec} quantity={state.cart_qty} pid={Number(router.query.id)} /> */}
                 {userInfo?.access_token ? <Fragment>{state?.is_cart ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
                 </Fragment> :
                   <Fragment>{state?.is_cart_local ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
                   </Fragment>}
 
+                <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>Buy now</Button></Link>
               </Flex> 
-                {/* <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>add to cart</Button></Link> */}
 
               <ul className='list-unstyled p-0'>
                 <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>SKU</span>: <span className='text-secondary'>{state?.sku}</span></li>

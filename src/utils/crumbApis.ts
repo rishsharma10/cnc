@@ -4,6 +4,11 @@ const superagent = SuperagentPromise(_superagent, global.Promise);
 
 export const API_ROOT = "https://copper-crumb.wloper.com/api/";
 export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
+
+// export const API_ROOT = "https://copperandcrumb.in/api/";
+// export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
+
+
 export const CURRENCY = '₹'
 
 export const PHONE_NUMBER_LINK = `919915708181`

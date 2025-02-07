@@ -11,7 +11,6 @@ import { Form, Grid, Spin } from 'antd';
 import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis';
 import CartCountCompo from '@/components/CartCountCompo';
 import EmptyCart from '@/components/common/EmptyCart';
-import { EditFilled } from '@ant-design/icons'
 import Head from 'next/head';
 import productImage from '@/assets/images/product-placeholder-wp.jpg'
 import { stringReplace } from '@/utils/crumbValidation'
@@ -327,9 +326,8 @@ const AddToCart = () => {
                                                 <span>Subtotal</span>
                                                 <span>{CURRENCY}{state.sub_total}</span>
                                             </li>
-                                            <li className='cart-list'>
+                                            {/* <li className='cart-list'>
                                                 {!show && <span>Shipping</span>}
-                                                {/* <Flex> */}
                                                 {!show ? <><span role='button' className='text-wrap'>{userInfo?.b_address_line_1 ?? 'Enter your address to view shipping options.'}
                                                     <Button onClick={() => setShow(true)} type='text' className='fs-5'><EditFilled /></Button></span></> : <AntForm className='w-100' layout='vertical' size={!screens.md ? "middle" : 'large'} onFinish={handleSubmit}>
                                                     <Row gutter={[10, 5]}>
@@ -386,13 +384,18 @@ const AddToCart = () => {
                                                         </Col>
                                                     </Row>
                                                 </AntForm>}
-                                                {/* <Button>Edit</Button> */}
-                                                {/* </Flex> */}
+                                            </li> */}
+                                            {coupon?.is_applied &&<>
+                                                <li className='cart-list'>
+                                                <span>Discount</span>
+                                                <span>{CURRENCY}{discount}</span>
                                             </li>
-                                            <li className='cart-list'>
+                                                 <li className='cart-list'>
                                                 <span>Total</span>
                                                 <span>{CURRENCY}{Number(state.sub_total) - discount}</span>
                                             </li>
+                                            </>
+                                            }
 
                                         </ul>
 
