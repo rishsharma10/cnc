@@ -301,30 +301,29 @@ const AddToCart = () => {
                             </Spin>
                             {state?.data?.length !== 0 &&
                                 <Fragment>
-                                    <div className="coupon">
+                                    {/* <div className="coupon">
                                         <AntForm size='large' form={form} className='d-flex flex-wrap align-items-center gap-3' onFinish={applyCoupon}>
                                             <FormItem name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]} className={screens.sm ? 'w-25 m-0' : 'w-100 m-0'}>
                                                 <Input placeholder='Coupon Code' disabled={coupon.is_applied} />
                                             </FormItem>
 
                                             <Button loading={couponLoading} type='primary' htmlType='submit' block={screens.sm ? false : true} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply Coupon"}</Button>
-                                            {/* <Button type='primary' block={screens.sm ? false : true} className='px-5 text-uppercase'>Update cart</Button> */}
                                         </AntForm>
-                                    </div>
-                                    {coupon?.is_applied && <div className='mt-3 shadow-lg' style={{ padding: '10px', color: 'black', maxWidth: '400px' }}>
+                                    </div> */}
+                                    {/* {coupon?.is_applied && <div className='mt-3 shadow-lg' style={{ padding: '10px', color: 'black', maxWidth: '400px' }}>
                                         <h6>🎉 <span className='fw-bold'>{form.getFieldValue("code")}</span> Applied Successfully!</h6>
                                         <p>
                                             You saved <strong>{CURRENCY}{Number(coupon.discount).toFixed(2)}</strong> off your order. Enjoy your shopping!
                                         </p>
-                                    </div>}
+                                    </div>} */}
 
-                                    <div className="cart-total mt-5">
-                                        <h2 className='title'>Cart TOtal</h2>
+                                    <div className="cart-total mt-3">
+                                        {/* <h2 className='title'>Cart TOtal</h2> */}
 
                                         <ul className='list-unstyled mb-5 p-0'>
                                             <li className='cart-list'>
-                                                <span>Subtotal</span>
-                                                <span>{CURRENCY}{state.sub_total}</span>
+                                                <span className='fs-4 fw-bold'>Sub Total:</span>
+                                                <span className='fs-5 fw-bold'>{CURRENCY}{Number(state.sub_total).toFixed(2)}</span>
                                             </li>
                                             {/* <li className='cart-list'>
                                                 {!show && <span>Shipping</span>}

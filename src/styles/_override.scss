@@ -661,6 +661,18 @@ ul.notification-dropdown-menu {
       object-fit: cover;
   }
 }
+.cart-image-checkout {
+  height: 80px;
+  width: 80px;
+  border-radius: 5px;
+  overflow: hidden;
+
+  img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+  }
+}
 .boat-sharing {
   .btn {
       border: 1px solid $primary;
@@ -671,4 +683,10 @@ ul.notification-dropdown-menu {
           background: rgb(246, 246, 246);
       }
   }
+}
+.cart-section-checkout{
+  background: #ddceee55;
+}
+.cart-section-checkout-withoutbg{
+  background:"none";
 }

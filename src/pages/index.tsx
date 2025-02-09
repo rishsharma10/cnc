@@ -314,14 +314,22 @@ motion. `,
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
-              <h2 className="title">Featured Product</h2>
+              <h2 className="title">Featured Products</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
               {/* <p className="sub-title">Experience the finest coffee from the comfort of your home. From signature blends to fresh brews, our online shop brings the Copper & Crumb experience straight to your door. Sip, savor, and enjoy!</p> */}
             </Col>
           </Row>
-          <Row gutter={[20, 20]} justify={'center'}>
+          {/* <Row gutter={[20, 20]} justify={'center'}>
 
             {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res} /></Col>)}
+          </Row> */}
+          <Row gutter={[20, 20]} className="mx-0">
+            <Col span={24}>
+              <Carousel dots={false} autoplay slidesToShow={4.8} infinite={true} slidesToScroll={1} draggable={true} responsive={responsive}>
+                {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)}
+              </Carousel>
+
+            </Col>
           </Row>
         </div>
       </section>
@@ -389,17 +397,6 @@ motion. `,
           <Row gutter={[20, 20]} className="mx-0">
             <Col span={24}>
               <Carousel dots={false} autoplay slidesToShow={4.8} infinite={true} slidesToScroll={1} draggable={true} responsive={responsive}>
-                {/* {[...Array(6)].map(() => <div>
-                  <div className="gallery-card">
-                    <div className="gallery-image">
-                      <img src={serviceImage.src} alt="error" className="img-fluid" style={{ objectPosition: 'left' }} />
-                    </div>
-                    <div className="gallery-content">
-                      <h4>Brewed</h4>
-                      <p>Cup of coffee/Filtered</p>
-                    </div>
-                  </div>
-                </div>)} */}
                 {Array.isArray(popularProducts?.products) && popularProducts?.products.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)}
               </Carousel>
 

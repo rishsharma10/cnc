@@ -1,7 +1,8 @@
 import React from 'react'
 import HeaderPage from './HeaderPage'
 import FooterPage from './FooterPage'
-import { Grid } from 'antd'
+import logo from '@/assets/brand-guide/logo.png';
+import { Divider, Grid } from 'antd'
 import { ShoppingCartOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import { Col } from '@/lib/AntRegistry'
@@ -13,24 +14,20 @@ const CheckLayout = ({ children }: any) => {
             <header>
                 <nav className="navbar py-3 px-5 navbar-expand-lg ">
                     <div className="container-fluid">
-                        <Link className="navbar-brand p-0" href="/">
+                        {!screens.md ?  <Link className="navbar-brand p-0" href="/">
+                        <img src={logo.src} alt="error" height={50} width={50} />
+                    </Link> :<Link className="navbar-brand p-0" href="/">
                             <h1 className='logo-text'>Copper & Crumb</h1>
-                        </Link>
-                        <button className="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse " id="navbarSupportedContent">
-                            <ul className="navbar-nav mb-2 ms-auto gap-2 gap-lg-3 mb-lg-0 align-items-center">
-                                <Link className="nav-item" href="/viewcart" legacyBehavior>
+                        </Link>}
+                        <Link className="nav-item" href="/viewcart" legacyBehavior>
                                     <a className="nav-link" ><ShoppingCartOutlined /></a>
                                 </Link>
-                            </ul>
-                        </div>
                     </div>
                 </nav>
             </header>
+            <Divider className='m-0 p-0'/>
             <main className="main">{children}</main>
-            <footer>
+            {/* <footer>
                     <div className="">
                         <ul className="list-unstyled m-0 p-0 gap-4 d-flex">
                             <li> <div className="line"></div> <Link href={'/pages/privacy-policy'}>Privacy policy</Link></li>
@@ -39,7 +36,7 @@ const CheckLayout = ({ children }: any) => {
                             <li><div className="line"></div><Link href={'/pages/contact-us'}>Contact Us</Link></li>
                         </ul>
                     </div>
-            </footer>
+            </footer> */}
         </>
     )
 }
