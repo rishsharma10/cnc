@@ -160,6 +160,7 @@ const ProductDetail = (props: typeProps) => {
   console.log(cartData, 'cartDatacartData');
 
   const updateCart = (payload: any) => {
+    debugger
     try {
       let cart: any = localStorage.getItem('cart');
       cart = cart ? JSON.parse(cart) : [];
@@ -191,9 +192,9 @@ const ProductDetail = (props: typeProps) => {
           id:Number(router.query.id),
           feature_image:state?.feature_image??null
         },
-        quantity: Number(state.cart_qty),
-        size: 200,
-        grid_size: 'small'
+        quantity: Number(quantity),
+        size: size,
+        grid_size:grindSize
       }
       const cartPayload = {
         product_id: state.id,
@@ -326,6 +327,19 @@ const quantityArr = [
 const [grindSize, setGrindSize] = useState(arrGrindSize[0]?.value)
 const [size, setSize] = useState(250)
 const [buyQuantity, setBuyQuantity] = useState(1)
+
+
+
+// React.useEffect(() => {
+//   if(!userInfo?.access_token){
+//     let is_cart_local = cartData?.data?.some((res:any) => Number(res?.id) === Number(router.query.id));
+//     setState({
+//       ...state,
+//       is_cart_local:is_cart_local
+//     })
+//   }
+
+// },[userInfo?.access_token,router.query.id])
 
   return (
     <Fragment>

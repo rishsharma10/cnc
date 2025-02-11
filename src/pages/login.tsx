@@ -132,13 +132,15 @@ const LoginPage = () => {
       const apiRes = await crumbApi.Auth.login(payload);
       crumbApi.setToken(apiRes.token)
       const apiResUser = await crumbApi.Auth.profile();
-      // let localStorageData: any = localStorage.getItem("cart")
-      // let parseData = JSON.parse(String(localStorageData)) ?? []
-      // if (parseData?.length) {
-      //   let cartData = await crumbApi.Cart.list()
-      //   await syncCartData(parseData, cartData.cart)
-      //   localStorage.setItem("cart", JSON.stringify([]))
-      // }
+      if (router.query.checkout) {
+        let localStorageData: any = localStorage.getItem("cart")
+        let parseData = JSON.parse(String(localStorageData)) ?? []
+        if (parseData?.length) {
+          let cartData = await crumbApi.Cart.list()
+          await syncCartData(parseData, cartData.cart)
+          localStorage.setItem("cart", JSON.stringify([]))
+        }
+      }
       await initCart()
       setUserInfo({
         ...apiResUser?.customer,
@@ -147,7 +149,11 @@ const LoginPage = () => {
       setCookie(this, COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN, apiRes?.token, {
         path: "/",
       });
-      router.replace(`/`)
+      if (router.query.checkout) {
+        router.replace(`/checkout/payment`)
+      } else {
+        router.replace(`/`)
+      }
     } catch (error: any) {
       Toast.error(error.message)
       setLoading(false)

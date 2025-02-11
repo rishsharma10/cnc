@@ -28,6 +28,7 @@ const Payment = () => {
             billing_same: true
         }
         try {
+            await handlePayment()
             // setLoading(true)
             // let apiRes = await crumbApi.Auth.updateAddress(payload)
             // setUserInfo({
@@ -46,7 +47,7 @@ const Payment = () => {
 
 
     let discount = coupon.is_applied ? Number(coupon.discount) : 0
-    let loyalityDiscount = isLoyalityApplied ? Number(userInfo?.loyalty) : 0
+    let loyalityDiscount = isLoyalityApplied ? Number(userInfo?.loyalty ?? 0) : 0
     const applyCoupon = async ({ code }: any) => {
         if (coupon.is_applied) {
             form.resetFields()
@@ -83,6 +84,40 @@ const Payment = () => {
     const handleLoyality = () => {
         setIsLoyalityApplied(!isLoyalityApplied)
     }
+
+
+    const handlePayment = () => {
+        const options = {
+          key: 'YOUR_RAZORPAY_KEY', // Replace with your Razorpay Key
+          amount: 99, // Amount in paise (1 INR = 100 paise)
+          currency: 'INR',
+          name: 'Test Payment',
+          description: 'Test Payment for Razorpay Integration',
+          image: 'https://example.com/logo.png',  // Optional: Your company logo
+          handler: function (response:any) {
+            alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+          },
+          prefill: {
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            contact: '9876543210',
+          },
+          notes: {
+            address: 'Razorpay Corporate Office',
+          },
+          theme: {
+            color: '#F37254',
+          },
+        };
+    
+        // const razorpay = new window.Razorpay(options);
+        // razorpay.open();
+      };
+
+
+
+
+
     React.useEffect(() => {
         const total = cartData?.data?.reduce((acc: any, item: any) => {
             const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
@@ -109,8 +144,8 @@ const Payment = () => {
                         <div className="container mt-4 h-100 px-5">
                             <Flex align='center' justify='space-between'>
                                 <TypographyTitle level={5}>Contact</TypographyTitle>
-                                <Link href={`/login`}>
-                                    <Button type='text' className='text-primary'>Login</Button></Link>
+                                {!userInfo?.access_token && <Link href={`/login?checkout=true`}>
+                                    <Button type='text' className='text-primary'>Login</Button></Link>}
                             </Flex>
                             <AntForm className='w-100' layout='vertical' size={!screens.md ? "middle" : 'large'} onFinish={handleSubmit}>
                                 <Row gutter={[10, 0]}>
@@ -252,47 +287,47 @@ const Payment = () => {
                                             </FormItem>
                                         </Col>
                                     </Fragment>}
-{!screens.md && <Col span={!screens.md ? 24 : 12} className={`${!screens.md ? "cart-section-checkout-withoutbg" : "cart-section-checkout"}`}>
-                        <div className={`container  position-sticky`} style={{ top: 0, bottom: 0, right: 'auto', left: 'auto' }}>
-                            <div>
+                                    {!screens.md && <Col span={!screens.md ? 24 : 12} className={`${!screens.md ? "cart-section-checkout-withoutbg" : "cart-section-checkout"}`}>
+                                        <div className={`container  position-sticky`} style={{ top: 0, bottom: 0, right: 'auto', left: 'auto' }}>
+                                            <div>
 
-                                <div className={` ${!screens.md ? "" : "mt-3 px-5"} h-100`}>
-                                    {!screens.md &&
-                                        <TypographyTitle level={5}>Order summary</TypographyTitle>}
-                                    {Array.isArray(state.data) && state.data.map((res, index) => <CheckoutCartListCompo {...res} key={index} />)}
-                                    <div className="coupon">
-                                        <AntForm size='large' form={form} className='d-flex flex-wrap align-items-center gap-3' onFinish={applyCoupon}>
-                                            <Flex gap={10} wrap>
+                                                <div className={` ${!screens.md ? "" : "mt-3 px-5"} h-100`}>
+                                                    {!screens.md &&
+                                                        <TypographyTitle level={5}>Order summary</TypographyTitle>}
+                                                    {Array.isArray(state.data) && state.data.map((res, index) => <CheckoutCartListCompo {...res} key={index} />)}
+                                                    <div className="coupon">
+                                                        <AntForm size='large' form={form} className='d-flex flex-wrap align-items-center gap-3' onFinish={applyCoupon}>
+                                                            <Flex gap={10} wrap>
 
-                                                    <FormItem name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]}>
-                                                        <Input className='w-100' placeholder='Coupon Code' disabled={coupon.is_applied} />
-                                                    </FormItem>
+                                                                <FormItem name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]}>
+                                                                    <Input className='w-100' placeholder='Coupon Code' disabled={coupon.is_applied} />
+                                                                </FormItem>
 
-                                                    <Button loading={couponLoading} type='primary' htmlType='submit' block={!screens.sm ? true : false} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply"}</Button>
+                                                                <Button loading={couponLoading} type='primary' htmlType='submit' block={!screens.sm ? true : false} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply"}</Button>
 
-                                            </Flex>
+                                                            </Flex>
 
-                                            {/* <Button type='primary' block={screens.sm ? false : true} className='px-5 text-uppercase'>Update cart</Button> */}
-                                        </AntForm>
-                                    </div>
-                                    {coupon?.is_applied && <Card className='mt-3 shadow-sm' style={{backgroundColor:'#E5E4E2',  padding: '10px', color: 'black'}}>
-                                        <h6>🎉 <span className='fw-bold'>{form.getFieldValue("code")}</span> Applied Successfully!</h6>
-                                        <p>
-                                            You saved <strong>{CURRENCY}{Number(coupon.discount).toFixed(2)}</strong> off your order. Enjoy your shopping!
-                                        </p>
-                                    </Card>}
-                                    {Number(userInfo?.loyalty) !== 0 && <Card style={{backgroundColor:'#E5E4E2'}} className='p-2 px-3 my-3 shadow-sm' title={<Flex align='center' justify='space-between'>
-                                        <TypographyTitle level={5}>Loyality Points</TypographyTitle>
-                                        <Flex align='center' gap={6}>
-                                            <TypographyTitle level={5}>{userInfo?.loyalty}</TypographyTitle>
-                                            <Switch checked={isLoyalityApplied} onChange={handleLoyality} />
-                                        </Flex>
-                                    </Flex>}>
-                                        <TypographyText className='fw-semibold text-muted fs-14'>Your loyalty points have been applied to this order. Thank you for being a valued customer!
+                                                            {/* <Button type='primary' block={screens.sm ? false : true} className='px-5 text-uppercase'>Update cart</Button> */}
+                                                        </AntForm>
+                                                    </div>
+                                                    {coupon?.is_applied && <Card className='mt-3 shadow-sm' style={{ backgroundColor: '#E5E4E2', padding: '10px', color: 'black' }}>
+                                                        <h6>🎉 <span className='fw-bold'>{form.getFieldValue("code")}</span> Applied Successfully!</h6>
+                                                        <p>
+                                                            You saved <strong>{CURRENCY}{Number(coupon.discount).toFixed(2)}</strong> off your order. Enjoy your shopping!
+                                                        </p>
+                                                    </Card>}
+                                                    {(Number(userInfo?.loyalty) && userInfo?.access_token) ? <Card style={{ backgroundColor: '#E5E4E2' }} className='p-2 px-3 my-3 shadow-sm' title={<Flex align='center' justify='space-between'>
+                                                        <TypographyTitle level={5}>Loyality Points</TypographyTitle>
+                                                        <Flex align='center' gap={6}>
+                                                            <TypographyTitle level={5}>{userInfo?.loyalty}</TypographyTitle>
+                                                            <Switch checked={isLoyalityApplied} onChange={handleLoyality} />
+                                                        </Flex>
+                                                    </Flex>}>
+                                                        <TypographyText className='fw-semibold text-muted fs-14'>Your loyalty points have been applied to this order. Thank you for being a valued customer!
 
-                                        </TypographyText>
-                                    </Card>}
-                                    {/* <Card className='p-2 px-3 my-3' title={<Flex align='center' justify='space-between'>
+                                                        </TypographyText>
+                                                    </Card> : ""}
+                                                    {/* <Card className='p-2 px-3 my-3' title={<Flex align='center' justify='space-between'>
                                         <TypographyTitle level={5}>Membership Discount 15%</TypographyTitle>
                                         <Flex align='center' gap={6}>
                                             <TypographyTitle level={5}>15</TypographyTitle>
@@ -302,38 +337,38 @@ const Payment = () => {
                                         <TypographyText className='fw-semibold text-muted fs-14'>Enjoy 15% off as a valued member! Your discount has been applied to your order.</TypographyText>
                                     </Card> */}
 
-                                    <div className="cart-total-checkout">
-                                        <ul className='list-unstyled mb-5 p-0'>
-                                            <li className='cart-list'>
-                                                <span>Subtotal . {state.count} items</span>
-                                                <span>{CURRENCY}{Number(state.sub_total).toFixed(2)}</span>
-                                            </li>
-                                            <li className='cart-list'>
-                                                <span>Shipping</span>
-                                                <span>FREE</span>
-                                            </li>
-                                            {coupon?.is_applied &&
-                                                <li className='cart-list'>
-                                                    <span>Discount</span>
-                                                    <span>{CURRENCY}{Number(discount).toFixed(2)}</span>
-                                                </li>}
-                                                {isLoyalityApplied &&
-                                                <li className='cart-list'>
-                                                    <span>Loyality Points ({loyalityDiscount})</span>
-                                                    <span>{Number(loyalityDiscount).toFixed(2)}</span>
-                                                </li>}
-                                            <li className='cart-list'>
-                                                <span className='fs-5 fw-bold'>Total</span>
-                                                <span className='fs-5 fw-bold'>{CURRENCY}{Number(Number(state.sub_total) - (discount + loyalityDiscount)).toFixed(2)}</span>
-                                            </li>
+                                                    <div className="cart-total-checkout">
+                                                        <ul className='list-unstyled mb-5 p-0'>
+                                                            <li className='cart-list'>
+                                                                <span>Subtotal . {state.count} items</span>
+                                                                <span>{CURRENCY}{Number(state.sub_total).toFixed(2)}</span>
+                                                            </li>
+                                                            <li className='cart-list'>
+                                                                <span>Shipping</span>
+                                                                <span>FREE</span>
+                                                            </li>
+                                                            {coupon?.is_applied &&
+                                                                <li className='cart-list'>
+                                                                    <span>Discount</span>
+                                                                    <span>{CURRENCY}{Number(discount).toFixed(2)}</span>
+                                                                </li>}
+                                                            {(isLoyalityApplied && loyalityDiscount) &&
+                                                                <li className='cart-list'>
+                                                                    <span>Loyality Points ({loyalityDiscount})</span>
+                                                                    <span>{Number(loyalityDiscount).toFixed(2)}</span>
+                                                                </li>}
+                                                            <li className='cart-list'>
+                                                                <span className='fs-5 fw-bold'>Total</span>
+                                                                <span className='fs-5 fw-bold'>{CURRENCY}{Number(Number(state.sub_total) - (discount + loyalityDiscount)).toFixed(2)}</span>
+                                                            </li>
 
 
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </Col>}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Col>}
                                     <Col span={24}>
                                         <Button className='my-3' htmlType='submit' block type='primary'>Pay now</Button>
                                     </Col>
@@ -351,7 +386,7 @@ const Payment = () => {
 
                         </div>
                     </Col>
-                    {screens.md &&<Col span={!screens.md ? 24 : 12} className={`${!screens.md ? "cart-section-checkout-withoutbg" : "cart-section-checkout"}`}>
+                    {screens.md && <Col span={!screens.md ? 24 : 12} className={`${!screens.md ? "cart-section-checkout-withoutbg" : "cart-section-checkout"}`}>
                         <div className={`container  p-4 position-sticky`} style={{ top: 0, bottom: 0, right: 'auto', left: 'auto' }}>
                             <div>
 
@@ -363,24 +398,24 @@ const Payment = () => {
                                         <AntForm size='large' form={form} className='d-flex flex-wrap align-items-center gap-3' onFinish={applyCoupon}>
                                             <Flex gap={10} wrap>
 
-                                                    <FormItem name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]}>
-                                                        <Input className='w-100' placeholder='Coupon Code' disabled={coupon.is_applied} />
-                                                    </FormItem>
+                                                <FormItem name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]}>
+                                                    <Input className='w-100' placeholder='Coupon Code' disabled={coupon.is_applied} />
+                                                </FormItem>
 
-                                                    <Button loading={couponLoading} type='primary' htmlType='submit' block={!screens.sm ? true : false} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply"}</Button>
+                                                <Button loading={couponLoading} type='primary' htmlType='submit' block={!screens.sm ? true : false} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply"}</Button>
 
                                             </Flex>
 
                                             {/* <Button type='primary' block={screens.sm ? false : true} className='px-5 text-uppercase'>Update cart</Button> */}
                                         </AntForm>
                                     </div>
-                                    {coupon?.is_applied && <Card className='mt-3 shadow-sm' style={{backgroundColor:'#E5E4E2',  padding: '10px', color: 'black'}}>
+                                    {coupon?.is_applied && <Card className='mt-3 mb-3 shadow-sm' style={{ backgroundColor: '#E5E4E2', padding: '10px', color: 'black' }}>
                                         <h6>🎉 <span className='fw-bold'>{form.getFieldValue("code")}</span> Applied Successfully!</h6>
                                         <p>
                                             You saved <strong>{CURRENCY}{Number(coupon.discount).toFixed(2)}</strong> off your order. Enjoy your shopping!
                                         </p>
                                     </Card>}
-                                    {Number(userInfo?.loyalty) !== 0 && <Card style={{backgroundColor:'#E5E4E2'}} className='p-2 px-3 my-3 shadow-sm' title={<Flex align='center' justify='space-between'>
+                                    {(Number(userInfo?.loyalty) && userInfo?.access_token) ? <Card style={{ backgroundColor: '#E5E4E2' }} className='p-2 px-3 my-3 shadow-sm' title={<Flex align='center' justify='space-between'>
                                         <TypographyTitle level={5}>Loyality Points</TypographyTitle>
                                         <Flex align='center' gap={6}>
                                             <TypographyTitle level={5}>{userInfo?.loyalty}</TypographyTitle>
@@ -390,7 +425,7 @@ const Payment = () => {
                                         <TypographyText className='fw-semibold text-muted fs-14'>Your loyalty points have been applied to this order. Thank you for being a valued customer!
 
                                         </TypographyText>
-                                    </Card>}
+                                    </Card> : ""}
                                     {/* <Card className='p-2 px-3 my-3' title={<Flex align='center' justify='space-between'>
                                         <TypographyTitle level={5}>Membership Discount 15%</TypographyTitle>
                                         <Flex align='center' gap={6}>
@@ -416,7 +451,7 @@ const Payment = () => {
                                                     <span>Discount</span>
                                                     <span>{CURRENCY}{Number(discount).toFixed(2)}</span>
                                                 </li>}
-                                                {isLoyalityApplied &&
+                                            {isLoyalityApplied &&
                                                 <li className='cart-list'>
                                                     <span>Loyality Points ({loyalityDiscount})</span>
                                                     <span>{Number(loyalityDiscount).toFixed(2)}</span>

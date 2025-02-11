@@ -159,7 +159,7 @@ motion. `,
     {
       breakpoint: 480,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 1,
         slidesToScroll: 1
       }
     }
@@ -202,6 +202,7 @@ motion. `,
     //   video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
     // }
   ]
+  let screenSize = screens.xxl ? 5 :screens.xl ? 4 :screens.lg ? 3 : screens.md ? 2 : screens.sm ? 1 : 1
 
   return (
     <>
@@ -310,13 +311,15 @@ motion. `,
         </div>
       </section>
      
-      <section className="cart-section ">
-        <div className="container">
-          <Row justify={"center"} className="mb-5">
+      <section className="gallery-section ">
+        <div className="container-fluid px-0">
+          <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Featured Products</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              {/* <p className="sub-title">Experience the finest coffee from the comfort of your home. From signature blends to fresh brews, our online shop brings the Copper & Crumb experience straight to your door. Sip, savor, and enjoy!</p> */}
+              {/* <p className="sub-title">Treat yourself to our hand-crafted desserts and freshly baked pastries. The perfect sweet companion to your favorite brew, crafted to delight every time</p> */}
+            {/* <Button type="primary" className="text-end">View all</Button> */}
+
             </Col>
           </Row>
           {/* <Row gutter={[20, 20]} justify={'center'}>
@@ -325,8 +328,10 @@ motion. `,
           </Row> */}
           <Row gutter={[20, 20]} className="mx-0">
             <Col span={24}>
-              <Carousel dots={false} autoplay slidesToShow={4.8} infinite={true} slidesToScroll={1} draggable={true} responsive={responsive}>
+              <Carousel dots={false} autoplay slidesToShow={screenSize} infinite={true} slidesToScroll={1} draggable={true} responsive={responsive}>
                 {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)}
+                {/* {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)} */}
+                {/* {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)} */}
               </Carousel>
 
             </Col>
@@ -396,7 +401,7 @@ motion. `,
           </Row>
           <Row gutter={[20, 20]} className="mx-0">
             <Col span={24}>
-              <Carousel dots={false} autoplay slidesToShow={4.8} infinite={true} slidesToScroll={1} draggable={true} responsive={responsive}>
+              <Carousel dots={false} autoplay slidesToShow={screenSize} infinite={true} slidesToScroll={1} draggable={true} responsive={responsive}>
                 {Array.isArray(popularProducts?.products) && popularProducts?.products.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)}
               </Carousel>
 

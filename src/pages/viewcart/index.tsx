@@ -1,5 +1,5 @@
 import CommonLayout from '@/components/common/CommonLayout'
-import { AntForm, Avatar, Button, Col, Flex, FormItem, Input, Row, Table } from '@/lib/AntRegistry'
+import { AntForm, Avatar, Button, Col, Flex, FormItem, Input, Row, Table, TypographyText } from '@/lib/AntRegistry'
 import React, { ReactElement, useState, useContext, Fragment } from 'react'
 import CrumbIcons from '@/components/CrumbIcons'
 import Link from 'next/link'
@@ -13,16 +13,18 @@ import CartCountCompo from '@/components/CartCountCompo';
 import EmptyCart from '@/components/common/EmptyCart';
 import Head from 'next/head';
 import productImage from '@/assets/images/product-placeholder-wp.jpg'
-import { stringReplace } from '@/utils/crumbValidation'
+import { formatString, stringReplace } from '@/utils/crumbValidation'
 
 
 const AddToCart = () => {
-    const { Toast, userInfo, cartData, initCart, setUserInfo } = useContext(GlobalContext)
+    const screens = Grid.useBreakpoint()
+    const { Toast, userInfo, cartData, initCart,setCartData, setUserInfo } = useContext(GlobalContext)
     const router = useRouter()
     const [form] = Form.useForm()
     const [state, setState] = useState({ data: cartData.data, count: cartData.count, sub_total: 0 })
     const [show, setShow] = useState(false)
     const [loading, setLoading] = useState(false)
+
     const [loadingUpdateCart, setLoadingUpdateCart] = useState(false)
 
 
@@ -138,6 +140,7 @@ const AddToCart = () => {
                     count: state?.data?.length,
                     sub_total: total
                 })
+                setCartData({data:data,count:data?.length})
             } else {
                 let apiRes = await crumbApi.Cart.remove({ product_id: id })
                 await initCart()
@@ -210,23 +213,25 @@ const AddToCart = () => {
             setLoading(false)
         }
     }
-    const dataSource: any = Array.isArray(state.data) && state.data.map((res, index) => {
+    const dataSource: any = Array.isArray(state?.data) && state?.data.map((res, index) => {
         return {
             key: index,
             cross: <Button onClick={() => handleRemoveCart(Number(res?.product?.id), index)} shape='circle' className='border-0'>x</Button>,
-            product: <Link href={`/product/${stringReplace(res?.product?.name)}/${res?.product?.id}`}><Flex align='center' gap={8}><Avatar src={res?.product?.feature_image ? `${BUCKET_ROOT}${res?.product?.feature_image}` : productImage.src} shape='square' size={100} /><span>{res?.product?.name}</span></Flex></Link>,
+            product: <Link href={`/product/${stringReplace(res?.product?.name)}/${res?.product?.id}`}>
+                <Flex align='center' gap={8}>
+                    <Avatar src={res?.product?.feature_image ? `${BUCKET_ROOT}${res?.product?.feature_image}` : productImage.src} shape='square' size={100} />
+                    <div>
+
+                    <span>{res?.product?.name}</span><br/>
+                    <TypographyText className='text-muted'>{formatString(res?.grid_size)} / {res?.size}g</TypographyText>
+                    </div>
+            </Flex>
+            </Link>,
             price: `${CURRENCY}${res?.product?.customer_buying_price}`,
             quantity: <CartCountCompo is_cart={res?.quantity > 1 ? true : false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product?.id)} />,
             subtotal: `${CURRENCY}${res?.quantity * res?.product?.customer_buying_price}`,
         }
     })
-
-    console.log(state, 'statetettetetet');
-    console.log(cartData, 'cartDatacartData');
-
-
-
-
 
     const columns = [
         {
@@ -256,7 +261,6 @@ const AddToCart = () => {
         },
     ];
     console.log(cartData, 'cartDatacartData');
-    const screens = Grid.useBreakpoint()
 
     React.useEffect(() => {
         const total = cartData?.data?.reduce((acc: any, item: any) => {
@@ -265,8 +269,8 @@ const AddToCart = () => {
             return acc + (price * quantity); // Add to the accumulator
         }, 0);
         setState({
-            data: cartData.data,
-            count: cartData.count,
+            data: cartData?.data,
+            count: cartData?.count,
             sub_total: total
         })
     }, [cartData])
@@ -284,7 +288,7 @@ const AddToCart = () => {
     return (
         <Fragment>
             <Head>
-      <title>{`Viewcart`} at Copper & Crumb</title>
+      <title>{`Viewcart`} - Copper & Crumb</title>
       <meta name='desription' content={`Viewcart`}/>
       </Head>
             <section className="add-to-cart-section pt-0 bg-white" >
@@ -323,7 +327,7 @@ const AddToCart = () => {
                                         <ul className='list-unstyled mb-5 p-0'>
                                             <li className='cart-list'>
                                                 <span className='fs-4 fw-bold'>Sub Total:</span>
-                                                <span className='fs-5 fw-bold'>{CURRENCY}{Number(state.sub_total).toFixed(2)}</span>
+                                                <span className='fs-5 fw-bold'>{CURRENCY}{Number(state?.sub_total).toFixed(2)}</span>
                                             </li>
                                             {/* <li className='cart-list'>
                                                 {!show && <span>Shipping</span>}
@@ -398,7 +402,7 @@ const AddToCart = () => {
 
                                         </ul>
 
-                                        <span><Link href={`/checkout/payment`}><Button block={screens.sm ? false : true} type='primary' size='large' className='px-5 text-uppercase'>Proceed to checkout</Button></Link></span>
+                                        <span><Link href={`/checkout/payment`}><Button block={screens?.sm ? false : true} type='primary' size='large' className='px-5 text-uppercase'>Proceed to checkout</Button></Link></span>
                                     </div>
                                 </Fragment>
                             }
