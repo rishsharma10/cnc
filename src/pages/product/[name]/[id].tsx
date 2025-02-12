@@ -6,7 +6,7 @@ import React, { ReactElement, useState, useContext, Fragment } from 'react'
 import productImage from '@/assets/images/product-placeholder-wp.jpg'
 import Link from 'next/link'
 import { GetServerSideProps } from "next";
-import { MenuProps, TabsProps, Tag } from 'antd'
+import { Grid, MenuProps, TabsProps, Tag } from 'antd'
 import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis'
 import { ProductDetails } from '@/interface/product/ProductDetails'
 import ProductCard from '@/components/ProductCard'
@@ -28,6 +28,7 @@ const ProductDetail = (props: typeProps) => {
   const [loading, setLoading] = useState(false)
   const [relatedProduct, setRelatedProduct] = useState({ data: [], count: 0 })
   const [quantity, setQuantity] = useState(1)
+  const screens = Grid.useBreakpoint()
 
 
   const items: TabsProps['items'] = [
@@ -432,7 +433,7 @@ const [buyQuantity, setBuyQuantity] = useState(1)
                 {/* <CartCountCompo is_cart={state.is_cart} handleIncDec={handleIncDec} quantity={state.cart_qty} pid={Number(router.query.id)} /> */}
                 {userInfo?.access_token ? <Fragment>{state?.is_cart ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
                 </Fragment> :
-                  <Fragment>{state?.is_cart_local ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
+                  <Fragment>{state?.is_cart_local ? <Link href={`/viewcart`}><Button type='primary' size='large' className={!screens.md ? "px-4" :'px-5'}>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className={!screens.md ? "px-4" :'px-5'}>add to cart</Button>}
                   </Fragment>}
 
                 <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>Buy now</Button></Link>

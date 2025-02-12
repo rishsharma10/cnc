@@ -16,6 +16,7 @@ const Payment = () => {
     const [billing, setBilling] = useState('BILLING_SAME')
     const [couponLoading, setCouponLoading] = useState(false)
     const [isLoyalityApplied, setIsLoyalityApplied] = useState(false)
+    const [couponCode, SetCouponCode] = useState('')
     const [coupon, setCoupon] = useState({
         is_applied: false,
         discount: 0
@@ -49,8 +50,14 @@ const Payment = () => {
     let discount = coupon.is_applied ? Number(coupon.discount) : 0
     let loyalityDiscount = isLoyalityApplied ? Number(userInfo?.loyalty ?? 0) : 0
     const applyCoupon = async ({ code }: any) => {
+        if(!screens.md && !couponCode.trim()){
+            setCouponLoading
+            (false)
+            return 
+        }
         if (coupon.is_applied) {
             form.resetFields()
+            SetCouponCode("")
             return setCoupon({ is_applied: false, discount: 0 })
         }
         debugger
@@ -58,7 +65,7 @@ const Payment = () => {
             ? state.data.map((res: any) => res[userInfo?.access_token ? "product_id" : "id"])
             : [];
         const payload = {
-            code,
+            code:!screens.md ? couponCode : code,
             product_ids: JSON.stringify(productIds)
         }
         try {
@@ -296,19 +303,19 @@ const Payment = () => {
                                                         <TypographyTitle level={5}>Order summary</TypographyTitle>}
                                                     {Array.isArray(state.data) && state.data.map((res, index) => <CheckoutCartListCompo {...res} key={index} />)}
                                                     <div className="coupon">
-                                                        <AntForm size='large' form={form} className='d-flex flex-wrap align-items-center gap-3' onFinish={applyCoupon}>
+                                                         {/* <AntForm size='large' form={form} className='d-flex flex-wrap align-items-center gap-3' onFinish={applyCoupon}>  */}
                                                             <Flex gap={10} wrap>
 
                                                                 <FormItem name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]}>
-                                                                    <Input className='w-100' placeholder='Coupon Code' disabled={coupon.is_applied} />
+                                                                    <Input className='w-100' onChange={(e:any) => SetCouponCode(e.target.value)} placeholder='Coupon Code' disabled={coupon.is_applied} />
                                                                 </FormItem>
 
-                                                                <Button loading={couponLoading} type='primary' htmlType='submit' block={!screens.sm ? true : false} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply"}</Button>
+                                                                <Button loading={couponLoading} onClick={applyCoupon} type='primary' htmlType='submit' block={!screens.sm ? true : false} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply"}</Button>
 
                                                             </Flex>
 
                                                             {/* <Button type='primary' block={screens.sm ? false : true} className='px-5 text-uppercase'>Update cart</Button> */}
-                                                        </AntForm>
+                                                        {/* </AntForm> */}
                                                     </div>
                                                     {coupon?.is_applied && <Card className='mt-3 shadow-sm' style={{ backgroundColor: '#E5E4E2', padding: '10px', color: 'black' }}>
                                                         <h6>🎉 <span className='fw-bold'>{form.getFieldValue("code")}</span> Applied Successfully!</h6>
