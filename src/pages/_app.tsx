@@ -47,6 +47,17 @@ const MyApp = ({ Component, pageProps, ...props }: AppPropsWithLayout) => {
       }
     `}</style> */}
       </Head>
+      <Script id="my-script" strategy="lazyOnload">
+      {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-FVXPLF125R', {
+                    page_path: window.location.pathname,
+                    });
+                `}
+    </Script>
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-FVXPLF125R"></Script>
       {getLayout(<><Component {...pageProps} /><ScrollToTop/></>)}
     </GlobalProvider >
 
