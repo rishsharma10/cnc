@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react'
 import logo from '@/assets/brand-guide/logo.png';
 import CrumbIcons from '../CrumbIcons';
 import { FacebookOutlined, InstagramOutlined, WhatsAppOutlined } from '@ant-design/icons';
-import crumbApi from '@/utils/crumbApis';
+import crumbApi, { FACEBOOK_LINK, INSTAGRAM_LINK, WHATSPP_LINK } from '@/utils/crumbApis';
 import { GlobalContext } from '@/context/Provider';
 import { Form } from 'antd';
 const FooterPage = () => {
@@ -82,9 +82,9 @@ nostrud exercitation ullamco laboris.”</p> */}
                                 <p className="m-0">© Copyright ©2025 COPPER & CRUMB. Powered by Techharbor Partners
                                 </p>
                                 <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
-                                    <li><Link href={'/'}><FacebookOutlined /></Link></li>
-                                    <li><Link href={'/'}><InstagramOutlined /></Link></li>
-                                    <li><Link href={'/'}><WhatsAppOutlined /></Link></li>
+                                    <li><Link target='_blank' href={FACEBOOK_LINK}><FacebookOutlined /></Link></li>
+                                    <li><Link target='_blank' href={INSTAGRAM_LINK}><InstagramOutlined /></Link></li>
+                                    <li><Link target='_blank' href={WHATSPP_LINK}><WhatsAppOutlined /></Link></li>
                                 </ul>
 
                             </div>

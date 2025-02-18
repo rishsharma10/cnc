@@ -1,21 +1,19 @@
 
 import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
-import { AntForm, Avatar, Button, Checkbox, Col, Dropdown, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs, TextArea } from '@/lib/AntRegistry'
+import { AntForm, Avatar, Button, Checkbox, Col, Dropdown, Flex, FormItem, Input, Pagination, Rate, Row, Select, Tabs, TextArea, TypographyText } from '@/lib/AntRegistry'
 import React, { ReactElement, useState, useContext, Fragment } from 'react'
 import productImage from '@/assets/images/product-placeholder-wp.jpg'
-import banner from '@/assets/images/espresso-pouring-from-coffee-machine-cafe.jpg'
 import Link from 'next/link'
 import { GetServerSideProps } from "next";
-import { MenuProps, TabsProps } from 'antd'
+import { Grid, MenuProps, TabsProps, Tag } from 'antd'
 import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis'
 import { ProductDetails } from '@/interface/product/ProductDetails'
-import { stringReplace } from '@/utils/crumbValidation'
 import ProductCard from '@/components/ProductCard'
-import CartCountCompo from '@/components/CartCountCompo'
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@/context/Provider'
-import { count } from 'console'
+import Head from 'next/head'
+import ShareProduct from '@/components/common/ShareModal'
 
 interface typeProps extends ProductDetails {
   is_cart_local: boolean
@@ -30,13 +28,14 @@ const ProductDetail = (props: typeProps) => {
   const [loading, setLoading] = useState(false)
   const [relatedProduct, setRelatedProduct] = useState({ data: [], count: 0 })
   const [quantity, setQuantity] = useState(1)
+  const screens = Grid.useBreakpoint()
 
 
   const items: TabsProps['items'] = [
     {
       key: '1',
       label: 'Description',
-      children: <p>{state?.desc}</p>,
+      children: <p className='text-justify'>{state?.desc}</p>,
     },
     {
       key: '2',
@@ -162,6 +161,7 @@ const ProductDetail = (props: typeProps) => {
   console.log(cartData, 'cartDatacartData');
 
   const updateCart = (payload: any) => {
+    debugger
     try {
       let cart: any = localStorage.getItem('cart');
       cart = cart ? JSON.parse(cart) : [];
@@ -193,9 +193,9 @@ const ProductDetail = (props: typeProps) => {
           id:Number(router.query.id),
           feature_image:state?.feature_image??null
         },
-        quantity: Number(state.cart_qty),
-        size: 200,
-        grid_size: 'small'
+        quantity: Number(quantity),
+        size: size,
+        grid_size:grindSize
       }
       const cartPayload = {
         product_id: state.id,
@@ -260,7 +260,7 @@ const ProductDetail = (props: typeProps) => {
     debugger
     try {
       let apiRes = await crumbApi.Product.list()
-      let data = apiRes.data.filter((res:any) => res.id !== router.query.id)
+      let data = apiRes.data.filter((res:any) => Number(res.id) !== Number(router.query.id))
       setRelatedProduct({data:data,count:data?.length})
     } catch (error) {
 
@@ -293,7 +293,62 @@ const ProductDetail = (props: typeProps) => {
     // setSelectedImage(data?.images.length ? data?.images[0] : '')
 }, [router.query.id])
 
+const arrGrindSize = [
+  {
+    value:'WHOLE_BEANS',
+    label:'Whole Beans'
+  },
+  {
+    value:'COARSE_GRIND',
+    label:'Coarse Grind'
+  },
+  {
+    value:'MEDIUM_GRIND',
+    label:'Medium Grind'
+  },
+  {
+    value:'FINE_GRIND',
+    label:'Fine Grind'
+  },
+]
+const quantityArr = [
+  { value: 1, label: '1' },
+  { value: 2, label: '2' },
+  { value: 3, label: '3' },
+  { value: 4, label: '4' },
+  { value: 5, label: '5' },
+  { value: 6, label: '6' },
+  { value: 7, label: '7' },
+  { value: 8, label: '8' },
+  { value: 9, label: '9' },
+  { value: 10, label: '10' },
+];
+
+
+const [grindSize, setGrindSize] = useState(arrGrindSize[0]?.value)
+const [size, setSize] = useState(250)
+const [buyQuantity, setBuyQuantity] = useState(1)
+
+
+
+// React.useEffect(() => {
+//   if(!userInfo?.access_token){
+//     let is_cart_local = cartData?.data?.some((res:any) => Number(res?.id) === Number(router.query.id));
+//     setState({
+//       ...state,
+//       is_cart_local:is_cart_local
+//     })
+//   }
+
+// },[userInfo?.access_token,router.query.id])
+
   return (
+    <Fragment>
+      <Head>
+      <title>{props?.name} at Copper & Crumb</title>
+      <meta name='desription' content={props?.desc}/>
+      <meta property='og:image' content={`${BUCKET_ROOT}${state?.feature_image}`}/>
+      </Head>
     <section className='product-list-section pt-0 bg-white'>
       <CommonBanner title={"PRoduct Details"} image={state?.thumb_url} />
       <div className="container mt-sm-5 pt-5">
@@ -301,42 +356,105 @@ const ProductDetail = (props: typeProps) => {
           <Col span={24} lg={11} xl={12} xxl={12}>
             <div className="product-images">
               <div className="preview-image mb-4">
-                <img onError={(e:any) => e.target.src = productImage.src} src={state?.feature_image ? `${BUCKET_ROOT}${state?.feature_image}` : productImage.src} alt="error" className='h-100 w-100' />
+                <img onError={(e:any) => e.target.src = productImage.src} src={state?.feature_image ? `${BUCKET_ROOT}${state?.feature_image}` : productImage.src} alt="error" className='h-100 w-100 rounded-3' />
               </div>
               <div className="preview-image-list">
                 {[state.image_1, state.image_2].map((res, index) => <div key={index} className="list-image">
-                  <img src={res ? `${BUCKET_ROOT}${res}` : productImage.src} alt="error" className='h-100 ' onError={(e:any) => e.target.src = productImage.src}/>
+                  <img src={res ? `${BUCKET_ROOT}${res}` : productImage.src} alt="error" className='h-100 rounded-3' onError={(e:any) => e.target.src = productImage.src}/>
                 </div>)}
               </div>
             </div>
           </Col>
           <Col span={24} lg={11} xl={11} xxl={11}>
             <div className="product-details">
+              <Flex align='top' justify='space-between'>
               <h4 className="title fs-1">
                 {state.name}
               </h4>
-              <p className='fs-5'>{CURRENCY}{Number(state.customer_buying_price).toFixed(2)}</p>
+              <ShareProduct title={`Share Product`} price={state?.customer_buying_price} name={state.name} img={state?.feature_image ?  `${BUCKET_ROOT}${state?.feature_image}` : null}/>
+              </Flex>
+              
 
               {/* <Flex className='rate mb-4' gap={6}><Rate className='fs-5' value={3} />
                 <span className='text-secondary'>(1 customer review)</span>
                 </Flex> */}
 
-              <p>{state?.notes}</p>
+              <p className='fw-semibold fs-16' style={{color:"#f50"}}>{state?.notes}</p>
+              <p className='mt-2 fs-14 text-justify mb-4'>{state.desc}</p>
 
-              <Flex align='center' gap={20} className='my-5'>
+              <Row gutter={[12,0]}>
+                <Col span={24} xxl={24} xl={24}>
+                <FormItem label='GRIND SIZE' layout='vertical'>
+                 <Select
+                 value={grindSize}
+                 onChange={(val:any) => setGrindSize(val)}
+                options={arrGrindSize?.map((res,i) => {
+                  return {
+                    value:res.value,
+                    label:res.label
+                  }
+                })}
+                />
+                </FormItem>
+                </Col>
+                <Col span={24} xxl={12} xl={12} md={12} sm={12} xs={12}>
+                <FormItem label='SIZE' layout='vertical'>
+                 <Select
+                value={size}
+                onChange={(val:any) => setSize(val)}
+                options={[
+                  { value:250, label: '250g' },
+                  { value:500, label: '500g' },
+                ]}
+                />
+                </FormItem>
+                </Col>
+                <Col span={24} xxl={12} xl={12} md={12} sm={12} xs={12}>
+                <FormItem label='QUANTITY' layout='vertical'>
+                 <Select
+                 value={buyQuantity}
+                 onChange={(val:any) => setBuyQuantity(val)}
+                // style={{ width: 160 }}
+                options={quantityArr?.map((res:any,i:number) => {
+                  return {
+                    value:res.value,
+                    label:res.label
+                  }
+                })}
+                />
+                </FormItem>
+                </Col>
+              </Row>
+              <Flex align='baseline' gap={20}>
+              <p className='fs-3 fw-bold mt-2'>{CURRENCY}{Number(state.customer_buying_price).toFixed(2)}</p>
+              <del className='fs-6 text-grey mt-2'>{CURRENCY}{Number(state.price).toFixed(2)}</del>
+              </Flex>
+              <Flex align='center' gap={20} className='my-3'>
                 {/* <CartCountCompo is_cart={state.is_cart} handleIncDec={handleIncDec} quantity={state.cart_qty} pid={Number(router.query.id)} /> */}
                 {userInfo?.access_token ? <Fragment>{state?.is_cart ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
                 </Fragment> :
-                  <Fragment>{state?.is_cart_local ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
+                  <Fragment>{state?.is_cart_local ? <Link href={`/viewcart`}><Button type='primary' size='large' className={!screens.md ? "px-4" :'px-5'}>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className={!screens.md ? "px-4" :'px-5'}>add to cart</Button>}
                   </Fragment>}
 
+                <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>Buy now</Button></Link>
               </Flex> 
-                {/* <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>add to cart</Button></Link> */}
 
               <ul className='list-unstyled p-0'>
                 <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>SKU</span>: <span className='text-secondary'>{state?.sku}</span></li>
                 <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Category</span>: <span className='text-secondary'>Fresh Coffee</span></li>
-                <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Tags</span>: <span className='text-secondary'>{`${state?.tag_1}, ${state?.tag_2}, ${state?.tag_3}`}</span></li>
+                <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Tags</span>: <span className='text-secondary'>{
+                  <>
+                  <Tag bordered={true} className='rounded' color="magenta">
+                  {state.tag_1}
+                </Tag>
+                <Tag bordered={true} className='rounded' color="orange">
+                {state.tag_2}
+              </Tag>
+              <Tag bordered={true} className='rounded' color="geekblue">
+              {state.tag_3}
+            </Tag>
+            </>
+                  }</span></li>
                 {/* <li className='product-desc-list'><span className='fw-semibold text-uppercase'>Share</span>:
                   <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
                     <li><Link href={'/'}><i className="fa-brands fa-facebook"></i></Link></li>
@@ -371,11 +489,12 @@ const ProductDetail = (props: typeProps) => {
           </Col>)}
         </Row> */}
         <Row gutter={[20, 20]} className='mt-5'>
-          <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col>
+          <Col span={24} className='mb-2'><h4 className='title fs-2'>You may also like.</h4></Col>
           {Array.isArray(relatedProduct?.data) && relatedProduct?.data.map((res: any, index: number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res}  /></Col>)}
         </Row>
       </div>
     </section>
+    </Fragment>
   )
 }
 

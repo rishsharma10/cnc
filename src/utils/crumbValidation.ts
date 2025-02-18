@@ -205,6 +205,13 @@ export const getTypeForUrl = (role: string) => {
     return role;
   }
 };
+export const formatString = (str:string) => {
+  return str
+      ?.toLowerCase()  // Convert the entire string to lowercase
+      ?.replace(/_/g, ' ')  // Replace underscores with spaces
+      ?.replace(/\b\w/g, char => char?.toUpperCase());  // Capitalize the first letter of each word
+}
+
 const crumbValidations = {
   roundOffCeil,
   stringReplace,

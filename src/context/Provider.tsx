@@ -212,6 +212,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   };
   const logout = async () => {
     setUserInfo(null as any);
+    setCartData({data:[],count:0})
     destroyCookie(null, COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN, {
       maxAge: 0,
       path: `/`,

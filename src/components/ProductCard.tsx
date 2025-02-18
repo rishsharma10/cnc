@@ -17,7 +17,7 @@ const ProductCard = (props: newDetails) => {
             <div className={`cart-card ${props?.slider ? "m-2":""}`}>
                 <div className="cart-image text-center">
                     <div className={props?.class ?props?.class : "product-image"}>
-                        <img src={props?.thumb_url ?? productImage.src} alt="error" onError={(e:any) => e.target.src = productImage.src} />
+                        <img src={props?.thumb_url ?? productImage.src} alt="error" onError={(e:any) => e.target.src = productImage.src} className='rounded-3' />
 
                     </div>
                     {/* <div className="cart-overlay">

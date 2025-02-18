@@ -467,6 +467,30 @@ a {
     }
   }
 }
+.cart-total-checkout {
+  .cart-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // border-bottom: 1px solid $border-color;
+    padding-block: 6px;
+
+    span:first-child {
+      font-weight: 600;
+      // width: 25%;
+      min-width: 200px;
+    }
+
+  }
+  @media (max-width:575px) {
+    .cart-list {
+      span:first-child {
+        min-width: 100px;
+      }
+  
+    }
+  }
+}
 
 .quantity-counter {
   .counter-div {
@@ -491,7 +515,7 @@ a {
 
 .preview-image {
   // background-color: $white;
-  height: 700px;
+  height: 500px;
 }
 
 .preview-image-list {

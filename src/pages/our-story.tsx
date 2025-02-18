@@ -1,7 +1,7 @@
 import CommonLayout from '@/components/common/CommonLayout'
 import CommonBanner from '@/components/CommonBanner'
 import { Button, Col, Flex, Row, TypographyText, TypographyTitle } from '@/lib/AntRegistry'
-import React, { ReactElement, useState } from 'react'
+import React, { Fragment, ReactElement, useState } from 'react'
 import aboutBanner from '@/assets/brand-guide/title-above.png';
 import banner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg';
 import common_img from '@/assets/images/bun-with-poppy-seeds.jpg'
@@ -18,6 +18,7 @@ import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import { Grid, Typography } from 'antd';
 import OurStoryCard from '@/components/OurStoryCard';
 import ScrollToTop from '@/components/ScrollToTop';
+import Head from 'next/head';
 const OurStory = () => {
 
   const story = [
@@ -165,35 +166,40 @@ const OurStory = () => {
 
   const screens = Grid.useBreakpoint()
   return (
-    <section className="contact-us pt-0 bg-white">
-      <CommonBanner title="Our story" image={common_img.src} />
-      <div className="container mt-sm-5 pt-5">
-        <Row gutter={[20, 20]} justify={'center'}>
-          <Col span={24} xl={24}>
-            <div className="our-story-col-1">
-              <div className="our-story-image">
-                <img src={coffee_mug.src} alt="error" className='img-fluid' />
+    <Fragment>
+      <Head>
+        <title>{`Our story`} at Copper & Crumb</title>
+        <meta name='desription' content={`Our story at copper & crumb`} />
+      </Head>
+      <section className="contact-us pt-0 bg-white">
+        <CommonBanner title="Our story" image={common_img.src} />
+        <div className="container mt-sm-5 pt-5">
+          <Row gutter={[20, 20]} justify={'center'}>
+            <Col span={24} xl={24}>
+              <div className="our-story-col-1">
+                <div className="our-story-image">
+                  <img src={coffee_mug.src} alt="error" className='img-fluid' />
+                </div>
+                <div className="out-story-content-1 out-story-content">
+                  <TypographyTitle level={4}>The Seed is Planted (2019)</TypographyTitle>
+                  <p>In the quiet hours of motherhood, Kannupriya Garg discovered her calling. Her kitchen became an experimental sanctuary, where each failed dessert wasn't a setback but a stepping stone. Starting with simple cakes for her children, she found herself drawn deeper into the world of contemporary desserts, experimenting with flavors that bridged cultures and challenged conventions.</p>
+                </div>
               </div>
-              <div className="out-story-content-1 out-story-content">
-                <TypographyTitle level={4}>The Seed is Planted (2019)</TypographyTitle>
-                <p>In the quiet hours of motherhood, Kannupriya Garg discovered her calling. Her kitchen became an experimental sanctuary, where each failed dessert wasn't a setback but a stepping stone. Starting with simple cakes for her children, she found herself drawn deeper into the world of contemporary desserts, experimenting with flavors that bridged cultures and challenged conventions.</p>
-              </div>
-            </div>
-          </Col>
-          <Col span={24} xl={12}>
-            <div className="our-story-right-col">
-              <div className="our-story-image" style={{ height: 200 }}>
-                <img src={hand_holding.src} alt="error" className='img-fluid' />
-              </div>
+            </Col>
+            <Col span={24} xl={12}>
+              <div className="our-story-right-col">
+                <div className="our-story-image" style={{ height: 200 }}>
+                  <img src={hand_holding.src} alt="error" className='img-fluid' />
+                </div>
 
-              <div className="out-story-content-1 out-story-content">
-                <TypographyTitle level={4}>A Serendipitous Connection (2021)</TypographyTitle>
-                <p>At a school get together, Kannupriya met Utkarsh, who was visiting from the US. Frustrated by the lack of exceptional coffee experiences in India, he shared her vision of elevating local culinary standards. Their conversation sparked an immediate connection her innovative approach to desserts perfectly complemented his vision of creating extraordinary coffee experiences. Both shared a frustration with the lack of spaces that truly celebrated both crafts.</p>
+                <div className="out-story-content-1 out-story-content">
+                  <TypographyTitle level={4}>A Serendipitous Connection (2021)</TypographyTitle>
+                  <p>At a school get together, Kannupriya met Utkarsh, who was visiting from the US. Frustrated by the lack of exceptional coffee experiences in India, he shared her vision of elevating local culinary standards. Their conversation sparked an immediate connection her innovative approach to desserts perfectly complemented his vision of creating extraordinary coffee experiences. Both shared a frustration with the lack of spaces that truly celebrated both crafts.</p>
+                </div>
               </div>
-            </div>
-          </Col>
+            </Col>
 
-          {/* <Col span={24} xl={16}>
+            {/* <Col span={24} xl={16}>
             <div className="our-story-col-1">
               <div className="our-story-image">
                 <img src={banner.src} alt="error" className='img-fluid' />
@@ -208,36 +214,36 @@ const OurStory = () => {
               </div>
             </div>
           </Col> */}
-          {/* <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={serviceImage.src} title={`Exploring Fusion: More Than Just Recipes`} desc={title_desc8}/> */}
+            {/* <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={serviceImage.src} title={`Exploring Fusion: More Than Just Recipes`} desc={title_desc8}/> */}
 
-          <Col span={24} xl={12}>
-            <div className="our-story-right-col">
-              <div className="our-story-image" style={{ height: 200 }}>
-                <img src={raspberry.src} alt="error" className='img-fluid' />
-              </div>
+            <Col span={24} xl={12}>
+              <div className="our-story-right-col">
+                <div className="our-story-image" style={{ height: 200 }}>
+                  <img src={raspberry.src} alt="error" className='img-fluid' />
+                </div>
 
-              <div className="out-story-content-1 out-story-content">
-                <TypographyTitle level={4}>Vision Takes Shape (2022)</TypographyTitle>
-                <p
-                // key={2}
-                // ellipsis={{
-                //   rows,
-                //   expandable: 'collapsible',
-                //   expanded,
-                //   // onExpand: (_: any, info: any) => setExpanded(info.expanded),
-                // }}
-                >While Kannupriya perfected her pastry craft, Utkarsh dove deep into coffee sourcing and brewing techniques. Their complementary skills created a perfect blend her understanding of baking techniques with local flavors, his expertise in building startups and global coffee cultures.
-                  {/* <Button
+                <div className="out-story-content-1 out-story-content">
+                  <TypographyTitle level={4}>Vision Takes Shape (2022)</TypographyTitle>
+                  <p
+                  // key={2}
+                  // ellipsis={{
+                  //   rows,
+                  //   expandable: 'collapsible',
+                  //   expanded,
+                  //   // onExpand: (_: any, info: any) => setExpanded(info.expanded),
+                  // }}
+                  >While Kannupriya perfected her pastry craft, Utkarsh dove deep into coffee sourcing and brewing techniques. Their complementary skills created a perfect blend her understanding of baking techniques with local flavors, his expertise in building startups and global coffee cultures.
+                    {/* <Button
                         type="link"
                         onClick={() => setExpanded((prev:any) => !prev)
 
                         }
                       >{expanded ? "Hide" : "Show"}</Button> */}
-                </p>
+                  </p>
+                </div>
               </div>
-            </div>
-          </Col>
-          {/* <Col span={24} xl={12}>
+            </Col>
+            {/* <Col span={24} xl={12}>
             <div className="our-story-right-col">
               <div className="our-story-image" style={{ height: 200 }}>
                 <img src={platedish.src} alt="error" className='img-fluid' />
@@ -280,7 +286,7 @@ const OurStory = () => {
               </Col>
             </Row>
           </Col> */}
-          {/* <Col span={24} xl={24}>
+            {/* <Col span={24} xl={24}>
             <div className="our-story-col-1">
               <div className="our-story-image">
                 <img src={small_tarlet.src} alt="error" className='img-fluid' />
@@ -301,26 +307,28 @@ const OurStory = () => {
               </div>
             </div>
           </Col> */}
-           {/* <section className="about-testimonial fixed-banner-section h-auto">
+            {/* <section className="about-testimonial fixed-banner-section h-auto">
         <div className="container ">
           <Row justify={'center'}> */}
             <Col span={24}>
-               <div className="pt-5 pb-4 fixed-banner-section h-auto rounded-4">
-               <div className="about-testimonial-card px-4 pt-5 mt-5" >
+              <div className="pt-5 pb-4 fixed-banner-section h-auto rounded-4">
+                <div className="about-testimonial-card px-4 pt-5 mt-5" >
                   <h4 className="text-start mb-3 mt-5">The Perfect Partnership (2023)</h4>
                   <p className='fs-6 text-start'>Their collaboration with Beanrove Coffee Roasters completed the triangle. Utkarsh returned back from the US and his coffee expertise proved invaluable in sourcing signature blends that complemented Kannupriya's dessert innovations. This partnership ensured not just quality but a commitment to ethical sourcing and sustainability.</p>
                 </div>
-               </div>
+              </div>
             </Col>
-          {/* </Row>
+            {/* </Row>
         </div>
       </section> */}
-          <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={serviceImage.src} title={`Dream to Reality (Feb 2025)`} desc={`Copper & Crumb's flagship store opens its doors, embodying a new chapter in India's culinary landscape. Here, Kannupriya's innovative desserts showcase the beautiful collision of global inspiration and local soul, while Utkarsh's coffee program introduces Indians to new ways of experiencing their daily brew. The space itself becomes a canvas where contemporary design meets familiar comfort, where every detail invites discovery.`} />
-          <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={blogImage.src} title={`Beyond Boundaries (2026 onwards)`} desc={`More than just a café, Copper & Crumb emerges as a movement celebrating modern Indian creativity. Their apprenticeship program nurtures the next generation of culinary innovators, while their commitment to sustainable sourcing creates positive impact in farming communities. Each day brings new opportunities to push boundaries, honor traditions, and create experiences that delight and inspire.`} />
+            <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={serviceImage.src} title={`Dream to Reality (Feb 2025)`} desc={`Copper & Crumb's flagship store opens its doors, embodying a new chapter in India's culinary landscape. Here, Kannupriya's innovative desserts showcase the beautiful collision of global inspiration and local soul, while Utkarsh's coffee program introduces Indians to new ways of experiencing their daily brew. The space itself becomes a canvas where contemporary design meets familiar comfort, where every detail invites discovery.`} />
+            <OurStoryCard span={24} lg={12} xl={12} xxl={12} img={blogImage.src} title={`Beyond Boundaries (2026 onwards)`} desc={`More than just a café, Copper & Crumb emerges as a movement celebrating modern Indian creativity. Their apprenticeship program nurtures the next generation of culinary innovators, while their commitment to sustainable sourcing creates positive impact in farming communities. Each day brings new opportunities to push boundaries, honor traditions, and create experiences that delight and inspire.`} />
 
-        </Row>
-      </div>
-    </section>
+          </Row>
+        </div>
+      </section>
+    </Fragment>
+
   )
 }
 OurStory.getLayout = function getLayout(page: ReactElement) {
