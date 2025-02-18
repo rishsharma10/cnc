@@ -108,7 +108,7 @@ const domainCheck=(str:string)=>{
 }
 export const stringReplace = (str: string) => {
   let newStr = str?.toLocaleLowerCase();
-  return newStr.replace(/ /g, "-");
+  return newStr?.replace(/ /g, "-");
 };
 
 const roundOffCeil = (count: number, limit: number) => {
