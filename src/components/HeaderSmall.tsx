@@ -63,14 +63,14 @@ const HeaderSmall = () => {
                 </Flex>
                 <Flex gap={20} align='center'>
 
-                    <Link className="nav-item" href="/search" legacyBehavior>
+                    {/* <Link className="nav-item" href="/search" legacyBehavior>
                         <a className="nav-link " href="/search"><SearchOutlined /></a>
                     </Link>
                     <Badge count={cartData.count} showZero={false}>
                         <Link className="nav-item" href="/viewcart" legacyBehavior>
                             <a className="nav-link" ><ShoppingCartOutlined /></a>
                         </Link>
-                    </Badge>
+                    </Badge> */}
                     {!userInfo?.access_token ? "" : <Dropdown menu={{ items }} placement="bottomLeft">
                         <Button type="text" className="h-100 p-0" shape="circle">
                             <Avatar
