@@ -71,6 +71,13 @@ const HeaderSmall = () => {
                             <a className="nav-link" ><ShoppingCartOutlined /></a>
                         </Link>
                     </Badge> */}
+
+
+
+
+
+
+                    
                     {!userInfo?.access_token ? "" : <Dropdown menu={{ items }} placement="bottomLeft">
                         <Button type="text" className="h-100 p-0" shape="circle">
                             <Avatar
