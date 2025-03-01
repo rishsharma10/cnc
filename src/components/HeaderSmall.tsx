@@ -100,9 +100,9 @@ const HeaderSmall = () => {
                             <Link className="nav-item" href="/" legacyBehavior>
                                 Home
                             </Link>
-                            <Link className="nav-item my-2 d-inline-block" href="/products/search/all/1" legacyBehavior>
+                            {/* <Link className="nav-item my-2 d-inline-block" href="/products/search/all/1" legacyBehavior>
                                 Shop
-                            </Link>
+                            </Link> */}
                             <Link className="nav-item" href="/about" legacyBehavior>
                                 About us
                             </Link>
@@ -115,9 +115,9 @@ const HeaderSmall = () => {
                             <Link className="nav-item" href="/pages/contact-us" legacyBehavior>
                                 Contact us
                             </Link>
-                            {!userInfo?.access_token ? <Link href={`/login`}><Button size='small' className='text-white' type='primary'>SIGN IN</Button></Link> : ""}
+                            {/* {!userInfo?.access_token ? <Link href={`/login`}><Button size='small' className='text-white' type='primary'>SIGN IN</Button></Link> : ""} */}
                         </div>
-                        {userInfo?.access_token ?<Button onClick={() => logout()} type='text' className='p-0 text-capitalize text-danger mt-auto h-auto'>Logout</Button>:""}
+                        {/* {userInfo?.access_token ?<Button onClick={() => logout()} type='text' className='p-0 text-capitalize text-danger mt-auto h-auto'>Logout</Button>:""} */}
                     </Flex>
                 </Drawer>
                 {/* {!userInfo?.access_token ? <Link href={`/login`}><Button className='text-white' type='primary'>SIGN IN</Button></Link> :  <Dropdown menu={{ items }} placement="bottomLeft">

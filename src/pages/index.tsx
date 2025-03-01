@@ -232,9 +232,9 @@ motion. `,
                           <img src={seperator.src} alt="error" className="mt-3 mb-4 mx-auto" />
                           <p className="mb-4 mb-sm-5">{res.desc}
                           </p>
-                          <span>
+                          {/* <span>
                             <Link href={res.link}><Button size="large" type="primary" ghost className="rounded-0 border border-light text-uppercase py-3 h-auto px-5">{res.button}</Button></Link>
-                          </span>
+                          </span> */}
                         </Col>
                       </Row>
                     </div>
@@ -311,34 +311,25 @@ motion. `,
         </div>
       </section>
      
-      <section className="gallery-section ">
+      {/* <section className="gallery-section ">
         <div className="container-fluid px-0">
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Featured Products</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              {/* <p className="sub-title">Treat yourself to our hand-crafted desserts and freshly baked pastries. The perfect sweet companion to your favorite brew, crafted to delight every time</p> */}
-            {/* <Button type="primary" className="text-end">View all</Button> */}
-
             </Col>
           </Row>
-          {/* <Row gutter={[20, 20]} justify={'center'}>
-
-            {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res} /></Col>)}
-          </Row> */}
           <Row gutter={[20, 20]} className="mx-0">
             <Col span={24}>
               <Carousel dots={false} autoplay slidesToShow={screenSize} infinite={true} slidesToScroll={1} draggable={true} responsive={responsive}>
                 {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)}
-                {/* {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)} */}
-                {/* {Array.isArray(state?.data) && state?.data.map((res: any, index: number) => <ProductCard slider key={index} {...res} />)} */}
               </Carousel>
 
             </Col>
           </Row>
         </div>
-      </section>
-      <section className="offer-section common-bg-2">
+      </section> */}
+      <section className="offer-section common-bg-1">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={16} xl={14} className="text-center">
@@ -390,13 +381,12 @@ motion. `,
       </section> */}
 
       {/* /-------------------------- Gallery section ------------------ */}
-      <section className="gallery-section">
+      {/* <section className="gallery-section">
         <div className="container-fluid px-0">
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Best sellers</h2>
               <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              {/* <p className="sub-title">Treat yourself to our hand-crafted desserts and freshly baked pastries. The perfect sweet companion to your favorite brew, crafted to delight every time</p> */}
             </Col>
           </Row>
           <Row gutter={[20, 20]} className="mx-0">
@@ -408,7 +398,7 @@ motion. `,
             </Col>
           </Row>
         </div>
-      </section>
+      </section> */}
 
       {/* ---------------------------- Brand Section ------------------- */}
       {/* <section className="beand-section">
@@ -426,7 +416,7 @@ motion. `,
       </section> */}
 
       {/* ---------------------------- contact-section ---------------- */}
-      <section className="contact-section pt-0">
+      <section className="contact-section pt-0 mt-5">
         <div className="container cta-section">
           <Row justify={"center"}>
             <Col span={24} lg={18} xl={16} xxl={14}>
