@@ -249,23 +249,6 @@ motion. `,
       <section className="contact-us pt-0 bg-white">
         <div className="container pt-5">
           <Row gutter={[40, 40]} justify={'space-between'} align={"top"}>
-            {/* <Col span={24} lg={12} xl={12} xxl={12}>
-              <div>
-                <TypographyTitle className="text-uppercase" level={4}>Building Dreams One Layer at a Time
-                </TypographyTitle>
-                <p className='fs-16'>Where French technique meets Indian heart, crafting tomorrow's classics today.
-                  In our sunlit corner of Panchkula, a culinary revolution is taking shape. Here, antique copper
-                  pots share space with gleaming espresso machines, while the aroma of Kerala vanilla beans
-                  mingles with French butter. At Copper & Crumb, we're not just making pastries – we're crafting
-                  experiences that bridge continents and generations.</p>
-                <Link href={`/products/search/1/1`} ><Button className="mt-3" type="primary" ghost>Reserve Your Experience</Button></Link>
-              </div>
-            </Col>
-            <Col span={24} lg={12} xl={12} xxl={12}>
-              <div className="story-section">
-                <img src={side_view_man.src} alt="error" className='img-fluid' />
-              </div>
-            </Col> */}
             <Col span={24} lg={14} xl={14} xxl={14}>
               <div className="story-section">
                 <img src={hand_holding.src} alt="error" className='img-fluid' />

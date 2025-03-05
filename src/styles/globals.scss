@@ -553,6 +553,10 @@ button {
   height: 400px;
   min-height: 400px;
 }
+.about-banner-founder{
+  height: 400px;
+  min-height: 400px;
+}
 
 .story-section {
   height: 300px;
@@ -725,4 +729,21 @@ width: 100% !important;
 }
 .text-justify{
   text-align: justify;
+}
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 400px; /* Adjust the height as needed */
+  overflow: hidden;
+  border-radius: 10px !important;
+}
+
+.image-container img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scale(1.1); /* Adjust scale if you want to zoom in/out */
+  object-fit: cover; /* Ensures the image covers the container */
+  width: 100%;
+  height: 100%;
 }
