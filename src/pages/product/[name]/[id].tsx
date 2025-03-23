@@ -6,7 +6,7 @@ import React, { ReactElement, useState, useContext, Fragment } from 'react'
 import productImage from '@/assets/images/product-placeholder-wp.jpg'
 import Link from 'next/link'
 import { GetServerSideProps } from "next";
-import { Grid, MenuProps, TabsProps, Tag } from 'antd'
+import { Carousel, Grid, MenuProps, TabsProps, Tag } from 'antd'
 import crumbApi, { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis'
 import { ProductDetails } from '@/interface/product/ProductDetails'
 import ProductCard from '@/components/ProductCard'
@@ -21,6 +21,111 @@ interface typeProps extends ProductDetails {
   cart_qty: number
 }
 const ProductDetail = (props: typeProps) => {
+
+  
+    const responsive = [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+
+    const dataRes = {
+      "id": 2,
+      "quantity": 120,
+      "product_id": 2,
+      "warehouse_id": 1,
+      "attribute_id": 4,
+      "attribute_item_id": 1,
+      "price": 400,
+      "customer_buying_price": 500,
+      "created_at": "2025-03-14T22:26:22.000000Z",
+      "updated_at": "2025-03-14T22:31:11.000000Z",
+      "price_for_sale": 500,
+      "product": {
+          "id": 2,
+          "name": "Coral cake",
+          "sku": "CC00000002COF",
+          "barcode": "1741990778",
+          "barcode_image": "CC00000002COF_1741990778.png",
+          "quantity": null,
+          "price": "400",
+          "customer_buying_price": "500",
+          "weight": null,
+          "dimension_l": null,
+          "dimension_w": null,
+          "dimension_d": null,
+          "thumb": "17419914408538.jpg",
+          "sgst_tax": 5,
+          "igst_tax": 5,
+          "feature_image": null,
+          "image_1": null,
+          "image_2": null,
+          "tag_3": "dark",
+          "tag_2": "vannila",
+          "tag_1": "cake",
+          "notes": "cake item",
+          "desc": "With a soft gianduja (hazelnut chocolate) fondue in the centre of this gorgeous entremet, the stage is set for the perfect marriage between a crisp fruit and luscious chocolate.\r\n\r\nBring back memories of strawberries dipped in Nutella with our indulgent gianduja praline & fresh strawberry entremet sans the plam oil.",
+          "is_variant": 0,
+          "status": "active",
+          "available_for": "all",
+          "category_id": 3,
+          "brand_id": 1,
+          "manufacturer_id": null,
+          "weight_unit_id": null,
+          "measurement_unit_id": null,
+          "created_by": 1,
+          "updated_by": 1,
+          "created_at": "2025-03-14T22:24:03.000000Z",
+          "updated_at": "2025-03-14T22:31:11.000000Z",
+          "tax_status": "included",
+          "custom_tax": 10,
+          "stock": 220,
+          "split_sale": null,
+          "stock_alert_quantity": 70,
+          "thumb_url": "http://127.0.0.1:9000/storage/products/17419914408538.jpg"
+      },
+      "attribute": {
+          "id": 4,
+          "name": "750",
+          "status": "active",
+          "created_by": 1,
+          "updated_by": null,
+          "created_at": "2025-03-14T22:18:05.000000Z",
+          "updated_at": "2025-03-14T22:18:05.000000Z"
+      },
+      "attribute_item": {
+          "id": 1,
+          "attribute_id": 4,
+          "name": "cake 1",
+          "color": "#000000",
+          "image": null,
+          "created_by": null,
+          "updated_by": null,
+          "created_at": "2025-03-14T22:18:05.000000Z",
+          "updated_at": "2025-03-14T22:18:05.000000Z",
+          "file_url": "http://127.0.0.1:9000/images/default.png"
+      }
+    }
   console.log(props, 'propsspsppsp');
   const { Toast, userInfo, cartData,setCartData,initCart, isCart } = useContext(GlobalContext)
   const router = useRouter()
@@ -29,7 +134,7 @@ const ProductDetail = (props: typeProps) => {
   const [relatedProduct, setRelatedProduct] = useState({ data: [], count: 0 })
   const [quantity, setQuantity] = useState(1)
   const screens = Grid.useBreakpoint()
-
+let screenSize = screens.xxl ? 5 :screens.xl ? 4 :screens.lg ? 3 : screens.md ? 2 : screens.sm ? 1 : 1
 
   const items: TabsProps['items'] = [
     {
@@ -158,7 +263,8 @@ const ProductDetail = (props: typeProps) => {
       Toast.error(error)
     }
   }
-  console.log(cartData, 'cartDatacartData');
+  console.log(state, 'state__________');
+  console.log(dataRes,"dateres_____")
 
   const updateCart = (payload: any) => {
     debugger
@@ -342,6 +448,10 @@ const [buyQuantity, setBuyQuantity] = useState(1)
 
 // },[userInfo?.access_token,router.query.id])
 
+
+
+
+
   return (
     <Fragment>
       <Head>
@@ -471,29 +581,27 @@ const [buyQuantity, setBuyQuantity] = useState(1)
             </div>
           </Col>
         </Row>
-        {/* <Row gutter={[20, 20]} className='mt-5'>
-          <Col span={24} className='mb-2'><h4 className='title fs-2'>Related products</h4></Col>
-          {[...Array(4)].map(() => <Col span={24} sm={12} md={12} lg={6} xl={6} xxl={6}>
-            <div className="cart-card">
-              <div className="cart-image text-center">
-                <img src={productImage.src} alt="error" />
-                <div className="cart-overlay">
-                  <Link href={'/product/name/id'}><Button type="primary" className="px-5 py-3 h-auto">Add To Cart</Button></Link>
-                </div>
-              </div>
-              <div className="cart-content mt-4 text-center">
-                <Link href={'#'}><h4>Kenya Coffee</h4></Link>
-                <p className="text-secondary fs-6">$18.00</p>
-              </div>
-            </div>
-          </Col>)}
-        </Row> */}
         <Row gutter={[20, 20]} className='mt-5'>
           <Col span={24} className='mb-2'><h4 className='title fs-2'>You may also like.</h4></Col>
-          {Array.isArray(relatedProduct?.data) && relatedProduct?.data.map((res: any, index: number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res}  /></Col>)}
+          {Array.isArray(relatedProduct?.data) && relatedProduct?.data?.slice(0,4)?.map((res: any, index: number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res}  /></Col>)}
         </Row>
       </div>
     </section>
+     {/* <section className="gallery-section">
+            <div className="container-fluid px-0">
+              <Row justify={"center"} className="mb-5 mx-0">
+              <Col span={24} className='mb-2'><h4 className='title fs-2'>You may also like.</h4></Col>
+              </Row>
+              <Row gutter={[20, 20]} className="mx-0">
+                <Col span={24}>
+                  <Carousel dots={false} autoplay slidesToShow={screenSize} infinite={true} slidesToScroll={1} draggable={true} responsive={responsive}>
+                  {Array.isArray(relatedProduct?.data) && relatedProduct?.data.map((res: any, index: number) => <Col key={index} span={24} sm={12} md={12} lg={6} xl={6} xxl={6}> <ProductCard {...res}  /></Col>)} 
+                                   </Carousel>
+    
+                </Col>
+              </Row>
+            </div>
+          </section> */}
     </Fragment>
   )
 }

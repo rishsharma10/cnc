@@ -60,6 +60,15 @@ nostrud exercitation ullamco laboris.”</p> */}
                                     <li>+91 9915708181</li>
                                     <li>Sco 6 sector 16, PANCHKULA 134109</li>
                                     <li>sales@copperandcrumb.in</li>
+                                    <Link href={`/best-in-panchkula`}>
+                                    <li>Panchkula</li>
+                                    </Link>
+                                    <Link href={`/best-in-mohali`}>
+                                    <li>Mohali</li>
+                                    </Link>
+                                    <Link href={`/best-in-chandigarh`}>
+                                    <li>Chandigarh</li>
+                                    </Link>
                                 </ul>
                             </div>
                         </Col>

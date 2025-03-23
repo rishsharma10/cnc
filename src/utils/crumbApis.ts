@@ -2,11 +2,11 @@ import _superagent, { search } from "superagent";
 const SuperagentPromise = require("superagent-promise");
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-// export const API_ROOT = "https://copper-crumb.wloper.com/api/";
-// export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
-
-export const API_ROOT = "https://admin.copperandcrumb.in/api/";
+export const API_ROOT = "https://copper-crumb.wloper.com/api/";
 export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
+
+// export const API_ROOT = "https://admin.copperandcrumb.in/api/";
+// export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
 
 
 export const CURRENCY = '₹'

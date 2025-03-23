@@ -294,7 +294,7 @@ motion. `,
         </div>
       </section>
      
-      {/* <section className="gallery-section ">
+      <section className="gallery-section ">
         <div className="container-fluid px-0">
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
@@ -311,8 +311,8 @@ motion. `,
             </Col>
           </Row>
         </div>
-      </section> */}
-      <section className="offer-section common-bg-1">
+      </section> 
+      <section className="offer-section common-bg-2">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={16} xl={14} className="text-center">
@@ -329,7 +329,7 @@ motion. `,
                   <img src={res.image} alt="error" />
                 </div>
                 <h4 className="mt-3 mb-3">{res.title}</h4>
-                <p className="text-secondary ">{res.subTitle}</p>
+                <p className="text-dark ">{res.subTitle}</p>
               </div>
             </Col>)}
           </Row>
@@ -364,7 +364,7 @@ motion. `,
       </section> */}
 
       {/* /-------------------------- Gallery section ------------------ */}
-      {/* <section className="gallery-section">
+       <section className="gallery-section">
         <div className="container-fluid px-0">
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
@@ -381,7 +381,7 @@ motion. `,
             </Col>
           </Row>
         </div>
-      </section> */}
+      </section>
 
       {/* ---------------------------- Brand Section ------------------- */}
       {/* <section className="beand-section">

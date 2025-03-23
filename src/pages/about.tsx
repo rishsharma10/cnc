@@ -4,9 +4,9 @@ import { Button, Col, Flex, Row, TypographyText, TypographyTitle } from '@/lib/A
 import React, { Fragment, ReactElement } from 'react'
 import aboutBanner from '@/assets/brand-guide/title-above.png';
 import blog2 from '@/assets/images/delicious-coffee-cup-table.jpg';
+import blog3 from '@/assets/images/front-view-cake-slice-with-cream-fresh-red-strawberries-inside-plate-getting-sugar-powder-dark-background.jpg'
 import titleImage from '@/assets/brand-guide/title-separator.png';
 import { Carousel } from 'antd';
-import blog3 from '@/assets/images/front-view-cake-slice-with-cream-fresh-red-strawberries-inside-plate-getting-sugar-powder-dark-background.jpg'
 import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import image1 from "@/assets/images/founderimg1.jpeg"
 import image2 from "@/assets/images/WhatsApp Image 2025-01-11 at 00.47.33.jpeg"
@@ -117,13 +117,6 @@ const About = () => {
         <CommonBanner title="About us" image={imageabout2.src} />
         <section className="blog-section common-bg-2">
           <div className="container">
-            {/* <Row justify={"center"} className="mb-5">
-            <Col span={24} md={20} lg={14} xl={12} className="text-center">
-              <h2 className="title">About us</h2>
-              <img src={titleSeperator.src} alt="error" className="title-seperator" />
-              <p className="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-            </Col>
-          </Row> */}
             <Row gutter={[20, 20]}>
               <Col span={24}>
                 <div className="full-width-image">
@@ -189,60 +182,6 @@ const About = () => {
               At Copper & Crumb, our story is woven from a distinct thread of passion, expertise, and determination. Our founder represents the perfect blend of entrepreneurial vision and culinary mastery, to create something truly extraordinary.
               </p>
             </Col>
-            
-            {/* <Col span={24} lg={24} xl={24} xxl={24}>
-            <Flex>
-
-              <div className="about-banner-founder mb-3">
-                <img src={image1.src} alt="error" className='img-fluid rounded-3' />
-              </div>
-              <div>
-
-              <TypographyTitle level={5}>Kannupriya: (Founder & Vision Director)
-              </TypographyTitle>
-              <p className='m-0 text-secondary text-justify'>In the quiet moments of motherhood, while her children slept, Kannupriya's kitchen became an
-                alchemist's laboratory. What started as a pursuit of the perfect entremet evolved into a vision for
-                transforming India's patisserie landscape. Her journey wasn't marked by formal culinary training,
-                but by something equally valuable—an unwavering dedication to mastery and an intuitive
-                understanding of how food brings people together.
-                Kannupriya's strength lies in her ability to see beyond the conventional. Where others saw just a
-                vacant storefront, she envisioned a haven where traditional craftsmanship could flourish
-                alongside modern innovation. Her entrepreneurial spirit is matched only by her commitment to
-                community building and ethical sourcing.
-                As Vision Director, Kannupriya has crafted more than just a patisserie—she's created a
-                movement. Her focus on empowering women in culinary arts, supporting local farmers, and
-                preserving traditional craftsmanship has transformed Copper & Crumb into a beacon of
-                sustainable luxury in the food industry.
-              </p>
-              </div>
-              </Flex>
-
-            </Col> */}
-            {/* <Col span={24} lg={12} xl={12} xxl={12}>
-              <div className="about-banner mb-3">
-                <img src={image2.src} alt="error" className='img-fluid rounded-3' />
-              </div>
-              <TypographyTitle level={5}>Chef Zareen: Master Pastry Chef & Culinary Director
-              </TypographyTitle>
-              <p className='m-0 text-secondary text-justify'>From the prestigious kitchens of Le Cordon Bleu London to the vibrant streets of Panchkula,
-                Chef Zareen's journey is a testament to the transformative power of culinary arts. Her
-                accolades, including leading Team India to 4th position at the 7th World Tapas Competition,
-                speak to her technical mastery. However, it's her philosophy about food that truly sets her apart.
-                "Every layer tells a story," she often says, her hands gracefully demonstrating the art of
-                lamination. For Chef Zareen, French patisserie isn't just about technique—it's about cultural
-                dialogue. She sees every pastry as an opportunity to bridge worlds: the precision of French
-                methodology with the warmth of Indian flavors, traditional craftsmanship with contemporary
-                innovation.
-                As Culinary Director, Chef Zareen has created more than just a menu—she's pioneered a new
-                culinary language. Her signature creations, from the perfect butter chicken puff pastry (perfected
-                over 45 iterations) to innovative coffee-infused entremets, showcase her unique ability to honor
-                both French and Indian culinary traditions while creating something entirely new.
-                Under her guidance, Copper & Crumb's kitchen has become a learning ground for the next
-                generation of pastry chefs, with special emphasis on empowering women in professional
-                kitchens. Her mentorship program has already begun transforming lives, helping aspiring chefs
-                transition from never having held a piping bag to crafting perfect entremets.
-              </p>
-            </Col> */}
           </Row>
         </div>
       </section>
