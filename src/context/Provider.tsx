@@ -62,6 +62,7 @@ interface CommonContextType {
   uploadImages: any;
   setClickedTexts: any;
   setPic: any;
+  category:any
   cartData:any;
   initCart:() => void
   isCart:(pid:number) => boolean;
@@ -71,6 +72,7 @@ type GlobleContextProviderProps = {
   children: ReactNode;
   access_token: string;
   user_info: any;
+  category_list:any
   userType: string;
   signInPrivacy: string;
   theme?: {
@@ -82,12 +84,13 @@ type GlobleContextProviderProps = {
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
 function GlobalProvider(props: GlobleContextProviderProps) {
+  const [category,setCategory] = useState(props?.category_list)
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   crumbApi.setToken(props?.user_info?.access_token);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [userType, setUserType] = useState(props?.user_info?.userType);
-  console.log(userType, "setUserType");
+  console.log(props, "setUserType");
 
   const [userInfo, setUserInfo] = useState(props?.user_info);
   const [colorPrimary, setColorPrimary] = React.useState(
@@ -277,6 +280,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
         {
           ...props,
           logout,
+          category,
           setCartData,
           collapsed,
           setCollapsed,

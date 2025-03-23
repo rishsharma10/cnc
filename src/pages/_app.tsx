@@ -18,7 +18,8 @@ export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout,
   access_token: string,
-  user_info: any
+  user_info: any,
+  category_list:any,
   signInPrivacy: string,
   userType: string,
 }
@@ -69,16 +70,17 @@ const MyApp = ({ Component, pageProps, ...props }: AppPropsWithLayout) => {
 MyApp.getInitialProps = async (context: any) => {
   const accessToken = parseCookies(context.ctx)[COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN]
   try {
+    const apiRes = await crumbApi.Category.list();
     if (accessToken) {
       crumbApi.setToken(accessToken)
       let apiRes = await crumbApi.Auth.profile()
       const user_info = { ...apiRes.customer }
-      return { user_info: { ...user_info, access_token: accessToken } }
+      return { user_info: { ...user_info, access_token: accessToken },category_list:apiRes.data }
     }
-    return { user_info: {access_token: accessToken } }
+    return { user_info: {access_token: accessToken },category_list:apiRes.data }
 
   } catch (error: any) {
-    return { user_info: { access_token: accessToken } }
+    return { user_info: { access_token: accessToken },category_list:[] }
   }
 }
 

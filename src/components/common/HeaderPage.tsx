@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext, useState} from 'react'
 import logo from '@/assets/brand-guide/logo.png';
 import { Button, Dropdown } from '@/lib/AntRegistry';
 import Link from 'next/link'
@@ -11,8 +11,8 @@ import { SearchOutlined,ShoppingCartOutlined } from '@ant-design/icons';
 
 const HeaderPage = () => {
     const screens = Grid.useBreakpoint()
-    const {userInfo,logout,cartData} = useContext(GlobalContext)
-    console.log(userInfo,'userinfoooooooo');
+    const {userInfo,logout,cartData,category:newCategory} = useContext(GlobalContext)
+    console.log(newCategory,'categorycategory');
 
 
     const items: MenuProps["items"] = [
@@ -55,6 +55,23 @@ const HeaderPage = () => {
     
 
     const router = useRouter()
+const obj = {
+    "id": 'all',
+    "name": "ALL PRODUCTS",
+  }
+  const [category, SetCategory] = useState([obj, ...newCategory]);
+    
+    const items1:any = Array.isArray(category) && category.map((res:any) => {
+      return {
+        key: '1',
+        label: (
+          <Link className="nav-item"  href={`/products/search/${res.id}/1`} legacyBehavior> 
+            {String(res?.name)?.toLocaleUpperCase()}
+          </Link>
+        ),
+      }
+    })
+    
     return (
         <nav className="navbar py-3 px-4 navbar-expand-lg ">
             <div className="container-fluid">
@@ -71,9 +88,14 @@ const HeaderPage = () => {
                         <Link className="nav-item"  href="/" legacyBehavior>
                             <a className="nav-link" aria-current="page">Home</a>
                         </Link>
-                        <Link className="nav-item"  href="/products/search/all/1" legacyBehavior>
+                        <Dropdown menu={{ items:items1 }} placement="bottom">
+                        {/* <Link className="nav-item"  href="/products/search/all/1" legacyBehavior> */}
+                            <a className="nav-link" role='button'>Shop</a>
+                        {/* </Link> */}
+                        </Dropdown>
+                        {/* <Link className="nav-item"  href="/products/search/all/1" legacyBehavior>
                             <a className="nav-link">Shop</a>
-                        </Link>
+                        </Link> */}
                         <Link className="nav-item"  href="/about" legacyBehavior>
                             <a className="nav-link">About us</a>
                         </Link>

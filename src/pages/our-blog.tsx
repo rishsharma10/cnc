@@ -7,6 +7,7 @@ import serviceImage from '@/assets/images/delicious-coffee-cup-table.jpg'
 import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import CommonBanner from '@/components/CommonBanner'
 import Head from 'next/head'
+import Link from 'next/link'
 const OurBlog = () => {
 
     const itemData = [
@@ -62,6 +63,7 @@ const OurBlog = () => {
                         </Col>
                         <Row gutter={[20, 20]}>
                             {itemData.map((res, index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
+                            <Link href={`/blog/hello/1`}>
                                 <div className="blog-card">
                                     <div className="blog-image">
                                         <img src={res.image} alt="error" className="img-fluid" />
@@ -72,6 +74,7 @@ const OurBlog = () => {
                                         {/* <Link href={'#'}>Read More</Link> */}
                                     </div>
                                 </div>
+                            </Link>
                             </Col>)}
                         </Row>
                     </Row>
