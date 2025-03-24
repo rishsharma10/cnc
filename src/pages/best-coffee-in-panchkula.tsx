@@ -67,7 +67,7 @@ const BestInPanchkula = () => {
                 <title>Relax & Recharge With The Best Cafe Panchkula</title>
                 <meta name='desription' content={`Looking for a place for your next coffee date? Panchkula has a hidden gem. Copper & Crumb is a well-known cafe in Panchkula and popular among coffee lovers for having an Indo-French fusion.`} />
             </Head>
-            <CommonBanner title={"Best in panchkula"} />
+            <CommonBanner title={"Best coffee in panchkula"} />
             {/* <section className="blog-section common-bg-1">
                 <div className="container">
                     <Row gutter={[20, 20]}>

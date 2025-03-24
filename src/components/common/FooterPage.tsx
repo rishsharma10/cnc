@@ -73,13 +73,13 @@ nostrud exercitation ullamco laboris.”</p> */}
                             <div className="about-content">
                                 <h4 className='mb-3'>BEST IN</h4>
                                 <ul className="list-unstyled m-0 p-0 gap-4">
-                                <Link href={`/best-in-panchkula`}>
+                                <Link href={`/best-coffee-in-panchkula`}>
                                     <li>Panchkula</li>
                                     </Link>
-                                    <Link href={`/best-in-mohali`}>
+                                    <Link href={`/best-coffee-in-mohali`}>
                                     <li>Mohali</li>
                                     </Link>
-                                    <Link href={`/best-in-chandigarh`}>
+                                    <Link href={`/best-coffee-in-chandigarh`}>
                                     <li>Chandigarh</li>
                                     </Link>
                                 </ul>

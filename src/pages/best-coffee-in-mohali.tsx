@@ -56,7 +56,7 @@ const BestInMohali = () => {
                 <title>Have a Relaxing Coffee in the Best Cafe in Mohali</title>
                 <meta name='desription' content={`Are you in search of a perfect coffee place? Mohali has the best Indo-French retreat to enhance your culinary experience. Copper & Crumb is the best Mohali cafe with a touch of classiness.`} />
             </Head>
-            <CommonBanner title={"Best in Mohali"} />
+            <CommonBanner title={"Best coffee in Mohali"} />
             <section>
                 <div className="container mt-sm-0 pt-0">
                     <Row gutter={[20, 20]} justify={'center'}>

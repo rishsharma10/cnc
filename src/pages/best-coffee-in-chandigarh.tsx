@@ -56,7 +56,7 @@ const BestInChandigarh = () => {
                 <title>Copper & Crumb: Iconic Backpackers Cafe in Chandigarh</title>
                 <meta name='desription' content={`Are you looking for a perfect dating venue to surprise your partner? Being one of the top cafes in Chandigarh, Copper & Crumb can make everything even more special. Experience the classic touch of Indo-French fusion.`} />
             </Head>
-            <CommonBanner title={"Best in chandigarh"} />
+            <CommonBanner title={"Best coffee in chandigarh"} />
             {/* <section className="blog-section common-bg-1">
                 <div className="container">
                     <Row gutter={[20, 20]}>
