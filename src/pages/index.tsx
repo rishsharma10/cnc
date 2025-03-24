@@ -303,12 +303,11 @@ motion. `,
         </div>
       </section>
      
-      <section className="gallery-section ">
+      {/* <section className="gallery-section ">
         <div className="container-fluid px-0">
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Featured Products</h2>
-              {/* <img src={titleSeperator.src} alt="error" className="title-seperator" /> */}
               <div className="title-separater-next">
               <OptimizeImage width={192} height={27} image={titleSeperator.src} blurDataURL={titleSeperator.src}/>
               </div>
@@ -323,8 +322,8 @@ motion. `,
             </Col>
           </Row>
         </div>
-      </section> 
-      <section className="offer-section common-bg-2">
+      </section>  */}
+      <section className="offer-section common-bg-1">
         <div className="container">
           <Row justify={"center"} className="mb-5">
             <Col span={24} md={20} lg={16} xl={14} className="text-center">
@@ -381,12 +380,11 @@ motion. `,
       </section> */}
 
       {/* /-------------------------- Gallery section ------------------ */}
-       <section className="gallery-section">
+       {/* <section className="gallery-section">
         <div className="container-fluid px-0">
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Best sellers</h2>
-              {/* <img src={titleSeperator.src} alt="error" className="title-seperator" /> */}
               <div className="title-separater-next">
               <OptimizeImage width={192} height={27} image={titleSeperator.src} blurDataURL={titleSeperator.src}/>
               </div>
@@ -401,7 +399,7 @@ motion. `,
             </Col>
           </Row>
         </div>
-      </section>
+      </section> */}
 
       {/* ---------------------------- Brand Section ------------------- */}
       {/* <section className="beand-section">

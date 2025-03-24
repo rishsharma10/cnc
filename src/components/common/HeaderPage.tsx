@@ -88,11 +88,9 @@ const obj = {
                         <Link className="nav-item"  href="/" legacyBehavior>
                             <a className="nav-link" aria-current="page">Home</a>
                         </Link>
-                        <Dropdown menu={{ items:items1 }} placement="bottom">
-                        {/* <Link className="nav-item"  href="/products/search/all/1" legacyBehavior> */}
+                        {/* <Dropdown menu={{ items:items1 }} placement="bottom">
                             <a className="nav-link" role='button'>Shop</a>
-                        {/* </Link> */}
-                        </Dropdown>
+                        </Dropdown> */}
                         {/* <Link className="nav-item"  href="/products/search/all/1" legacyBehavior>
                             <a className="nav-link">Shop</a>
                         </Link> */}
@@ -108,11 +106,11 @@ const obj = {
                         <Link className="nav-item"  href="/pages/contact-us" legacyBehavior>
                             <a className="nav-link">Contact us</a>
                         </Link>
-                        <Badge count={cartData.count} showZero={false}>
+                        {/* <Badge count={cartData.count} showZero={false}>
                         <Link className="nav-item" href="/viewcart" legacyBehavior>
                             <a className="nav-link" ><ShoppingCartOutlined /></a>
                         </Link>
-                        </Badge>
+                        </Badge> */}
                         {/* <li className="nav-item">
                             <a className="nav-link " href="#">Portofolio</a>
                         </li>
@@ -125,13 +123,12 @@ const obj = {
                         <li className="nav-item">
                             <a className="nav-link " href="#">Element</a>
                         </li> */}
-                        <Link className="nav-item"  href="/search" legacyBehavior>
+                        {/* <Link className="nav-item"  href="/search" legacyBehavior>
                         <li className="nav-item">
                             <a className="nav-link " href="/search"><SearchOutlined /></a>
                         </li>
-                        </Link>
-                        {/* <Link className="nav-item bg-white"  href="/login"> */}
-                        {!userInfo?.access_token ? <Link href={`/login`}><Button className='text-white' type='primary'>SIGN IN</Button></Link> :  <Dropdown menu={{ items }} placement="bottomLeft">
+                        </Link> */}
+                        {/* {!userInfo?.access_token ? <Link href={`/login`}><Button className='text-white' type='primary'>SIGN IN</Button></Link> :  <Dropdown menu={{ items }} placement="bottomLeft">
                   <Button type="text" className="h-100 p-0" shape="circle">
                     <Avatar
                       src={
@@ -145,8 +142,7 @@ const obj = {
                     />
                     {userInfo?.first_name}
                   </Button>
-                </Dropdown> }
-                        {/* </Link> */}
+                </Dropdown> } */}
                     </ul>
                 </div>
             </div>
