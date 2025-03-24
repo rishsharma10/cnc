@@ -17,7 +17,6 @@ import {
 import React, { useContext, useState } from 'react'
 import logo from '@/assets/brand-guide/logo.png'
 import seperator from '@/assets/brand-guide/slider-separator-img.png'
-import HeroBanner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg'
 import titleSeperator from '@/assets/brand-guide/title-separator.png'
 import serviceImage from '@/assets/images/delicious-coffee-cup-table.jpg'
 import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
@@ -36,6 +35,8 @@ import crumbApi from "@/utils/crumbApis";
 // import video1 from "@/assets/videos/cori"
 import { stringReplace } from "@/utils/crumbValidation";
 import ProductCard from "@/components/ProductCard";
+import Image from "next/image";
+import OptimizeImage from "@/components/OptimizeImage";
 const Home = () => {
   const itemData = [
     {
@@ -174,7 +175,6 @@ motion. `,
                   experiences that bridge continents and generations.`,
       button: `Explore Our Menu`,
       link: `/products/search/all/1`,
-      poster: HeroBanner.src,
       video: '/public/prelaunch-teaser-campaign-of-cafe-patisserie-copper.mp4'
     },
     // {
@@ -229,7 +229,10 @@ motion. `,
                           </div> */}
                           <h1>{res.title}
                           </h1>
-                          <img src={seperator.src} alt="error" className="mt-3 mb-4 mx-auto" />
+                          {/* <img src={seperator.src} alt="error" className="mt-3 mb-4 mx-auto" /> */}
+                          <div className="title-separater-next">
+              <OptimizeImage width={192} height={27} image={seperator.src} blurDataURL={seperator.src}/>
+              </div>
                           <p className="mb-4 mb-sm-5">{res.desc}
                           </p>
                           {/* <span>
@@ -250,15 +253,18 @@ motion. `,
         <div className="container pt-5">
           <Row gutter={[40, 40]} justify={'space-between'} align={"top"}>
             <Col span={24} lg={14} xl={14} xxl={14}>
-              <div className="story-section">
+              {/* <div className="story-section">
                 <img src={hand_holding.src} alt="error" className='img-fluid' />
+              </div> */}
+              <div className="story-section">
+              <OptimizeImage width={192} height={27} image={hand_holding.src} blurDataURL={hand_holding.src}/>
               </div>
             </Col>
             <Col span={24} lg={9} xl={9} xxl={9}>
               <TypographyTitle className="text-uppercase" level={4}>Our Story Snapshot
               </TypographyTitle>
               <p className='fs-16 text-justify'>From quiet kitchen experiments during motherhood to the bustling heart of Panchkula's culinary
-                scene, Copper & Crumb represents the vision of two women who dared to dream differently.
+                scene, Copper & Crumb represents the vision of one woman who dared to dream differently.
                 Here, antique copper pots share space with modern espresso machines, while Kerala vanilla
                 beans infuse the air alongside French butter.</p>
               <Link href={`/our-story`} ><Button className="mt-3" type="primary" ghost>Discover Our Journey</Button></Link>
@@ -273,7 +279,10 @@ motion. `,
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Signature Creations
               </h2>
-              <img src={titleSeperator.src} alt="error" className="title-seperator" />
+              <div className="title-separater-next">
+              <OptimizeImage width={192} height={27} image={titleSeperator.src} blurDataURL={titleSeperator.src}/>
+              </div>
+              {/* <img src={titleSeperator.src} alt="error" className="title-seperator" /> */}
               {/* <p className="sub-title">At Copper & Crumb, we craft unique coffee experiences with our Signature Creations. Each cup is a masterpiece, made with quality ingredients and a dash of creativity to delight your senses.</p> */}
             </Col>
           </Row>
@@ -281,7 +290,7 @@ motion. `,
             {itemData.map((res, index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
               <div className="blog-card">
                 <div className="blog-image">
-                  <img src={res.image} alt="error" className="img-fluid" />
+                  <OptimizeImage width={420} height={240} image={res.image} blurDataURL={blogImage.src}/>
                 </div>
                 <div className="blog-content mt-4">
                   <h4>{res.title}</h4>
@@ -299,7 +308,10 @@ motion. `,
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Featured Products</h2>
-              <img src={titleSeperator.src} alt="error" className="title-seperator" />
+              {/* <img src={titleSeperator.src} alt="error" className="title-seperator" /> */}
+              <div className="title-separater-next">
+              <OptimizeImage width={192} height={27} image={titleSeperator.src} blurDataURL={titleSeperator.src}/>
+              </div>
             </Col>
           </Row>
           <Row gutter={[20, 20]} className="mx-0">
@@ -318,7 +330,10 @@ motion. `,
             <Col span={24} md={20} lg={16} xl={14} className="text-center">
               <h2 className="title">Our Spaces
               </h2>
-              <img src={titleSeperator.src} alt="error" className="title-seperator" />
+              {/* <img src={titleSeperator.src} alt="error" className="title-seperator" /> */}
+              <div className="title-separater-next">
+              <OptimizeImage width={192} height={27} image={titleSeperator.src} blurDataURL={titleSeperator.src}/>
+              </div>
               {/* <p className="sub-title">At Copper & Crumb, we’re all about bringing you the finest coffee and delightful treats that perfectly complement your coffee experience. Whether you're craving a smooth espresso, a rich pour-over, or a freshly baked pastry, our menu has something for everyone.</p> */}
             </Col>
           </Row>
@@ -326,7 +341,8 @@ motion. `,
             {serviceArray.map((res: any) => <Col key={res} span={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
               <div className="offered-items-container text-center h-100 p-4">
                 <div className="item-image">
-                  <img src={res.image} alt="error" />
+                  {/* <img src={res.image} alt="error" /> */}
+                  <OptimizeImage width={94} height={106} image={res.image} blurDataURL={res.image}/>
                 </div>
                 <h4 className="mt-3 mb-3">{res.title}</h4>
                 <p className="text-dark ">{res.subTitle}</p>
@@ -340,8 +356,9 @@ motion. `,
         <div className="container h-100">
           <Row className="h-100" align={"middle"}>
             <Col span={24}>
-              <div className="logo text-center">
-                <img src={logo.src} alt="error" height={220} width={200} />
+              <div className="logo text-center" style={{height:220,width:200,margin:"auto"}}>
+                {/* <img src={logo.src} alt="error" height={220} width={200} /> */}
+                <OptimizeImage width={94} height={106} image={logo.src} blurDataURL={logo.src}/>
               </div>
             </Col>
           </Row>
@@ -369,7 +386,10 @@ motion. `,
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
               <h2 className="title">Best sellers</h2>
-              <img src={titleSeperator.src} alt="error" className="title-seperator" />
+              {/* <img src={titleSeperator.src} alt="error" className="title-seperator" /> */}
+              <div className="title-separater-next">
+              <OptimizeImage width={192} height={27} image={titleSeperator.src} blurDataURL={titleSeperator.src}/>
+              </div>
             </Col>
           </Row>
           <Row gutter={[20, 20]} className="mx-0">

@@ -13,7 +13,7 @@ export const CURRENCY = '₹'
 
 export const PHONE_NUMBER_LINK = `919915708181`
 export const INSTAGRAM_LINK = 'https://www.instagram.com/copperandcrumb.in/'
-export const FACEBOOK_LINK = 'https://www.facebook.com'
+export const FACEBOOK_LINK = 'https://www.facebook.com/profile.php?id=61567101523334#'
 export const WHATSPP_LINK = `https://api.whatsapp.com/send/?phone=${PHONE_NUMBER_LINK}&text=Hi, I have a quick question. Could you please help me with this? Thanks!&type=phone_number&app_absent=0`
 
 const API_FILE_ROOT_MEDIUM = `${BUCKET_ROOT}/medium/`;

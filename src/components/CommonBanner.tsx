@@ -2,6 +2,7 @@ import { Col, Row } from '@/lib/AntRegistry'
 import React from 'react'
 import banner from '@/assets/images/cappuccino-sits-elegantly-atop-pile-rich-coffee-beans.jpg'
 import titleSeperator from '@/assets/brand-guide/title-separator.png'
+import OptimizeImage from './OptimizeImage'
 const CommonBanner = ({title,image}:any) => {
   return (
     <div className="container-fluid px-0">

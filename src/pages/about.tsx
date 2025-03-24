@@ -97,14 +97,11 @@ const About = () => {
 
   const data2 = [
     {
-      desc: `The partnership between Kannupriya and Chef Zareen represents the perfect blend of vision
-                    and expertise, business acumen and culinary artistry. Their collaboration has created more than
-                    just a patisserie—it's a movement celebrating the union of cultures, the preservation of craft,
-                    and the power of female entrepreneurship`
+      desc: `Their shared commitment to excellence, sustainability, and community building ensures that every visit to Copper & Crumb is more than just a culinary experience—it's a chance to be part of a larger story of transformation and tradition, innovation and authenticity.`
     }
     ,
     {
-      desc: `Their shared commitment to excellence, sustainability, and community building ensures that every visit to Copper & Crumb is more than just a culinary experience—it's a chance to be part of a larger story of transformation and tradition, innovation and authenticity.`
+      desc: `The partnership between Kannupriya and Beanrove roasters represents the perfect blend of vision and expertise, business acumen and culinary artistry. Their collaboration has created more than just a cafe it's a movement celebrating the union of cultures, the preservation of craft, and the passion for coffee.`
     }
   ]
   return (

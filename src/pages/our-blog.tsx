@@ -8,6 +8,7 @@ import blogImage from '@/assets/images/retro-dishware-aroma-life-brown.jpg'
 import CommonBanner from '@/components/CommonBanner'
 import Head from 'next/head'
 import Link from 'next/link'
+import OptimizeImage from '@/components/OptimizeImage'
 const OurBlog = () => {
 
     const itemData = [
@@ -63,18 +64,21 @@ const OurBlog = () => {
                         </Col>
                         <Row gutter={[20, 20]}>
                             {itemData.map((res, index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
-                            <Link href={`/blog/hello/1`}>
-                                <div className="blog-card">
-                                    <div className="blog-image">
+                                <Link href={`/blog/hello/1`}>
+                                    <div className="blog-card">
+                                        {/* <div className="blog-image">
                                         <img src={res.image} alt="error" className="img-fluid" />
+                                    </div> */}
+                                        <div className="blog-image">
+                                            <OptimizeImage width={420} height={240} image={res.image} blurDataURL={blogImage.src} />
+                                        </div>
+                                        <div className="blog-content mt-4">
+                                            <h4>{res.title}</h4>
+                                            <p className="mt-3 mb-3 text-secondary text-justify">{res.subTitle}</p>
+                                            {/* <Link href={'#'}>Read More</Link> */}
+                                        </div>
                                     </div>
-                                    <div className="blog-content mt-4">
-                                        <h4>{res.title}</h4>
-                                        <p className="mt-3 mb-3 text-secondary text-justify">{res.subTitle}</p>
-                                        {/* <Link href={'#'}>Read More</Link> */}
-                                    </div>
-                                </div>
-                            </Link>
+                                </Link>
                             </Col>)}
                         </Row>
                     </Row>

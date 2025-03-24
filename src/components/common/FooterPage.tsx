@@ -7,6 +7,7 @@ import { FacebookOutlined, InstagramOutlined, WhatsAppOutlined } from '@ant-desi
 import crumbApi, { FACEBOOK_LINK, INSTAGRAM_LINK, WHATSPP_LINK } from '@/utils/crumbApis';
 import { GlobalContext } from '@/context/Provider';
 import { Form } from 'antd';
+import OptimizeImage from '../OptimizeImage';
 const FooterPage = () => {
     const [form] = Form.useForm()
     const { Toast } = useContext(GlobalContext)
@@ -29,12 +30,16 @@ const FooterPage = () => {
         <>
             <footer className="footer-section footer">
                 <div className="container">
-                    <Row justify={"space-between"} gutter={[20, 20]}>
-                        <Col span={24} md={20} lg={8} xl={9} xxl={9}>
+                    <Row justify={"space-between"} gutter={[60, 20]}>
+                        <Col span={24} md={12} lg={12} xl={9} xxl={9}>
                             <div className="about-content">
-                                <div className="logo mb-4">
+                                {/* <div className="logo mb-4">
                                     <img src={logo.src} alt="error" height={100} width={95} />
-                                </div>
+
+                                </div> */}
+                                <div className="footer-logo mb-4">
+                                            <OptimizeImage width={95} height={100} image={logo.src} blurDataURL={logo.src} />
+                                        </div>
                                 {/* <p className="fs-6 mb-5">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 
 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -51,16 +56,24 @@ nostrud exercitation ullamco laboris.”</p> */}
                             </div>
                         </Col>
 
-                        <Col span={24} md={20} lg={18} xl={5} xxl={5}>
+                        <Col span={24} md={12} lg={12} xl={5} xxl={5}>
                             <div className="about-content">
                                 <h4 className="mb-3">Contact</h4>
                                 <ul className="list-unstyled mb-5 p-0">
                                     <li className='text-uppercase'>Copper & crumb</li>
                                     {/* <li>GST NO. 062400171112TRN</li> */}
                                     <li>+91 9915708181</li>
-                                    <li>Sco 6 sector 16, PANCHKULA 134109</li>
+                                    <li className='text-uppercase'>Sco 6 sector 16, PANCHKULA 134109</li>
                                     <li>sales@copperandcrumb.in</li>
-                                    <Link href={`/best-in-panchkula`}>
+                                   
+                                </ul>
+                            </div>
+                        </Col>
+                        <Col span={24} md={12} lg={12} xl={5} xxl={5}>
+                            <div className="about-content">
+                                <h4 className='mb-3'>BEST IN</h4>
+                                <ul className="list-unstyled m-0 p-0 gap-4">
+                                <Link href={`/best-in-panchkula`}>
                                     <li>Panchkula</li>
                                     </Link>
                                     <Link href={`/best-in-mohali`}>
@@ -72,7 +85,7 @@ nostrud exercitation ullamco laboris.”</p> */}
                                 </ul>
                             </div>
                         </Col>
-                        <Col span={24} md={20} lg={18} xl={5} xxl={5}>
+                        <Col span={24} md={12} lg={12} xl={5} xxl={5}>
                             <div className="about-content">
                                 <h4 className='mb-3'>POLICIES</h4>
                                 <ul className="list-unstyled m-0 p-0 gap-4">
