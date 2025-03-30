@@ -114,7 +114,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
       content: success,
     });
   };
-  console.log(userInfo, "userInfouserInfouserInfo");
+  console.log(category, "categorycategory");
 
   const capitalizeFirstLetter = (string: any) => {
     if (!string) return "";
@@ -238,10 +238,10 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     return isInCart ? true : false;
   }
 
-  const getProfile = async () => {
+  const getCategory = async () => {
     try {
-      const apiRes = await crumbApi.Auth.profile();
-      setUserInfo(apiRes?.data);
+      const apiRes = await crumbApi.Category.list();
+      setCategory(apiRes?.data);
     } catch (error: any) {}
   };
   console.log(router, "routerrrrrrr");
@@ -250,6 +250,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     if(userInfo?.access_token){
       initCart()
     }
+    getCategory()
   },[userInfo?.access_token])
 
   useEffect(() => {

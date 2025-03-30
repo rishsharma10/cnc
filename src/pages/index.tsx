@@ -303,7 +303,7 @@ motion. `,
         </div>
       </section>
      
-      {/* <section className="gallery-section ">
+      <section className="gallery-section ">
         <div className="container-fluid px-0">
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
@@ -322,7 +322,7 @@ motion. `,
             </Col>
           </Row>
         </div>
-      </section>  */}
+      </section> 
       <section className="offer-section common-bg-1">
         <div className="container">
           <Row justify={"center"} className="mb-5">

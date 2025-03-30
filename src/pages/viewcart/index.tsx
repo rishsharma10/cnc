@@ -223,7 +223,11 @@ const AddToCart = () => {
                     <div>
 
                     <span>{res?.product?.name}</span><br/>
-                    <TypographyText className='text-muted'>{formatString(res?.grid_size)} / {res?.size}g</TypographyText>
+                    {(res?.attribute_item_detail?.name) ? 
+                    <TypographyText className='text-muted'>{res?.attribute_item_detail?.name}</TypographyText>:""}
+                    <br/>
+                    {(res?.attribute_detail?.name) ? 
+                    <TypographyText className='text-muted'>{res?.attribute_detail?.name}</TypographyText>:""}
                     </div>
             </Flex>
             </Link>,

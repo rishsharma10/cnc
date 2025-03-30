@@ -94,6 +94,10 @@ const Product = {
   list: () => requests.get("v1/products"),
   popular: () => requests.get("v1/popular-products"),
   details: (id: any) => requests.get(`v1/product/${id}`),
+  variantAttributes: (id: any) => requests.get(`v1/variants/${id}/attributes`),
+  productStockttributes: (q?: string) => requests.get(`v1/product-stock${q ? `?${q}` : ""}`),
+  
+
 }
 const Category = {
   list: () => requests.get("v1/categories"),

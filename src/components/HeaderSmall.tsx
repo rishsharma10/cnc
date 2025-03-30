@@ -11,7 +11,7 @@ import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 
 const HeaderSmall = () => {
     const screens = Grid.useBreakpoint()
-    const { userInfo, logout, cartData,collapsed,setCollapsed } = useContext(GlobalContext)
+    const { userInfo, logout, cartData,collapsed,setCollapsed,category } = useContext(GlobalContext)
     const items: MenuProps["items"] = [
         {
             key: "2",
@@ -50,6 +50,18 @@ const HeaderSmall = () => {
         },
     ];
     const router = useRouter()
+
+    
+    const items1:any = Array.isArray(category) && category.map((res:any) => {
+      return {
+        key: '1',
+        label: (
+          <Link className="nav-item"  href={`/products/search/${res.id}/1?sub_category=all`} legacyBehavior> 
+            {String(res?.name)?.toLocaleUpperCase()}
+          </Link>
+        ),
+      }
+    })
    
     return (
         <nav className="navbar py-3 navbar-expand-lg ">
@@ -110,6 +122,9 @@ const HeaderSmall = () => {
                             {/* <Link className="nav-item my-2 d-inline-block" href="/products/search/all/1" legacyBehavior>
                                 Shop
                             </Link> */}
+                             <Dropdown menu={{ items:items1 }} placement="bottom">
+                                                        <a className="nav-link" role='button'>Shop</a>
+                                                    </Dropdown>
                             <Link className="nav-item" href="/about" legacyBehavior>
                                 About us
                             </Link>

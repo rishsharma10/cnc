@@ -18,7 +18,7 @@ const ProductList = (props: any) => {
   const router = useRouter()
   const obj = {
     "id": 'all',
-    "name": "ALL PRODUCTS",
+    "name": "All Products",
   }
   const [category, SetCategory] = useState([obj, ...props.data]);
   const [loading, setLoading] = useState(false)
@@ -31,11 +31,12 @@ const ProductList = (props: any) => {
     debugger
     try {
       setLoading(true)
-      if (router.query.created_by == 'all') {
-        let apiRes = await crumbApi.Product.list()
+      if (router.query.sub_category == 'all') {
+        // let apiRes = await crumbApi.Product.list()
+        let apiRes = await crumbApi.Category.productList(Number(router.query.created_by))
         setState({ data: apiRes.data, count: apiRes?.data?.length })
       } else {
-        let apiRes = await crumbApi.Category.productList(Number(router.query.created_by))
+        let apiRes = await crumbApi.Category.productList(Number(router.query.sub_category))
         setState({ data: apiRes.data, count: apiRes?.data?.length })
       }
     } catch (error) {
@@ -45,17 +46,27 @@ const ProductList = (props: any) => {
     }
   }
   const handleChange = (id: any) => {
-    router.push({ ...router.query, query: { created_by: id, page: router.query.page } })
+    router.push({ ...router.query, query: {created_by:router.query.created_by, sub_category: id, page: router.query.page } })
+  }
+  const handleCategoryChange = (id:any) => {
+    router.push({ ...router.query, query: {created_by:router.query.created_by, sub_category: id, page: router.query.page } })
   }
   const handlePagination = (page: number, pageSize: number) => {
     router.replace({
       query: { ...router.query, page: page, limit: pageSize },
     }, undefined, { shallow: true })
   }
+  const updateCategoryData = async () => {
+    const data = await props?.data?.find((res:any) => res.id == Number(router.query.created_by))
+    SetCategory([obj,...data?.subcategories])
+  }
   console.log(state, 'statettetette')
   React.useEffect(() => {
+    updateCategoryData()
+  },[router.query.created_by,router.query.limit,router.query.page])
+  React.useEffect(() => {
     initProductList()
-  }, [router.query.created_by,router.query.limit])
+  }, [router.query.created_by,router.query.limit,router.query?.sub_category])
 
 
   return (
@@ -85,7 +96,7 @@ const ProductList = (props: any) => {
                 /></Flex> :
                   <ul className='list-unstyled p-0 mb-5'>
                     <h4>categories</h4>
-                    {Array.isArray(category) && category.map((res, index) => <div role='button' onClick={() => router.push({ ...router.query, query: { created_by: res?.id, page: router.query.page } })} key={res.id}><li className={`mb-2 fs-16 ${res.id == router.query.created_by ? "text-black fw-bold " : "text-muted"}`}>{res.name}</li></div>)}
+                    {Array.isArray(category) && category.map((res, index) => <div role='button' onClick={() => handleCategoryChange(res?.id)} key={res.id}><li className={`mb-2 fs-16 ${res.id == router.query.sub_category ? "text-black fw-bold " : "text-muted"}`}>{res.name}</li></div>)}
 
                   </ul>}
 

@@ -10,7 +10,7 @@ const EmptyCart = () => {
             <img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png" alt="" />
             </div>
             <TypographyTitle className='mt-2 mb-3' level={3}>Your cart is empty</TypographyTitle>
-            <Link href={`/products/search/all/1`}><Button type='primary' className='text-uppercase'>Shop now</Button></Link>
+            <Link href={`/products/search/1/1?sub_category=all`}><Button type='primary' className='text-uppercase'>Shop now</Button></Link>
         </div>
     </div>
   )

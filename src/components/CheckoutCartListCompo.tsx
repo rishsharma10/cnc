@@ -20,7 +20,11 @@ const CheckoutCartListCompo = (props:any) => {
                     <div>
                         <TypographyText>{props?.product?.name}</TypographyText>
                         <br/>
-                        <TypographyText className='text-muted'>{formatString(props?.grid_size)} / {props?.size}g</TypographyText>
+                        {(props?.attribute_item_detail?.name) ? 
+                                            <TypographyText className='text-muted'>{props?.attribute_item_detail?.name}</TypographyText>:""}
+                                            <br/>
+                                            {(props?.attribute_detail?.name) ? 
+                                            <TypographyText className='text-muted'>{props?.attribute_detail?.name}</TypographyText>:""}
                     </div>
                 </Flex>
                 <TypographyText>{`${CURRENCY}${Number(props?.quantity * props?.product?.customer_buying_price).toFixed(2)}`}</TypographyText>
