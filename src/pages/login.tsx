@@ -140,6 +140,9 @@ const LoginPage = () => {
           await syncCartData(parseData, cartData.cart)
           localStorage.setItem("cart", JSON.stringify([]))
         }
+      }else{
+        localStorage.setItem("cart",JSON.stringify([]))
+
       }
       await initCart()
       setUserInfo({

@@ -21,6 +21,7 @@
     "razorpay": "^2.9.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^5.5.0",
     "sass": "^1.70.0",
     "superagent": "^8.1.2",
     "superagent-promise": "^1.1.0"

@@ -18,7 +18,7 @@ import { formatString, stringReplace } from '@/utils/crumbValidation'
 
 const AddToCart = () => {
     const screens = Grid.useBreakpoint()
-    const { Toast, userInfo, cartData, initCart,setCartData, setUserInfo } = useContext(GlobalContext)
+    const { Toast, userInfo, cartData, initCart, setCartData, setUserInfo } = useContext(GlobalContext)
     const router = useRouter()
     const [form] = Form.useForm()
     const [state, setState] = useState({ data: cartData.data, count: cartData.count, sub_total: 0 })
@@ -29,7 +29,7 @@ const AddToCart = () => {
 
 
 
-    const handleIncDec = async (pid: number, type: string, qty: number, index: number) => {
+    const handleIncDec = async (pid: number, type: string, qty: number, index: number, is_variant?: boolean, attribute_id?: number, attribute_item_id?: number) => {
         debugger
         setLoadingUpdateCart(true)
         try {
@@ -38,51 +38,71 @@ const AddToCart = () => {
                 let cart: any = localStorage.getItem('cart');
                 cart = cart ? JSON.parse(cart) : [];
                 let itemFound = false;
+
                 cart = cart.map((item: any) => {
-                    if (item.id === pid) {
-                        itemFound = true;
+                    if (is_variant) {
+                        if (
+                            item.product_id === pid &&
+                            item.variant?.attribute_id === attribute_id &&
+                            item.variant?.attribute_item_id === attribute_item_id
+                        ) {
+                            itemFound = true;
+                            return { ...item, quantity: qty };
+                        }
+                    } else {
+                        if (item.product_id === pid) {
+                            itemFound = true;
+                            return { ...item, quantity: qty };
+                        }
+                    }
+                    return item;
+                });
+
+                if (!itemFound) {
+                    return; // Optionally show a warning: Toast.warning('Item not found in cart');
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                const updatedData = state.data.map((item: any, idx: number) => {
+                    if (idx === index) {
                         return { ...item, quantity: qty };
                     }
                     return item;
                 });
-                if (!itemFound) {
-                    return
-                    // Toast.warning('Item not found in cart');
-                }
-                localStorage.setItem('cart', JSON.stringify(cart));
-                const data = state.data
-                data[index].quantity = qty
-                // setState({
-                //     ...state,
-                //     data
-                // })
-                const total = state?.data?.reduce((acc: any, item: any) => {
-                    const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
-                    const quantity = item?.quantity; // Get quantity
-                    return acc + (price * quantity); // Add to the accumulator
+
+                // Recalculate total price
+                const total = updatedData.reduce((acc: any, item: any) => {
+                    const price = parseFloat(item?.price);
+                    const quantity = item?.quantity;
+                    return acc + (price * quantity);
                 }, 0);
+
                 setState({
                     ...state,
-                    data,
-                    count: state?.data?.length,
+                    data: updatedData,
+                    count: updatedData.length,
                     sub_total: total
-                })
-                // if (type == 'INC') {
-                //   setQuantity(quantity + 1)
-                // } else {
-                //   setQuantity(quantity - 1)
-                // }
+                });
+
+
             } else {
                 const payload = {
                     product_id: pid,
-                    quantity: qty
+                    quantity: qty,
+                } as any
+                if (is_variant) {
+                    payload.attribute_id = attribute_id,
+                        payload.attribute_item_id = attribute_item_id
+
                 }
-                const apiRes = await crumbApi.Cart.update(payload)
+
+                const apiRes = await crumbApi.Cart.updateCart(payload)
                 if (type == 'INC') {
                     const data = state.data
                     data[index].quantity = qty
                     const total = cartData?.data?.reduce((acc: any, item: any) => {
-                        const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
+                        const price = parseFloat(item?.price); // Convert price to number
                         const quantity = item?.quantity; // Get quantity
                         return acc + (price * quantity); // Add to the accumulator
                     }, 0);
@@ -95,7 +115,7 @@ const AddToCart = () => {
                     const data = state.data
                     data[index].quantity = qty
                     const total = cartData?.data?.reduce((acc: any, item: any) => {
-                        const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
+                        const price = parseFloat(item?.price); // Convert price to number
                         const quantity = item?.quantity; // Get quantity
                         return acc + (price * quantity); // Add to the accumulator
                     }, 0);
@@ -105,7 +125,7 @@ const AddToCart = () => {
                         data
                     })
                 }
-                setCoupon({is_applied:false,discount:0})
+                setCoupon({ is_applied: false, discount: 0 })
                 Toast.success(`Cart quantity updated to ${qty}`)
             }
         } catch (error) {
@@ -130,7 +150,7 @@ const AddToCart = () => {
                 data.splice(index, 1);
                 localStorage.setItem('cart', JSON.stringify(data));
                 const total = data?.reduce((acc: any, item: any) => {
-                    const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
+                    const price = parseFloat(item?.price); // Convert price to number
                     const quantity = item?.quantity; // Get quantity
                     return acc + (price * quantity); // Add to the accumulator
                 }, 0);
@@ -140,12 +160,12 @@ const AddToCart = () => {
                     count: state?.data?.length,
                     sub_total: total
                 })
-                setCartData({data:data,count:data?.length})
+                setCartData({ data: data, count: data?.length })
             } else {
                 let apiRes = await crumbApi.Cart.remove({ product_id: id })
                 await initCart()
             }
-            setCoupon({is_applied:false,discount:0})
+            setCoupon({ is_applied: false, discount: 0 })
             Toast.success(`Item successfully removed from your cart!`)
         } catch (error) {
 
@@ -216,24 +236,36 @@ const AddToCart = () => {
     const dataSource: any = Array.isArray(state?.data) && state?.data.map((res, index) => {
         return {
             key: index,
-            cross: <Button onClick={() => handleRemoveCart(Number(res?.product?.id), index)} shape='circle' className='border-0'>x</Button>,
-            product: <Link href={`/product/${stringReplace(res?.product?.name)}/${res?.product?.id}`}>
+            cross: <Button onClick={() => handleRemoveCart(Number(res?.product_id), index)} shape='circle' className='border-0'>x</Button>,
+            product: <Link href={`/product/${stringReplace(res?.product_name)}/${res?.product_id}`}>
                 <Flex align='center' gap={8}>
-                    <Avatar src={res?.product?.feature_image ? `${BUCKET_ROOT}${res?.product?.feature_image}` : productImage.src} shape='square' size={100} />
+                    <Avatar src={res?.image ? `${BUCKET_ROOT}${res?.image}` : productImage.src} shape='square' size={100} />
                     <div>
 
-                    <span>{res?.product?.name}</span><br/>
-                    {(res?.attribute_item_detail?.name) ? 
-                    <TypographyText className='text-muted'>{res?.attribute_item_detail?.name}</TypographyText>:""}
-                    <br/>
-                    {(res?.attribute_detail?.name) ? 
-                    <TypographyText className='text-muted'>{res?.attribute_detail?.name}</TypographyText>:""}
+                        <span className='fs-16 fw-bold'>{res?.product_name}</span>
+                        <br />
+                        {(userInfo?.access_token && res?.is_variant) ? <Fragment>
+
+                            {(res?.variant?.attribute_name) ?
+                                <TypographyText className='text-muted fs-14 fw-semibold me-1'>{res?.variant?.attribute_name}</TypographyText> : ""}
+                            /
+                            {(res?.variant?.variant_name) ?
+                                <TypographyText className='text-muted fs-14 fw-semibold mx-1'>{res?.variant?.variant_name}</TypographyText> : ""}
+                        </Fragment> : res?.is_variant ?
+                            <Fragment>
+                                {(res?.variant?.attribute_name) ?
+                                    <TypographyText className='text-muted fs-14 fw-semibold me-1'>{res?.variant?.attribute_name}</TypographyText> : ""}
+                                /
+
+                                {(res?.variant?.variant_name) ?
+                                    <TypographyText className='text-muted fs-14 fw-semibold mx-1'>{res?.variant?.variant_name}</TypographyText> : ""}
+                            </Fragment>:""}
                     </div>
-            </Flex>
+                </Flex>
             </Link>,
-            price: `${CURRENCY}${res?.product?.customer_buying_price}`,
-            quantity: <CartCountCompo is_cart={res?.quantity > 1 ? true : false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product?.id)} />,
-            subtotal: `${CURRENCY}${res?.quantity * res?.product?.customer_buying_price}`,
+            price: <span className='fs-14 fw-semibold'>{`${CURRENCY}${res?.price}`}</span>,
+            quantity: <CartCountCompo is_variant={res?.is_variant ?? false} attribute_item_id={res?.variant?.attribute_item_id} attribute_id={res?.variant?.attribute_id} is_cart={res?.quantity > 1 ? true : false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product_id)} />,
+            subtotal: <span className='fs-14 fw-semibold'>{`${CURRENCY}${Number(res?.quantity * res?.price)?.toFixed(2)}`}</span>,
         }
     })
 
@@ -268,7 +300,7 @@ const AddToCart = () => {
 
     React.useEffect(() => {
         const total = cartData?.data?.reduce((acc: any, item: any) => {
-            const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
+            const price = parseFloat(item?.price); // Convert price to number
             const quantity = item?.quantity; // Get quantity
             return acc + (price * quantity); // Add to the accumulator
         }, 0);
@@ -292,9 +324,9 @@ const AddToCart = () => {
     return (
         <Fragment>
             <Head>
-      <title>{`Viewcart`} - Copper & Crumb</title>
-      <meta name='desription' content={`Viewcart`}/>
-      </Head>
+                <title>{`Viewcart`} - Copper & Crumb</title>
+                <meta name='desription' content={`Viewcart`} />
+            </Head>
             <section className="add-to-cart-section pt-0 bg-white" >
                 <CommonBanner title={"Cart"} image={banner_img.src} />
                 <div className="container mt-5">
@@ -392,15 +424,15 @@ const AddToCart = () => {
                                                     </Row>
                                                 </AntForm>}
                                             </li> */}
-                                            {coupon?.is_applied &&<>
+                                            {coupon?.is_applied && <>
                                                 <li className='cart-list'>
-                                                <span>Discount</span>
-                                                <span>{CURRENCY}{discount}</span>
-                                            </li>
-                                                 <li className='cart-list'>
-                                                <span>Total</span>
-                                                <span>{CURRENCY}{Number(state.sub_total) - discount}</span>
-                                            </li>
+                                                    <span>Discount</span>
+                                                    <span>{CURRENCY}{discount}</span>
+                                                </li>
+                                                <li className='cart-list'>
+                                                    <span>Total</span>
+                                                    <span>{CURRENCY}{Number(state.sub_total) - discount}</span>
+                                                </li>
                                             </>
                                             }
 

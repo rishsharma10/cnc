@@ -58,7 +58,7 @@ const ProductList = (props: any) => {
   }
   const updateCategoryData = async () => {
     const data = await props?.data?.find((res:any) => res.id == Number(router.query.created_by))
-    SetCategory([obj,...data?.subcategories])
+    SetCategory([{...obj,name:data?.name},...data?.subcategories])
   }
   console.log(state, 'statettetette')
   React.useEffect(() => {

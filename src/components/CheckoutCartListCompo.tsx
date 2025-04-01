@@ -1,33 +1,46 @@
 import { Badge, Flex, TypographyText } from '@/lib/AntRegistry'
 import productImage from '@/assets/images/product-placeholder-wp.jpg'
-import React from 'react'
+import React, { Fragment, useContext } from 'react'
 import { BUCKET_ROOT, CURRENCY } from '@/utils/crumbApis'
 import { formatString } from '@/utils/crumbValidation'
+import { GlobalContext } from '@/context/Provider'
 
-const CheckoutCartListCompo = (props:any) => {
-    console.log(props,'prooocheckout');
-    
+const CheckoutCartListCompo = (props: any) => {
+    const {userInfo} = useContext(GlobalContext)
+    console.log(props, 'prooocheckout');
+
     return (
         <div className='mb-3'>
             <Flex align='center' justify='space-between'>
 
                 <Flex gap={16} align='center'>
-                <Badge count={props?.quantity}>
-                    <div className='cart-image-checkout'>
-                        <img onError={(e:any) => e.target.src = productImage.src} src={props?.product?.feature_image ? `${BUCKET_ROOT}${props?.product?.feature_image}` : productImage.src} />
-                    </div>
+                    <Badge count={props?.quantity}>
+                        <div className='cart-image-checkout'>
+                            <img onError={(e: any) => e.target.src = productImage.src} src={props?.image ? `${BUCKET_ROOT}${props?.image}` : productImage.src} />
+                        </div>
                     </Badge>
                     <div>
-                        <TypographyText>{props?.product?.name}</TypographyText>
-                        <br/>
-                        {(props?.attribute_item_detail?.name) ? 
-                                            <TypographyText className='text-muted'>{props?.attribute_item_detail?.name}</TypographyText>:""}
-                                            <br/>
-                                            {(props?.attribute_detail?.name) ? 
-                                            <TypographyText className='text-muted'>{props?.attribute_detail?.name}</TypographyText>:""}
+                    <span className='fs-16 fw-bold'>{props?.product_name}</span>
+                        <br />
+                        {(userInfo?.access_token && props?.is_variant) ? <Fragment>
+                        
+                                                    {(props?.variant?.attribute_name) ?
+                                                        <TypographyText className='text-muted fs-14 fw-semibold me-1'>{props?.variant?.attribute_name}</TypographyText> : ""}
+                                                    /
+                                                    {(props?.variant?.variant_name) ?
+                                                        <TypographyText className='text-muted fs-14 fw-semibold mx-1'>{props?.variant?.variant_name}</TypographyText> : ""}
+                                                </Fragment> : props?.is_variant ?
+                                                    <Fragment>
+                                                        {(props?.variant?.attribute_name) ?
+                                                            <TypographyText className='text-muted fs-14 fw-semibold me-1'>{props?.variant?.attribute_name}</TypographyText> : ""}
+                                                        /
+                        
+                                                        {(props?.variant?.variant_name) ?
+                                                            <TypographyText className='text-muted fs-14 fw-semibold mx-1'>{props?.variant?.variant_name}</TypographyText> : ""}
+                                                    </Fragment>:""}
                     </div>
                 </Flex>
-                <TypographyText>{`${CURRENCY}${Number(props?.quantity * props?.product?.customer_buying_price).toFixed(2)}`}</TypographyText>
+                <TypographyText className='fw-bold'>{`${CURRENCY}${Number(props?.quantity * props?.price).toFixed(2)}`}</TypographyText>
             </Flex>
         </div>
     )

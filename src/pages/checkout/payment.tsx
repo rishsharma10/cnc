@@ -26,8 +26,11 @@ const Payment = () => {
     const handleSubmit = async (values: any) => {
         const payload = {
             ...values,
-            billing_same: true
+            billing_same: billing == "BILLING_SAME" ? true :false
         }
+
+        console.log(payload,"billig_payload")
+        return
         try {
             await handlePayment()
             // setLoading(true)
@@ -50,10 +53,10 @@ const Payment = () => {
     let discount = coupon.is_applied ? Number(coupon.discount) : 0
     let loyalityDiscount = isLoyalityApplied ? Number(userInfo?.loyalty ?? 0) : 0
     const applyCoupon = async ({ code }: any) => {
-        if(!screens.md && !couponCode.trim()){
+        if (!screens.md && !couponCode.trim()) {
             setCouponLoading
-            (false)
-            return 
+                (false)
+            return
         }
         if (coupon.is_applied) {
             form.resetFields()
@@ -65,7 +68,7 @@ const Payment = () => {
             ? state.data.map((res: any) => res[userInfo?.access_token ? "product_id" : "id"])
             : [];
         const payload = {
-            code:!screens.md ? couponCode : code,
+            code: !screens.md ? couponCode : code,
             product_ids: JSON.stringify(productIds)
         }
         try {
@@ -95,31 +98,31 @@ const Payment = () => {
 
     const handlePayment = () => {
         const options = {
-          key: 'YOUR_RAZORPAY_KEY', // Replace with your Razorpay Key
-          amount: 99, // Amount in paise (1 INR = 100 paise)
-          currency: 'INR',
-          name: 'Test Payment',
-          description: 'Test Payment for Razorpay Integration',
-          image: 'https://example.com/logo.png',  // Optional: Your company logo
-          handler: function (response:any) {
-            alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
-          },
-          prefill: {
-            name: 'John Doe',
-            email: 'john.doe@example.com',
-            contact: '9876543210',
-          },
-          notes: {
-            address: 'Razorpay Corporate Office',
-          },
-          theme: {
-            color: '#F37254',
-          },
+            key: 'YOUR_RAZORPAY_KEY', // Replace with your Razorpay Key
+            amount: 99, // Amount in paise (1 INR = 100 paise)
+            currency: 'INR',
+            name: 'Test Payment',
+            description: 'Test Payment for Razorpay Integration',
+            image: 'https://example.com/logo.png',  // Optional: Your company logo
+            handler: function (response: any) {
+                alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+            },
+            prefill: {
+                name: 'John Doe',
+                email: 'john.doe@example.com',
+                contact: '9876543210',
+            },
+            notes: {
+                address: 'Razorpay Corporate Office',
+            },
+            theme: {
+                color: '#F37254',
+            },
         };
-    
+
         // const razorpay = new window.Razorpay(options);
         // razorpay.open();
-      };
+    };
 
 
 
@@ -127,7 +130,7 @@ const Payment = () => {
 
     React.useEffect(() => {
         const total = cartData?.data?.reduce((acc: any, item: any) => {
-            const price = parseFloat(item?.product?.customer_buying_price); // Convert price to number
+            const price = parseFloat(item?.price); // Convert price to number
             const quantity = item?.quantity; // Get quantity
             return acc + (price * quantity); // Add to the accumulator
         }, 0);
@@ -157,7 +160,7 @@ const Payment = () => {
                             <AntForm className='w-100' layout='vertical' size={!screens.md ? "middle" : 'large'} onFinish={handleSubmit}>
                                 <Row gutter={[10, 0]}>
                                     <Col span={24}>
-                                        <FormItem name='email' rules={[{ required: false, message: "Please enter email" }]} label={'Email'}>
+                                        <FormItem name='email' rules={[{ required: true, message: "Please enter email" }]} label={'Email'}>
                                             <Input placeholder='Enter email' />
                                         </FormItem>
                                     </Col>
@@ -180,13 +183,18 @@ const Payment = () => {
                                         </FormItem>
                                     </Col>
                                     <Col span={24}>
+                                        <FormItem name='company' rules={[{ required: false, message: "Please enter company" }]} label={'Company'}>
+                                            <Input placeholder='Enter Company' />
+                                        </FormItem>
+                                    </Col>
+                                    <Col span={24}>
                                         <FormItem name='address_line_1' rules={[{ required: true, message: "Please enter address" }]} label={'Address'}>
                                             <Input placeholder='Enter Address' />
                                         </FormItem>
                                     </Col>
                                     <Col span={24}>
-                                        <FormItem name='address_line_2' rules={[{ required: false, message: "Please enter apartment" }]} label={'Apartment suites'}>
-                                            <Input placeholder='Enter apartment' />
+                                        <FormItem name='address_line_2' rules={[{ required: true, message: "Please enter apartment" }]} label={'Apartment suites'}>
+                                            <Input placeholder='Apartment, suites, etc. ' />
                                         </FormItem>
                                     </Col>
 
@@ -258,12 +266,17 @@ const Payment = () => {
                                             </FormItem>
                                         </Col>
                                         <Col span={24}>
+                                            <FormItem name='b_company' rules={[{ required: false, message: "Please enter company" }]} label={'Company'}>
+                                                <Input placeholder='Enter company' />
+                                            </FormItem>
+                                        </Col>
+                                        <Col span={24}>
                                             <FormItem name='b_address_line_1' rules={[{ required: true, message: "Please enter address" }]} label={'Address'}>
                                                 <Input placeholder='Enter Address' />
                                             </FormItem>
                                         </Col>
                                         <Col span={24}>
-                                            <FormItem name='b_address_line_2' rules={[{ required: false, message: "Please enter apartment" }]} label={'Apartment suites'}>
+                                            <FormItem name='b_address_line_2' rules={[{ required: true, message: "Please enter apartment" }]} label={'Apartment suites'}>
                                                 <Input placeholder='Enter apartment suites' />
                                             </FormItem>
                                         </Col>
@@ -303,19 +316,16 @@ const Payment = () => {
                                                         <TypographyTitle level={5}>Order summary</TypographyTitle>}
                                                     {Array.isArray(state.data) && state.data.map((res, index) => <CheckoutCartListCompo {...res} key={index} />)}
                                                     <div className="coupon">
-                                                         {/* <AntForm size='large' form={form} className='d-flex flex-wrap align-items-center gap-3' onFinish={applyCoupon}>  */}
-                                                            <Flex gap={10} wrap>
+                                                        <Flex gap={10} wrap>
 
-                                                                <FormItem name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]}>
-                                                                    <Input className='w-100' onChange={(e:any) => SetCouponCode(e.target.value)} placeholder='Coupon Code' disabled={coupon.is_applied} />
-                                                                </FormItem>
+                                                            <FormItem className='w-100' name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]}>
+                                                                <Input className='w-100' onChange={(e: any) => SetCouponCode(e.target.value)} placeholder='Coupon Code' disabled={coupon.is_applied} />
+                                                            </FormItem>
 
-                                                                <Button loading={couponLoading} onClick={applyCoupon} type='primary' htmlType='submit' block={!screens.sm ? true : false} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply"}</Button>
+                                                            <Button loading={couponLoading} onClick={applyCoupon} type='primary' htmlType='submit' block={!screens.sm ? true : false} className='px-5 text-uppercase'>{coupon.is_applied ? "Remove" : "Apply"}</Button>
 
-                                                            </Flex>
-
-                                                            {/* <Button type='primary' block={screens.sm ? false : true} className='px-5 text-uppercase'>Update cart</Button> */}
-                                                        {/* </AntForm> */}
+                                                        </Flex>
+                                                     
                                                     </div>
                                                     {coupon?.is_applied && <Card className='mt-3 shadow-sm' style={{ backgroundColor: '#E5E4E2', padding: '10px', color: 'black' }}>
                                                         <h6>🎉 <span className='fw-bold'>{form.getFieldValue("code")}</span> Applied Successfully!</h6>
@@ -334,35 +344,26 @@ const Payment = () => {
 
                                                         </TypographyText>
                                                     </Card> : ""}
-                                                    {/* <Card className='p-2 px-3 my-3' title={<Flex align='center' justify='space-between'>
-                                        <TypographyTitle level={5}>Membership Discount 15%</TypographyTitle>
-                                        <Flex align='center' gap={6}>
-                                            <TypographyTitle level={5}>15</TypographyTitle>
-                                            <Switch />
-                                        </Flex>
-                                    </Flex>}>
-                                        <TypographyText className='fw-semibold text-muted fs-14'>Enjoy 15% off as a valued member! Your discount has been applied to your order.</TypographyText>
-                                    </Card> */}
 
                                                     <div className="cart-total-checkout">
                                                         <ul className='list-unstyled mb-5 p-0'>
                                                             <li className='cart-list'>
                                                                 <span>Subtotal . {state.count} items</span>
-                                                                <span>{CURRENCY}{Number(state.sub_total).toFixed(2)}</span>
+                                                                <span className='fw-semibold'>{CURRENCY}{Number(state.sub_total).toFixed(2)}</span>
                                                             </li>
                                                             <li className='cart-list'>
                                                                 <span>Shipping</span>
-                                                                <span>FREE</span>
+                                                                <span className='fw-semibold'>FREE</span>
                                                             </li>
                                                             {coupon?.is_applied &&
                                                                 <li className='cart-list'>
                                                                     <span>Discount</span>
-                                                                    <span>{CURRENCY}{Number(discount).toFixed(2)}</span>
+                                                                    <span className='fw-semibold'>{CURRENCY}{Number(discount).toFixed(2)}</span>
                                                                 </li>}
                                                             {(isLoyalityApplied && loyalityDiscount) &&
                                                                 <li className='cart-list'>
                                                                     <span>Loyality Points ({loyalityDiscount})</span>
-                                                                    <span>{Number(loyalityDiscount).toFixed(2)}</span>
+                                                                    <span className='fw-semibold'>{Number(loyalityDiscount).toFixed(2)}</span>
                                                                 </li>}
                                                             <li className='cart-list'>
                                                                 <span className='fs-5 fw-bold'>Total</span>
@@ -403,9 +404,9 @@ const Payment = () => {
                                     {Array.isArray(state.data) && state.data.map((res, index) => <CheckoutCartListCompo {...res} key={index} />)}
                                     <div className="coupon">
                                         <AntForm size='large' form={form} className='d-flex flex-wrap align-items-center gap-3' onFinish={applyCoupon}>
-                                            <Flex gap={10} wrap>
+                                            <Flex gap={10} className='w-100'>
 
-                                                <FormItem name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]}>
+                                                <FormItem className='w-100' name={`code`} rules={[{ required: true, message: 'Please enter coupon code' }]}>
                                                     <Input className='w-100' placeholder='Coupon Code' disabled={coupon.is_applied} />
                                                 </FormItem>
 
@@ -447,21 +448,21 @@ const Payment = () => {
                                         <ul className='list-unstyled mb-5 p-0'>
                                             <li className='cart-list'>
                                                 <span>Subtotal . {state.count} items</span>
-                                                <span>{CURRENCY}{Number(state.sub_total).toFixed(2)}</span>
+                                                <span className='fw-semibold'>{CURRENCY}{Number(state.sub_total).toFixed(2)}</span>
                                             </li>
                                             <li className='cart-list'>
                                                 <span>Shipping</span>
-                                                <span>FREE</span>
+                                                <span className='fw-semibold'>FREE</span>
                                             </li>
                                             {coupon?.is_applied &&
                                                 <li className='cart-list'>
                                                     <span>Discount</span>
-                                                    <span>{CURRENCY}{Number(discount).toFixed(2)}</span>
+                                                    <span className='fw-semibold'>{CURRENCY}{Number(discount).toFixed(2)}</span>
                                                 </li>}
                                             {isLoyalityApplied &&
                                                 <li className='cart-list'>
                                                     <span>Loyality Points ({loyalityDiscount})</span>
-                                                    <span>{Number(loyalityDiscount).toFixed(2)}</span>
+                                                    <span className='fw-semibold'>{Number(loyalityDiscount).toFixed(2)}</span>
                                                 </li>}
                                             <li className='cart-list'>
                                                 <span className='fs-5 fw-bold'>Total</span>

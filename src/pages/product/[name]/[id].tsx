@@ -272,57 +272,82 @@ const ProductDetail = (props: typeProps) => {
     try {
       let cart: any = localStorage.getItem('cart');
       cart = cart ? JSON.parse(cart) : [];
-      const itemExists = cart.some((item: any) => item.id === payload.id);
-      if (itemExists) {
-        throw new Error('Item already in cart');
+
+      const { product_id, quantity, variant } = payload;
+
+      let existingItemIndex = -1;
+
+      if (state?.is_variant) {
+        existingItemIndex = cart.findIndex((item: any) =>
+          item.product_id === product_id &&
+          item.variant?.attribute_id === variant.attribute_id &&
+          item.variant?.attribute_item_id === variant.attribute_item_id
+        );
+      } else {
+        existingItemIndex = cart.findIndex((item: any) => item.product_id === product_id);
       }
-      cart.push(payload);
+
+      if (existingItemIndex !== -1) {
+        cart[existingItemIndex].quantity += quantity;
+        Toast.success('Quantity updated');
+      } else {
+        cart.push(payload);
+        Toast.success('Item added to cart');
+      }
       localStorage.setItem('cart', JSON.stringify(cart));
-      console.log('Item added to cart:', payload);
       setState({
         ...state,
         is_cart_local: true
-      })
-      setCartData({ data: cart, count: cart?.length })
+      });
+
+      setCartData({ data: cart, count: cart.length });
+
+
     } catch (error: any) {
       Toast.warning(error.message);
     }
   }
 
-  const sizeName =  (id:number) => {
+  const sizeName = (id: number) => {
     debugger
-    let data:any =  sizeData.find((res:any) => res.id == id)
-    return data
+    let data: any = sizeData.find((res: any) => res.id == id)
+    return data?.name
   }
-  const grindName =  (id:number) => {
+  const grindName = (id: number) => {
     debugger
-    let data:any =  variants.find((res:any) => res.id == id)
-    return data
+    let data: any = variants.find((res: any) => res.id == id)
+    return data?.name
   }
-
+  const generateUniqueId = (existingIds: number[]): number => {
+    let newId: number;
+    do {
+      newId = Math.floor(100 + Math.random() * 900);
+    } while (existingIds.includes(newId));
+    return newId;
+  };
   const addToCart = async () => {
+
     try {
+      let cart: any = localStorage.getItem('cart');
+      cart = cart ? JSON.parse(cart) : [];
+      const existingIds: any = Array.isArray(cart) && cart.map((res: any) => res.id);
+      const newId = generateUniqueId(existingIds);
       const payload = {
-        id: Number(router.query.id),
-        product: {
-          customer_buying_price: state.customer_buying_price,
-          name: state.name,
-          id: Number(router.query.id),
-          feature_image: state?.feature_image ?? null
-        },
+        id: newId,
+        price: state.customer_buying_price,
+        product_name: state.name,
+        product_id: Number(router.query.id),
+        image: state?.feature_image ?? null,
         quantity: Number(buyQuantity),
-        // size: size,
-        // grid_size: grindSize
       } as any
-      if(size){
-        payload.attribute_id = size
-        payload.is_varient = true
-        payload.attribute_detail = sizeName(size)
-      }
-      if(grindSize){
-        payload.attribute_item_id = grindSize
-        payload.attribute_item_detail = grindName(grindSize)
-        payload.is_varient = true
+      if (state?.is_variant) {
+        payload.is_variant = true
+        payload.variant = {
+          attribute_id: size,
+          variant_name: sizeName(Number(size)),
+          attribute_item_id: grindSize,
+          attribute_name: grindName(Number(grindSize))
+        }
       }
       const cartPayload = {
         product_id: state.id,
@@ -330,15 +355,14 @@ const ProductDetail = (props: typeProps) => {
         amount: Number(state.customer_buying_price),
         coupon_discount: 0
       } as any
-      if(size){
-        cartPayload.attribute_id = size
-        cartPayload.is_varient = true
+      if (state?.is_variant) {
+        cartPayload.is_variant = true
+        cartPayload.variant = {
+          attribute_id: size,
+          attribute_item_id: grindSize,
+        }
       }
-      if(grindSize){
-        cartPayload.attribute_item_id = grindSize
-        cartPayload.is_varient = true
-      }
-      console.log(payload,"payloaddddd")
+      console.log(payload, "payloaddddd")
       // return
       setLoading(true)
       if (!userInfo?.access_token) {
@@ -411,26 +435,26 @@ const ProductDetail = (props: typeProps) => {
   }
 
 
-  const setAttributePrice = async (attribute_id:number,pid:number) => {
+  const setAttributePrice = async (attribute_id: number, pid: number) => {
     debugger
     let urlSearchParams = new URLSearchParams()
     try {
-      if(attribute_id){
-        urlSearchParams.set("attribute_item_id",String(attribute_id))
-        urlSearchParams.set("product_id",String(router.query.id))
+      if (attribute_id) {
+        urlSearchParams.set("attribute_item_id", String(attribute_id))
+        urlSearchParams.set("product_id", String(router.query.id))
         let apiRes = await crumbApi.Product.productStockttributes(urlSearchParams.toString())
         setState({
           ...state,
-          customer_buying_price:apiRes?.data[0]["customer_buying_price"]
+          customer_buying_price: apiRes?.data[0]["customer_buying_price"]
         })
-      }else{
+      } else {
         setState({
           ...state,
-          customer_buying_price:props["customer_buying_price"]
+          customer_buying_price: props["customer_buying_price"]
         })
       }
     } catch (error) {
-      
+
     }
   }
 
@@ -498,14 +522,23 @@ const ProductDetail = (props: typeProps) => {
     try {
       setLoading(true);
       const apiRes1 = await crumbApi.Product.details(String(router.query.id))
-      const apiRes = await crumbApi.Product.variantAttributes(String(router.query.id))
-      setSizeData(apiRes?.data);
-      // setSize(Array.isArray(props?.variants) && props?.variants?.length ? props?.variants[0]?.id : [])
     } catch (err: any) {
       setSizeData([]);
       // alert(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+  const fetchVariants = async (id: string) => {
+    debugger
+    try {
+      const apiRes = await crumbApi.Product.variantAttributes(String(id))
+      setSizeData(apiRes?.data);
+      setSize(Array.isArray(apiRes?.data) && apiRes?.data?.length ? apiRes?.data[0]?.id : [])
+    } catch (err: any) {
+      setSizeData([]);
+      // alert(err.message);
+    } finally {
     }
   };
 
@@ -514,12 +547,13 @@ const ProductDetail = (props: typeProps) => {
       fetchData(String(router.query.id));
     }
     setVariants(props?.variants)
-    // setGrindSize(Array.isArray(props?.variants) && props?.variants?.length ? props?.variants[0]?.id : [])
+    fetchVariants(Array.isArray(props?.variants) && props?.variants?.length ? props?.variants[0]?.id : [])
+    setGrindSize(Array.isArray(props?.variants) && props?.variants?.length ? props?.variants[0]?.id : [])
   }, [router.query.id]);
 
   console.log(size, 'sizeonchange')
-  console.log(grindSize,"grindsizee");
-  
+  console.log(grindSize, "grindsizee");
+
 
   // return useMemo(() => ({ sizeData, loading }), [sizeData, loading]);
   // };
@@ -585,7 +619,7 @@ const ProductDetail = (props: typeProps) => {
                   {(props?.is_variant && variants?.length) ? <Col span={24} xxl={24} xl={24}>
                     <FormItem label='GRIND SIZE' layout='vertical'>
                       <Select
-                        allowClear
+                        // allowClear
                         options={Array.isArray(variants) && variants?.map((res: any, i: number) => {
                           return {
                             value: res?.id,
@@ -594,15 +628,16 @@ const ProductDetail = (props: typeProps) => {
                         }) as any}
                         placeholder="Select Grind size"
                         value={grindSize}
-                        onChange={(val: any) => {setGrindSize(val);setAttributePrice(val,props.id)}}
+                        onChange={(val: any) => { setGrindSize(val); setAttributePrice(val, props.id); fetchVariants(val) }}
                       />
                     </FormItem>
-                  </Col> :""}
-                  {(props?.is_variant && sizeData?.length) ? <Col span={24} xxl={12} xl={12} md={12} sm={12} xs={12}>
+                  </Col> : ""}
+                  {(props?.is_variant) ? <Col span={24} xxl={12} xl={12} md={12} sm={12} xs={12}>
                     <FormItem label='SIZE' layout='vertical'>
                       <Select
-                        allowClear
-                        onChange={(val: any) => {setSize(val);setAttributePrice(val,props.id)}}
+                        value={size}
+                        // allowClear
+                        onChange={(val: any) => { setSize(val); setAttributePrice(val, props.id) }}
                         options={Array.isArray(sizeData) && sizeData?.map((res: any) => {
                           return {
                             value: res?.id, label: res?.name
@@ -611,7 +646,7 @@ const ProductDetail = (props: typeProps) => {
                         placeholder="Select size"
                       />
                     </FormItem>
-                  </Col>:""}
+                  </Col> : ""}
                   <Col span={24} xxl={12} xl={12} md={12} sm={12} xs={12}>
                     <FormItem label='QUANTITY' layout='vertical'>
                       <Select
@@ -634,9 +669,9 @@ const ProductDetail = (props: typeProps) => {
                 </Flex>
                 <Flex align='center' gap={20} className='my-3'>
                   {/* <CartCountCompo is_cart={state.is_cart} handleIncDec={handleIncDec} quantity={state.cart_qty} pid={Number(router.query.id)} /> */}
-                  {userInfo?.access_token ? <Fragment>{state?.is_cart ? <Link href={`/viewcart`}><Button type='primary' size='large' className='px-5'>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>}
+                  {userInfo?.access_token ? <Fragment><Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>
                   </Fragment> :
-                    <Fragment>{state?.is_cart_local ? <Link href={`/viewcart`}><Button type='primary' size='large' className={!screens.md ? "px-4" : 'px-5'}>Go to Cart</Button></Link> : <Button onClick={addToCart} loading={loading} type='primary' size='large' className={!screens.md ? "px-4" : 'px-5'}>add to cart</Button>}
+                    <Fragment><Button onClick={addToCart} loading={loading} type='primary' size='large' className={!screens.md ? "px-4" : 'px-5'}>add to cart</Button>
                     </Fragment>}
 
                   <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>Buy now</Button></Link>
