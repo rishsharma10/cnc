@@ -107,7 +107,7 @@ const Cart = {
   list: () => requests.get("v1/cart"),
   update: (info: any) => requests.post("v1/cart/add", info),
   add: (info: any) => requests.post("v1/cart/add", info),
-  updateCart:(info:any) => requests.post(`cart/update-quantity`,info),
+  updateCart:(info:any) => requests.post(`v1/cart/update-quantity`,info),
   remove: (info: any) => requests.post("v1/cart/remove", info),
 }
 

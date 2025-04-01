@@ -355,13 +355,21 @@ const ProductDetail = (props: typeProps) => {
         amount: Number(state.customer_buying_price),
         coupon_discount: 0
       } as any
-      if (state?.is_variant) {
-        cartPayload.is_variant = true
-        cartPayload.variant = {
-          attribute_id: size,
-          attribute_item_id: grindSize,
-        }
+      if (size) {
+        cartPayload.attribute_id = size
+        cartPayload.is_varient = true
       }
+      if (grindSize) {
+        cartPayload.attribute_item_id = grindSize
+        cartPayload.is_varient = true
+      }
+      // if (state?.is_variant) {
+      //   cartPayload.is_variant = true
+      //   cartPayload.variant = {
+      //     attribute_id: size,
+      //     attribute_item_id: grindSize,
+      //   }
+      // }
       console.log(payload, "payloaddddd")
       // return
       setLoading(true)

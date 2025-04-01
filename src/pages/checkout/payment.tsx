@@ -21,6 +21,7 @@ const Payment = () => {
         is_applied: false,
         discount: 0
     })
+    const ALL_TAXES = 200
 
 
     const handleSubmit = async (values: any) => {
@@ -369,7 +370,9 @@ const Payment = () => {
                                                                 <span className='fs-5 fw-bold'>Total</span>
                                                                 <span className='fs-5 fw-bold'>{CURRENCY}{Number(Number(state.sub_total) - (discount + loyalityDiscount)).toFixed(2)}</span>
                                                             </li>
-
+                                                            <li className=''>
+                                                                <span className=''>Including {CURRENCY}{ALL_TAXES} in taxes</span>
+                                                            </li>
 
                                                         </ul>
                                                     </div>
@@ -468,7 +471,9 @@ const Payment = () => {
                                                 <span className='fs-5 fw-bold'>Total</span>
                                                 <span className='fs-5 fw-bold'>{CURRENCY}{Number(Number(state.sub_total) - (discount + loyalityDiscount)).toFixed(2)}</span>
                                             </li>
-
+                                            <li className=''>
+                                                                <span className='text-muted'>Including {CURRENCY}{ALL_TAXES} in taxes</span>
+                                                            </li>
 
                                         </ul>
                                     </div>
