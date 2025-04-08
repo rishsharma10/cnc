@@ -1,7 +1,8 @@
 import CheckoutCartListCompo from '@/components/CheckoutCartListCompo'
 import CheckLayout from '@/components/common/CheckoutLayout'
+import StatusModal from '@/components/PaymentStatusModal'
 import { GlobalContext } from '@/context/Provider'
-import { AntForm, Button, Checkbox, Col, Collapse, Flex, FormItem, Input, InputPassword, Row, Space, Switch, TypographyText, TypographyTitle } from '@/lib/AntRegistry'
+import { AntForm, Button, Checkbox, CheckboxGroup, Col, Collapse, Flex, FormItem, Input, InputPassword, Row, Space, Switch, TypographyText, TypographyTitle } from '@/lib/AntRegistry'
 import crumbApi, { CURRENCY } from '@/utils/crumbApis'
 import { Alert, Card, Divider, Form, Grid, Radio } from 'antd'
 import Head from 'next/head'
@@ -14,6 +15,7 @@ const Payment = () => {
     const { Toast, userInfo, cartData } = useContext(GlobalContext)
     const [state, setState] = useState({ data: cartData.data, count: cartData.count, sub_total: 0 })
     const [billing, setBilling] = useState('BILLING_SAME')
+    const [defaultAddress, setDefaultAddress] = useState((userInfo?.access_token && userInfo?.address_line_1) ? 'DEFAULT_ADDRESS' : "NEW_ADDRESS")
     const [couponLoading, setCouponLoading] = useState(false)
     const [isLoyalityApplied, setIsLoyalityApplied] = useState(false)
     const [couponCode, SetCouponCode] = useState('')
@@ -21,6 +23,22 @@ const Payment = () => {
         is_applied: false,
         discount: 0
     })
+    const [open, setOpen] = useState(false);
+    const [status, setStatus] = useState<"success" | "error" | null>(null);
+
+    const handleSuccess = () => {
+      setStatus("success");
+      setOpen(true);
+    };
+  
+    const handleError = () => {
+      setStatus("error");
+      setOpen(true);
+    };
+
+
+
+
     const ALL_TAXES = 200
 
 
@@ -31,6 +49,8 @@ const Payment = () => {
         }
 
         console.log(payload,"billig_payload")
+        // handleSuccess()
+        handleError()
         return
         try {
             await handlePayment()
@@ -170,9 +190,31 @@ const Payment = () => {
                                             <Checkbox /><span className='mx-3'>Email me with news and offers</span>
                                         </FormItem>
                                     </Col>
-                                    <Col span={24}>
-                                        <TypographyTitle level={5}>Delivery</TypographyTitle>
+                                    {(userInfo?.access_token && userInfo?.address_line_1) && <>
+                                        <Col span={24}>
+                                        <TypographyText className='fw-bold fs-6'>Shipping Address</TypographyText>
                                     </Col>
+                                    <Col span={24}>
+                                        <Radio.Group
+                                            name="radiogroupaddress"
+                                            className='my-2'
+                                            value={defaultAddress}
+                                            onChange={(e: any) => setDefaultAddress(e.target.value)}
+                                            options={[
+                                                { value: "DEFAULT_ADDRESS", label: 'Default address' },
+                                                { value: "NEW_ADDRESS", label: 'Add new address' },
+                                            ]}
+                                        />
+
+                                    </Col>
+                                    </>}
+                                    {/* <Col span={24}>
+                                        <TypographyTitle level={5}>Delivery</TypographyTitle>
+                                    </Col> */}
+                                    {defaultAddress == "DEFAULT_ADDRESS" ? <Col span={12}>
+                                        <Card className='mx-4 p-3 text-muted fw-semibold'>{userInfo?.address_line_1}</Card>
+                                    </Col> :
+                                    <>
                                     <Col span={12}>
                                         <FormItem name='first_name' rules={[{ required: true, message: "Please enter first name" }]} label={'First name'}>
                                             <Input placeholder='Enter first name' />
@@ -224,6 +266,8 @@ const Payment = () => {
                                             <Input placeholder='Enter phone number' />
                                         </FormItem>
                                     </Col>
+                                    </>
+}
                                     <Col span={24}>
                                         <FormItem name='news_offer'>
                                             <Checkbox /><span className='mx-2'>Save this information for next time</span>
@@ -495,6 +539,7 @@ const Payment = () => {
                 </Row>
 
             </div>
+            <StatusModal open={open} status={status}  onClose={()=>setOpen(false)} setOpen={setOpen}/>
         </Fragment>
     )
 }

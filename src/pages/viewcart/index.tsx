@@ -84,6 +84,12 @@ const AddToCart = () => {
                     count: updatedData.length,
                     sub_total: total
                 });
+                setCartData({
+                    ...cartData,
+                    data: updatedData,
+                    count: updatedData.length,
+                    sub_total: total
+                });
 
 
             } else {
@@ -247,18 +253,18 @@ const AddToCart = () => {
                         {(userInfo?.access_token && res?.is_variant) ? <Fragment>
 
                             {(res?.variant?.attribute_name) ?
-                                <TypographyText className='text-muted fs-14 fw-semibold me-1'>{res?.variant?.attribute_name}</TypographyText> : ""}
+                                <TypographyText className='text-muted fs-14 fw-semibold me-1 text-capitalize'>{res?.variant?.attribute_name}</TypographyText> : ""}
                             /
                             {(res?.variant?.variant_name) ?
-                                <TypographyText className='text-muted fs-14 fw-semibold mx-1'>{res?.variant?.variant_name}</TypographyText> : ""}
+                                <TypographyText className='text-muted fs-14 fw-semibold mx-1 text-capitalize'>{res?.variant?.variant_name}</TypographyText> : ""}
                         </Fragment> : res?.is_variant ?
                             <Fragment>
                                 {(res?.variant?.attribute_name) ?
-                                    <TypographyText className='text-muted fs-14 fw-semibold me-1'>{res?.variant?.attribute_name}</TypographyText> : ""}
+                                    <TypographyText className='text-muted fs-14 fw-semibold me-1 text-capitalize'>{res?.variant?.attribute_name}</TypographyText> : ""}
                                 /
 
                                 {(res?.variant?.variant_name) ?
-                                    <TypographyText className='text-muted fs-14 fw-semibold mx-1'>{res?.variant?.variant_name}</TypographyText> : ""}
+                                    <TypographyText className='text-muted fs-14 fw-semibold mx-1 text-capitalize'>{res?.variant?.variant_name}</TypographyText> : ""}
                             </Fragment>:""}
                     </div>
                 </Flex>

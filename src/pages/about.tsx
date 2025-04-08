@@ -235,7 +235,7 @@ const About = () => {
             {stateData.map((res: any) => <Col key={res} span={24} sm={12} md={8} lg={6} xl={6} xxl={6}>
               <div className="stats-card text-center">
                 <h1>{res.count}</h1>
-                <h4 className="mt-4 mb-2 text-nowrap">{res.title}</h4>
+                <h4 className="mt-4 mb-2">{res.title}</h4>
                 <p className=''>{res?.desc}</p>
               </div>
             </Col>)}

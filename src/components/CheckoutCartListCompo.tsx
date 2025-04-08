@@ -6,7 +6,7 @@ import { formatString } from '@/utils/crumbValidation'
 import { GlobalContext } from '@/context/Provider'
 
 const CheckoutCartListCompo = (props: any) => {
-    const {userInfo} = useContext(GlobalContext)
+    const { userInfo } = useContext(GlobalContext)
     console.log(props, 'prooocheckout');
 
     return (
@@ -20,24 +20,24 @@ const CheckoutCartListCompo = (props: any) => {
                         </div>
                     </Badge>
                     <div>
-                    <span className='fs-16 fw-bold'>{props?.product_name}</span>
+                        <span className='fs-16 fw-bold'>{props?.product_name}</span>
                         <br />
                         {(userInfo?.access_token && props?.is_variant) ? <Fragment>
-                        
-                                                    {(props?.variant?.attribute_name) ?
-                                                        <TypographyText className='text-muted fs-14 fw-semibold me-1'>{props?.variant?.attribute_name}</TypographyText> : ""}
-                                                    /
-                                                    {(props?.variant?.variant_name) ?
-                                                        <TypographyText className='text-muted fs-14 fw-semibold mx-1'>{props?.variant?.variant_name}</TypographyText> : ""}
-                                                </Fragment> : props?.is_variant ?
-                                                    <Fragment>
-                                                        {(props?.variant?.attribute_name) ?
-                                                            <TypographyText className='text-muted fs-14 fw-semibold me-1'>{props?.variant?.attribute_name}</TypographyText> : ""}
-                                                        /
-                        
-                                                        {(props?.variant?.variant_name) ?
-                                                            <TypographyText className='text-muted fs-14 fw-semibold mx-1'>{props?.variant?.variant_name}</TypographyText> : ""}
-                                                    </Fragment>:""}
+
+                            {(props?.variant?.attribute_name) ?
+                                <TypographyText className='text-muted fs-14 fw-semibold me-1 text-capitalize'>{props?.variant?.attribute_name}</TypographyText> : ""}
+                            /
+                            {(props?.variant?.variant_name) ?
+                                <TypographyText className='text-muted fs-14 fw-semibold mx-1 text-capitalize'>{props?.variant?.variant_name}</TypographyText> : ""}
+                        </Fragment> : props?.is_variant ?
+                            <Fragment>
+                                {(props?.variant?.attribute_name) ?
+                                    <TypographyText className='text-muted fs-14 fw-semibold me-1 text-capitalize'>{props?.variant?.attribute_name}</TypographyText> : ""}
+                                /
+
+                                {(props?.variant?.variant_name) ?
+                                    <TypographyText className='text-muted fs-14 fw-semibold mx-1 text-capitalize'>{props?.variant?.variant_name}</TypographyText> : ""}
+                            </Fragment> : ""}
                     </div>
                 </Flex>
                 <TypographyText className='fw-bold'>{`${CURRENCY}${Number(props?.quantity * props?.price).toFixed(2)}`}</TypographyText>
