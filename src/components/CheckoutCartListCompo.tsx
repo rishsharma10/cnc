@@ -16,11 +16,11 @@ const CheckoutCartListCompo = (props: any) => {
                 <Flex gap={16} align='center'>
                     <Badge count={props?.quantity}>
                         <div className='cart-image-checkout'>
-                            <img onError={(e: any) => e.target.src = productImage.src} src={props?.image ? `${BUCKET_ROOT}${props?.image}` : productImage.src} />
+                            <img onError={(e: any) => e.target.src = productImage.src} src={props?.product?.feature_image ? `${BUCKET_ROOT}${props?.product?.feature_image}` : productImage.src} />
                         </div>
                     </Badge>
                     <div>
-                        <span className='fs-16 fw-bold'>{props?.product_name}</span>
+                        <span className='fs-16 fw-bold'>{props?.product?.name}</span>
                         <br />
                         {(userInfo?.access_token && props?.is_variant) ? <Fragment>
 

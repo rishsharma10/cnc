@@ -264,8 +264,6 @@ const ProductDetail = (props: typeProps) => {
       Toast.error(error)
     }
   }
-  console.log(state, 'state__________');
-  console.log(dataRes, "dateres_____")
 
   const updateCart = (payload: any) => {
     debugger
@@ -273,18 +271,18 @@ const ProductDetail = (props: typeProps) => {
       let cart: any = localStorage.getItem('cart');
       cart = cart ? JSON.parse(cart) : [];
 
-      const { product_id, quantity, variant } = payload;
+      const { product, quantity, variant } = payload;
 
       let existingItemIndex = -1;
 
       if (state?.is_variant) {
         existingItemIndex = cart.findIndex((item: any) =>
-          item.product_id === product_id &&
+          item.product?.id === product?.id &&
           item.variant?.attribute_id === variant.attribute_id &&
           item.variant?.attribute_item_id === variant.attribute_item_id
         );
       } else {
-        existingItemIndex = cart.findIndex((item: any) => item.product_id === product_id);
+        existingItemIndex = cart.findIndex((item: any) => item.product?.id === product?.id);
       }
 
       if (existingItemIndex !== -1) {
@@ -335,9 +333,10 @@ const ProductDetail = (props: typeProps) => {
       const payload = {
         id: newId,
         price: state.customer_buying_price,
-        product_name: state.name,
-        product_id: Number(router.query.id),
-        image: state?.feature_image ?? null,
+        // product_name: state.name,
+        // product_id: Number(router.query.id),
+        // image: state?.feature_image ?? null,
+        product:state,
         quantity: Number(buyQuantity),
       } as any
       if (state?.is_variant) {
@@ -424,6 +423,14 @@ const ProductDetail = (props: typeProps) => {
     }
   }
 
+  const handleBuyNow = async () => {
+    try {
+      await addToCart()
+      router.replace(`/checkout/payment`)
+    } catch (error) {
+      
+    }
+  }
 
   const initProductList = async () => {
     debugger
@@ -682,7 +689,7 @@ const ProductDetail = (props: typeProps) => {
                     <Fragment><Button onClick={addToCart} loading={loading} type='primary' size='large' className={!screens.md ? "px-4" : 'px-5'}>add to cart</Button>
                     </Fragment>}
 
-                  <Link href={'/viewcart'}><Button type='primary' size='large' className='px-5'>Buy now</Button></Link>
+                  <Button onClick={handleBuyNow} type='primary' size='large' className='px-5'>Buy now</Button>
                 </Flex>
 
                 <ul className='list-unstyled p-0'>

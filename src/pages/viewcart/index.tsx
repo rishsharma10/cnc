@@ -42,7 +42,7 @@ const AddToCart = () => {
                 cart = cart.map((item: any) => {
                     if (is_variant) {
                         if (
-                            item.product_id === pid &&
+                            item.product?.id === pid &&
                             item.variant?.attribute_id === attribute_id &&
                             item.variant?.attribute_item_id === attribute_item_id
                         ) {
@@ -50,7 +50,7 @@ const AddToCart = () => {
                             return { ...item, quantity: qty };
                         }
                     } else {
-                        if (item.product_id === pid) {
+                        if (item.product?.id === pid) {
                             itemFound = true;
                             return { ...item, quantity: qty };
                         }
@@ -242,13 +242,13 @@ const AddToCart = () => {
     const dataSource: any = Array.isArray(state?.data) && state?.data.map((res, index) => {
         return {
             key: index,
-            cross: <Button onClick={() => handleRemoveCart(Number(res?.product_id), index)} shape='circle' className='border-0'>x</Button>,
-            product: <Link href={`/product/${stringReplace(res?.product_name)}/${res?.product_id}`}>
+            cross: <Button onClick={() => handleRemoveCart(Number(res?.product.id), index)} shape='circle' className='border-0'>x</Button>,
+            product: <Link href={`/product/${stringReplace(res?.product?.name)}/${res?.product.id}`}>
                 <Flex align='center' gap={8}>
-                    <Avatar src={res?.image ? `${BUCKET_ROOT}${res?.image}` : productImage.src} shape='square' size={100} />
+                    <Avatar src={res?.product?.feature_image ? `${BUCKET_ROOT}${res?.product?.feature_image}` : productImage.src} shape='square' size={100} />
                     <div>
 
-                        <span className='fs-16 fw-bold'>{res?.product_name}</span>
+                        <span className='fs-16 fw-bold'>{res?.product.name}</span>
                         <br />
                         {(userInfo?.access_token && res?.is_variant) ? <Fragment>
 
@@ -270,7 +270,7 @@ const AddToCart = () => {
                 </Flex>
             </Link>,
             price: <span className='fs-14 fw-semibold'>{`${CURRENCY}${res?.price}`}</span>,
-            quantity: <CartCountCompo is_variant={res?.is_variant ?? false} attribute_item_id={res?.variant?.attribute_item_id} attribute_id={res?.variant?.attribute_id} is_cart={res?.quantity > 1 ? true : false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product_id)} />,
+            quantity: <CartCountCompo is_variant={res?.is_variant ?? false} attribute_item_id={res?.variant?.attribute_item_id} attribute_id={res?.variant?.attribute_id} is_cart={res?.quantity > 1 ? true : false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product.id)} />,
             subtotal: <span className='fs-14 fw-semibold'>{`${CURRENCY}${Number(res?.quantity * res?.price)?.toFixed(2)}`}</span>,
         }
     })

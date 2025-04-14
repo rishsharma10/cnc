@@ -91,6 +91,7 @@ const Auth = {
   newsletter: (info: any) => requests.post("v1/newsletter/subscribe", info),
 };
 const Product = {
+  checkout: (info: any) => requests.post("v1/checkout", info),
   list: () => requests.get("v1/products"),
   popular: () => requests.get("v1/popular-products"),
   details: (id: any) => requests.get(`v1/product/${id}`),
