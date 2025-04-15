@@ -262,7 +262,7 @@ const Payment = () => {
                     <FormItem
                       name="email"
                       rules={[
-                        { required: true, message: "Please enter email" },
+                        {type:"email", required: true, message: "Please enter email" },
                       ]}
                       label={"Email"}
                     >
@@ -339,10 +339,18 @@ const Payment = () => {
                               required: true,
                               message: "Please enter phone number",
                             },
+                            {
+                              pattern: /^\d+$/,
+                              message: "Only numbers are allowed",
+                            },
+                            {
+                              max: 12,
+                              message: "Phone number cannot exceed 12 digits",
+                            },
                           ]}
                           label={"Phone"}
                         >
-                          <Input maxLength={12} placeholder="Enter phone number" />
+                          <Input maxLength={12}  placeholder="Enter phone number" />
                         </FormItem>
                       </Col>
                       {/* <Col span={12}>
@@ -528,6 +536,14 @@ const Payment = () => {
                             {
                               required: true,
                               message: "Please enter phone number",
+                            },
+                            {
+                              pattern: /^\d+$/,
+                              message: "Only numbers are allowed",
+                            },
+                            {
+                              max: 12,
+                              message: "Phone number cannot exceed 12 digits",
                             },
                           ]}
                           label={"Phone"}
