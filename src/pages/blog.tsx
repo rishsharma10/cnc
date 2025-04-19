@@ -9,7 +9,11 @@ import CommonBanner from '@/components/CommonBanner'
 import Head from 'next/head'
 import Link from 'next/link'
 import OptimizeImage from '@/components/OptimizeImage'
-const OurBlog = () => {
+import { GetServerSideProps } from 'next'
+import crumbApi from '@/utils/crumbApis'
+const OurBlog = (props:any) => {
+    console.log(props,"propsssss");
+    
 
     const itemData = [
         {
@@ -49,32 +53,36 @@ const OurBlog = () => {
           `,
         },
     ]
+
+
+
+
     return (
         <Fragment>
             <Head>
-                <title>{`Our Blog`} at Copper & Crumb</title>
-                <meta name='desription' content={`Our Blog at copper & crumb`} />
+                <title>{`Blogs`} at Copper & Crumb</title>
+                <meta name='desription' content={`Blog at copper & crumb`} />
             </Head>
             <section className="blog-section pt-0 bg-white">
-                <CommonBanner title="Our Blog" image={titleSeperator.src} />
+                <CommonBanner title="Blogs" image={titleSeperator.src} />
                 <div className="container mt-sm-5 pt-5">
                     <Row gutter={[20, 20]} justify={'center'}>
                         <Col span={24} lg={16} xl={14} xxl={12} className='text-center mb-4'>
                             <h4 className="title mb-4">Copper & Crumb</h4>
                         </Col>
                         <Row gutter={[20, 20]}>
-                            {itemData.map((res, index) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
-                                <Link href={`/blog/hello/1`}>
+                            {Array.isArray(props?.data) && props?.data.map((res:any, index:number) => <Col key={index} span={24} sm={12} md={12} lg={8} xl={8} xxl={8}>
+                                <Link href={`/blog/${res?.slug}`}>
                                     <div className="blog-card">
-                                        {/* <div className="blog-image">
-                                        <img src={res.image} alt="error" className="img-fluid" />
-                                    </div> */}
                                         <div className="blog-image">
-                                            <OptimizeImage width={420} height={240} image={res.image} blurDataURL={blogImage.src} />
-                                        </div>
+                                        <img src={res.banner_url} alt="error" className="img-fluid" />
+                                    </div>
+                                        {/* <div className="blog-image">
+                                            <OptimizeImage width={420} height={240} image={res.banner_url} blurDataURL={blogImage.src} />
+                                        </div> */}
                                         <div className="blog-content mt-4">
-                                            <h4>{res.title}</h4>
-                                            <p className="mt-3 mb-3 text-secondary text-justify">{res.subTitle}</p>
+                                            <h4>{res?.title}</h4>
+                                            <p className="mt-3 mb-3 text-secondary text-justify">{res?.description}</p>
                                             {/* <Link href={'#'}>Read More</Link> */}
                                         </div>
                                     </div>
@@ -94,5 +102,22 @@ OurBlog.getLayout = function getLayout(page: ReactElement) {
             {page}
         </CommonLayout>
     )
+}
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const data = await crumbApi.Blogs.list()
+    return {
+      props: { ...data },
+
+    }
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+
+    }
+  }
 }
 export default OurBlog

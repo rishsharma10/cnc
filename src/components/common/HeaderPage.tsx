@@ -99,7 +99,7 @@ const obj = {
                         <Link className="nav-item"  href="/our-story" legacyBehavior>
                             <a className="nav-link">Our story</a>
                         </Link>
-                        <Link className="nav-item"  href="/our-blog" legacyBehavior>
+                        <Link className="nav-item"  href="/blog" legacyBehavior>
                             <a className="nav-link"> Blog</a>
                         </Link>
                         <Link className="nav-item"  href="/pages/contact-us" legacyBehavior>

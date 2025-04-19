@@ -215,7 +215,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   };
   const logout = async () => {
     setUserInfo(null as any);
-    setCartData({data:[],count:0})
+    setCartData({data:[],count:0,total_tax:0})
     destroyCookie(null, COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN, {
       maxAge: 0,
       path: `/`,
@@ -223,11 +223,11 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     router.replace(`/login`);
   };
 
-  const [cartData,setCartData] = useState({data:[],count:0})
+  const [cartData,setCartData] = useState({data:[],count:0,total_tax:0})
   const initCart = async () => {
     try {
       let apiRes = await crumbApi.Cart.list()
-      setCartData({data:apiRes.cart,count:apiRes?.cart?.length})
+      setCartData({data:apiRes.cart,count:apiRes?.cart?.length,total_tax:apiRes?.total_tax})
     } catch (error) {
       
     }
@@ -254,14 +254,18 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   },[userInfo?.access_token])
 
   useEffect(() => {
-    if (isClient && localStorage.getItem('cart')) {
-      let data:any = localStorage.getItem('cart');
-      setCartData({
-        data: JSON.parse(data),
-        count: JSON.parse(data)?.length
-      });
+    if(!userInfo?.access_token){
+
+      if (isClient && localStorage.getItem('cart')) {
+        let data:any = localStorage.getItem('cart');
+        setCartData({
+          data: JSON.parse(data),
+          count: JSON.parse(data)?.length,
+          total_tax:0
+        });
+      }
     }
-  }, [isClient]);
+  }, [isClient,userInfo?.access_token]);
   useEffect(() => {
     setIsClient(true);  // Set the flag to true once mounted on the client-side
   }, []);

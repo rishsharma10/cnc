@@ -7,10 +7,10 @@ import { useRouter } from "next/router";
 const { Text, Title } = Typography;
 import { Fragment, ReactElement, useState } from "react";
 import Link from "next/link";
+import { GetServerSideProps } from "next";
 
-const OrderStatus = () => {
-  const router = useRouter();
-  const { type } = router.query;
+const OrderStatus = (props:any) => {
+  const {type} = props
   const [isSuccess, setIsSuccess] = useState(true);
   const [loading, setLoading] = useState(true);
 
@@ -66,4 +66,21 @@ const OrderStatus = () => {
 OrderStatus.getLayout = function getLayout(page: ReactElement) {
   return <CommonLayout>{page}</CommonLayout>;
 };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const type = context.query.type
+    return {
+      props: {type },
+
+    }
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+
+    }
+  }
+}
 export default OrderStatus;

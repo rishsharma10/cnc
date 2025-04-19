@@ -12,11 +12,15 @@ import blog2 from '@/assets/images/delicious-coffee-cup-table.jpg';
 import blog3 from '@/assets/images/front-view-cake-slice-with-cream-fresh-red-strawberries-inside-plate-getting-sugar-powder-dark-background.jpg'
 import { TypographyTitle } from '@/lib/AntRegistry';
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
+import crumbApi from '@/utils/crumbApis';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
 
-const BlogDetails = () => {
+const BlogDetails = (props:any) => {
+    console.log(props,"propsss");
+    
     const router = useRouter()
     const {slug,id}= router.query
 
@@ -67,24 +71,24 @@ const BlogDetails = () => {
     return (
         <Fragment>
             <Head>
-                <title>Relax & Recharge With The Best Cafe Panchkula</title>
-                <meta name='desription' content={`Looking for a place for your next coffee date? Panchkula has a hidden gem. Copper & Crumb is a well-known cafe in Panchkula and popular among coffee lovers for having an Indo-French fusion.`} />
+                <title>{props?.title}</title>
+                <meta name='desription' content={props?.description} />
             </Head>
-            <CommonBanner title={slug} />
+            <CommonBanner title={props?.title} />
             <section className="blog-section common-bg-1">
                 <div className="container">
                     <Row gutter={[20, 20]}>
                         <Col span={24}>
                             <div className="full-width-image">
-                                <img src={blogImage.src} alt="error" className="img-fluid" />
+                                <img src={props?.banner_url} alt="error" className="img-fluid" />
                             </div>
                             <div className="blog-content mt-4">
-                                <h4>A Cafe With Indo-French Culinary Revolution</h4>
-                                <p className="mt-2 mb-3 text-dark">
-                                    When classic French techniques meet Indian inspiration, they create something magical. Copper & Crumb is the best one when it comes to the best Indo-French cafe in Panchkula. Our culinary experts are crafting something revolutionary to give you the next-level experience. At Copper & Crumb, you can savor the unique taste of coffee crafted by using antique copper pots and modern-day espresso machines. The enchanting aroma of freshly brewed coffee will make your moments more special.
-                                </p>
+                                <h4>{props?.title}</h4>
+                                <div className="mt-2 mb-3 text-dark" dangerouslySetInnerHTML={{__html:props?.description}}>
+                                   
+                                </div>
                             </div>
-                            <p className='fw-bold'>Last Updated:<span className='text-muted ms-2'>26 jan 2025</span></p>
+                            <p className='fw-bold'>Last Updated:<span className='text-muted ms-2'>{props?.updated_at}</span></p>
                         </Col>
 
                     </Row>
@@ -99,5 +103,22 @@ BlogDetails.getLayout = function getLayout(page: ReactElement) {
             {page}
         </CommonLayout>
     )
+}
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const apiRes = await crumbApi.Blogs.getById(String(context.query.slug))
+    return {
+      props: { ...apiRes.data },
+
+    }
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+
+    }
+  }
 }
 export default BlogDetails

@@ -2,11 +2,11 @@ import _superagent, { search } from "superagent";
 const SuperagentPromise = require("superagent-promise");
 const superagent = SuperagentPromise(_superagent, global.Promise);
 
-export const API_ROOT = "https://copper-crumb.wloper.com/api/";
-export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
-
-// export const API_ROOT = "https://admin.copperandcrumb.in/api/";
+// export const API_ROOT = "https://copper-crumb.wloper.com/api/";
 // export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
+
+export const API_ROOT = "https://admin.copperandcrumb.in/api/";
+export const BUCKET_ROOT = "https://copper-crumb.wloper.com/public/storage/products/";
 
 
 export const CURRENCY = '₹'
@@ -104,6 +104,10 @@ const Category = {
   list: () => requests.get("v1/categories"),
   productList: (id: number) => requests.get(`v1/category-product/${id}`),
 }
+const Blogs = {
+  list: () => requests.get("v1/blogs"),
+  getById: (id: string) => requests.get(`v1/blog/${id}`),
+}
 const Cart = {
   list: () => requests.get("v1/cart"),
   update: (info: any) => requests.post("v1/cart/add", info),
@@ -177,6 +181,7 @@ const crumbApi = {
   FILES,
   token,
   encode,
+  Blogs,
   setToken: (_token?: string) => {
     token = _token;
   },

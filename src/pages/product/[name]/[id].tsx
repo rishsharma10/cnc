@@ -324,6 +324,7 @@ const ProductDetail = (props: typeProps) => {
     return newId;
   };
   const addToCart = async () => {
+    debugger
 
     try {
       let cart: any = localStorage.getItem('cart');
@@ -352,15 +353,21 @@ const ProductDetail = (props: typeProps) => {
         product_id: state.id,
         quantity: buyQuantity,
         amount: Number(state.customer_buying_price),
-        coupon_discount: 0
+        coupon_discount: 0,
+        is_varient:state?.is_variant
       } as any
-      if (size) {
-        cartPayload.attribute_id = size
-        cartPayload.is_varient = true
-      }
-      if (grindSize) {
-        cartPayload.attribute_item_id = grindSize
-        cartPayload.is_varient = true
+      if(state?.is_variant){
+        if (size) {
+          cartPayload.attribute_id = size
+          cartPayload.is_varient = true
+        }
+        if (grindSize) {
+          cartPayload.attribute_item_id = grindSize
+          cartPayload.is_varient = true
+        }
+      }else{
+        cartPayload.attribute_id = null,
+        cartPayload.attribute_item_id = null
       }
       // if (state?.is_variant) {
       //   cartPayload.is_variant = true

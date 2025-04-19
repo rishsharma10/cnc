@@ -131,7 +131,7 @@ const HeaderSmall = () => {
                             <Link className="nav-item" href="/our-story" legacyBehavior>
                                 Our story
                             </Link>
-                            <Link className="nav-item my-2" href="/our-blog" legacyBehavior>
+                            <Link className="nav-item my-2" href="/blog" legacyBehavior>
                                 Blog
                             </Link>
                             <Link className="nav-item" href="/pages/contact-us" legacyBehavior>

@@ -37,6 +37,7 @@ const Payment = () => {
     data: cartData.data,
     count: cartData.count,
     sub_total: 0,
+    total_tax:0
   });
   const [billing, setBilling] = useState("BILLING_SAME");
   const [defaultAddress, setDefaultAddress] = useState(
@@ -64,7 +65,7 @@ const Payment = () => {
     setOpen(true);
   };
 
-  const ALL_TAXES = 200;
+  const ALL_TAXES = cartData?.total_tax ?? 0;
   console.log(cartData, "cartdatata");
 
   const handleSubmit = async (values: any) => {
@@ -227,6 +228,7 @@ const Payment = () => {
       data: cartData.data,
       count: cartData.count,
       sub_total: total,
+      total_tax:cartData?.total_tax
     });
   }, [cartData]);
 
