@@ -68,6 +68,14 @@ const BlogDetails = (props:any) => {
             desc: "Being the best cafe Panchkula, Copper & Crumb is connected with the local community. Our team directly works with farmers, promoting sustainability and maintaining the authentic flavor. We have a special apprenticeship program to encourage women in culinary arts."
         },
     ]
+    function formatToDDMMYYYY(dateString:string) {
+        const date = new Date(dateString);
+        const dd = String(date.getUTCDate()).padStart(2, '0');
+        const mm = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const yyyy = date.getUTCFullYear();
+      
+        return `${dd}-${mm}-${yyyy}`;
+      }
     return (
         <Fragment>
             <Head>
@@ -88,7 +96,7 @@ const BlogDetails = (props:any) => {
                                    
                                 </div>
                             </div>
-                            <p className='fw-bold'>Last Updated:<span className='text-muted ms-2'>{props?.updated_at}</span></p>
+                            <p className='fw-bold'>Last Updated:<span className='text-muted ms-2'>{formatToDDMMYYYY(props?.updated_at)}</span></p>
                         </Col>
 
                     </Row>

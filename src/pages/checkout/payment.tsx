@@ -171,6 +171,9 @@ const Payment = () => {
         router.push(apiRes?.payment_url)
       }
       form.resetFields()
+      if(localStorage?.getItem("cart")){
+        localStorage?.removeItem("cart")
+      }
     } catch (error) {
       Toast.error(error)
       setLoading(false)

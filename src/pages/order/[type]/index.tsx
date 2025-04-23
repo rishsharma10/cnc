@@ -16,7 +16,8 @@ const OrderStatus = (props:any) => {
   React.useEffect(() => {
    const interval =setTimeout(() => {
         router.replace(`/`)
-    },5000);
+        
+    },10000);
     return () => {
       clearInterval(interval)
     }

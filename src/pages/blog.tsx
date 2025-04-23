@@ -82,7 +82,7 @@ const OurBlog = (props:any) => {
                                         </div> */}
                                         <div className="blog-content mt-4">
                                             <h4>{res?.title}</h4>
-                                            <p className="mt-3 mb-3 text-secondary text-justify">{res?.description}</p>
+                                            <div className="mt-3 mb-3 text-secondary text-justify" dangerouslySetInnerHTML={{__html:res?.description}}></div>
                                             {/* <Link href={'#'}>Read More</Link> */}
                                         </div>
                                     </div>
