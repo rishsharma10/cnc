@@ -125,7 +125,7 @@ const Payment = () => {
       warehouse_id: "1",
       due_date: new Date(),
       tax: "0",
-      discount: "0",
+      discount: discount  ? String(discount) : "0",
       
       discount_type: null,
     //   notes: "NOTES GOES HERE",
@@ -133,7 +133,7 @@ const Payment = () => {
       payments: [
         {
           type: "online",
-          amount: isLoyalityApplied ? String(Number(state.sub_total) - Number(loyalityDiscount))  : String(state.sub_total),
+          amount: isLoyalityApplied ? String(Number(state.sub_total) - Number(loyalityDiscount + discount))  : String(state.sub_total),
           selected: true,
         },
       ],
@@ -172,8 +172,9 @@ const Payment = () => {
       }
       form.resetFields()
     } catch (error) {
-    } finally {
+      Toast.error(error)
       setLoading(false)
+    } finally {
     }
   };
 
@@ -702,7 +703,7 @@ const Payment = () => {
                                   name={`code`}
                                   rules={[
                                     {
-                                      required: true,
+                                      required: false,
                                       message: "Please enter coupon code",
                                     },
                                   ]}
@@ -721,7 +722,7 @@ const Payment = () => {
                                   loading={couponLoading}
                                   onClick={applyCoupon}
                                   type="primary"
-                                  htmlType="submit"
+                                  // htmlType="submit"
                                   block={!screens.sm ? true : false}
                                   className="px-5 text-uppercase"
                                 >
