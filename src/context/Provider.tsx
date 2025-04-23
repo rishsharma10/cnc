@@ -228,10 +228,6 @@ function GlobalProvider(props: GlobleContextProviderProps) {
     try {
       let apiRes = await crumbApi.Cart.list()
       setCartData({data:apiRes.cart,count:apiRes?.cart?.length,total_tax:apiRes?.total_tax})
-      setUserInfo({
-        ...userInfo,
-        loyalty:20
-      })
     } catch (error) {
       
     }

@@ -10,25 +10,22 @@ import Link from "next/link";
 import { GetServerSideProps } from "next";
 
 const OrderStatus = (props:any) => {
+  const router = useRouter()
   const {type} = props
-  const [isSuccess, setIsSuccess] = useState(true);
-  const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
-    if (type == "error") {
-      setIsSuccess(false);
-    } else {
-      setIsSuccess(true);
+   const interval =setTimeout(() => {
+        router.replace(`/`)
+    },5000);
+    return () => {
+      clearInterval(interval)
     }
-    setTimeout(() => {
-        setLoading(false)
-    }, 500);
-  }, [type]);
+  }, []);
 
   return (
     <Fragment>
-      {!loading &&<div className="text-center space-y-4 p-5">
-        {isSuccess ? (
+      <div className="text-center space-y-4 p-5">
+        {type == 'success' ? (
           <CheckCircleTwoTone
             twoToneColor="#52c41a"
             style={{ fontSize: 100 }}
@@ -40,17 +37,17 @@ const OrderStatus = (props:any) => {
           />
         )}
 
-        <Title level={1} className="mt-5">
-          {isSuccess ? "Payment Successful" : "Payment Failed"}
+        <Title level={2} className="mt-5">
+          {type == 'success'  ? "Thank you for your order!" : "Payment Failed"}
         </Title>
 
         <Title
           level={3}
           className="my-2"
-          type={isSuccess ? "success" : "danger"}
+          type={type == 'success'  ? "success" : "danger"}
         >
-          {isSuccess
-            ? "Your payment has been processed successfully."
+          {type == 'success' 
+            ? "Your payment has been received successfully."
             : "Something went wrong. Please try again."}
         </Title>
         <br />
@@ -59,7 +56,7 @@ const OrderStatus = (props:any) => {
             Back to Home
           </Button>
         </Link>
-      </div>}
+      </div>
     </Fragment>
   );
 };
