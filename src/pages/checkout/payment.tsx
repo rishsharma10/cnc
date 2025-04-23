@@ -65,7 +65,7 @@ const Payment = () => {
     setOpen(true);
   };
 
-  const ALL_TAXES = cartData?.total_tax ?? 0;
+  const ALL_TAXES = userInfo?.access_token ? cartData?.total_tax : state?.total_tax ?? 0;
   console.log(cartData, "cartdatata");
 
   const handleSubmit = async (values: any) => {
@@ -126,14 +126,14 @@ const Payment = () => {
       due_date: new Date(),
       tax: "0",
       discount: "0",
-      loyalty_discount: "0",
+      
       discount_type: null,
     //   notes: "NOTES GOES HERE",
       status: null,
       payments: [
         {
           type: "online",
-          amount: String(state.sub_total),
+          amount: isLoyalityApplied ? String(Number(state.sub_total) - Number(loyalityDiscount))  : String(state.sub_total),
           selected: true,
         },
       ],
@@ -150,6 +150,15 @@ const Payment = () => {
       payload.billing = shipping;
     } else {
       payload.billing = billing_Address;
+    }
+    if(userInfo?.access_token){
+      if(isLoyalityApplied){
+        payload.loyalty_discount = String(loyalityDiscount)
+      }else{
+        payload.loyalty_discount = "0"
+      }
+    }else{
+      payload.loyalty_discount = "0"
     }
     console.log(payload, "billig_payload");
     // handleSuccess()
@@ -218,6 +227,16 @@ const Payment = () => {
   };
 
 
+  const calculateTotalTax = (items:any) => {
+    debugger
+    return Array.isArray(items?.data) && items.data.reduce((totalTax:any, item:any) => {
+      const itemTotalPrice = Number(item.price) * Number(item.quantity);
+      const itemTax = (Number(item.product?.custom_tax) / 100) * itemTotalPrice;
+      return totalTax + itemTax;
+    }, 0);
+  }
+
+  const totalTaxAmn = calculateTotalTax(cartData);
   React.useEffect(() => {
     const total = cartData?.data?.reduce((acc: any, item: any) => {
       const price = parseFloat(item?.price); // Convert price to number
@@ -228,9 +247,9 @@ const Payment = () => {
       data: cartData.data,
       count: cartData.count,
       sub_total: total,
-      total_tax:cartData?.total_tax
+      total_tax:totalTaxAmn
     });
-  }, [cartData]);
+  }, [cartData,totalTaxAmn]);
 
   return (
     <Fragment>

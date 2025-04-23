@@ -341,13 +341,15 @@ const ProductDetail = (props: typeProps) => {
         quantity: Number(buyQuantity),
       } as any
       if (state?.is_variant) {
-        payload.is_variant = true
+        payload.is_varient = true
         payload.variant = {
           attribute_id: size,
           variant_name: sizeName(Number(size)),
           attribute_item_id: grindSize,
           attribute_name: grindName(Number(grindSize))
         }
+      }else{
+        payload.is_varient = false
       }
       const cartPayload = {
         product_id: state.id,
@@ -432,8 +434,12 @@ const ProductDetail = (props: typeProps) => {
 
   const handleBuyNow = async () => {
     try {
-      await addToCart()
-      router.replace(`/checkout/payment`)
+      if(state?.is_cart || state?.is_cart_local){
+        router.push(`/checkout/payment`)
+      }else{
+        await addToCart()
+        router.push(`/checkout/payment`)
+      }
     } catch (error) {
       
     }

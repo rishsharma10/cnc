@@ -77,7 +77,7 @@ const TermsConditions = () => {
           </ul>
 
           <p>
-            All disputes will be governed by the laws of India under the jurisdiction of the Karnataka High Court.
+            All disputes will be governed by the laws of India under the jurisdiction of the Haryana High Court.
           </p>
         </div>
       </section>
