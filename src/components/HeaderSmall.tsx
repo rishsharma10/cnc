@@ -75,14 +75,14 @@ const HeaderSmall = () => {
                 </Flex>
                 <Flex gap={20} align='center'>
 
-                    {/* <Link className="nav-item" href="/search" legacyBehavior>
+                    <Link className="nav-item" href="/search" legacyBehavior>
                         <a className="nav-link " href="/search"><SearchOutlined /></a>
                     </Link>
                     <Badge count={cartData.count} showZero={false}>
                         <Link className="nav-item" href="/viewcart" legacyBehavior>
                             <a className="nav-link" ><ShoppingCartOutlined /></a>
                         </Link>
-                    </Badge> */}
+                    </Badge>
 
 
 
@@ -137,9 +137,10 @@ const HeaderSmall = () => {
                             <Link className="nav-item" href="/pages/contact-us" legacyBehavior>
                                 Contact us
                             </Link>
-                            {/* {!userInfo?.access_token ? <Link href={`/login`}><Button size='small' className='text-white' type='primary'>SIGN IN</Button></Link> : ""} */}
+                            
+                            {!userInfo?.access_token ? <Link href={`/login`}><Button size='small' className='text-white' type='primary'>SIGN IN</Button></Link> : ""}
                         </div>
-                        {/* {userInfo?.access_token ?<Button onClick={() => logout()} type='text' className='p-0 text-capitalize text-danger mt-auto h-auto'>Logout</Button>:""} */}
+                        {userInfo?.access_token ?<Button onClick={() => logout()} type='text' className='p-0 text-capitalize text-danger mt-auto h-auto'>Logout</Button>:""}
                     </Flex>
                 </Drawer>
                 {/* {!userInfo?.access_token ? <Link href={`/login`}><Button className='text-white' type='primary'>SIGN IN</Button></Link> :  <Dropdown menu={{ items }} placement="bottomLeft">

@@ -20,11 +20,11 @@ const HeaderPage = () => {
           label: (
             <Button
               type="text"
-              onClick={() => router.push(`https://copper-crumb.wloper.com/customer/dashboard`)}
+              onClick={() => router.push(`https://admin.copperandcrumb.in/customer/profile?_token=${userInfo?.access_token}`)}
               size="small"
               className="p-0 fw-medium bg-transparent rounded-0 h-100"
             >
-            PROFILE
+            Account
             </Button>
           ),
         },
