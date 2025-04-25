@@ -560,9 +560,11 @@ const ProductDetail = (props: typeProps) => {
   const fetchVariants = async (id: string) => {
     debugger
     try {
-      const apiRes = await crumbApi.Product.variantAttributes(String(id))
-      setSizeData(apiRes?.data);
-      setSize(Array.isArray(apiRes?.data) && apiRes?.data?.length ? apiRes?.data[0]?.id : [])
+      if(id){
+        const apiRes = await crumbApi.Product.variantAttributes(String(id))
+        setSizeData(apiRes?.data);
+        setSize(Array.isArray(apiRes?.data) && apiRes?.data?.length ? apiRes?.data[0]?.id : [])
+      }
     } catch (err: any) {
       setSizeData([]);
       // alert(err.message);
@@ -575,7 +577,7 @@ const ProductDetail = (props: typeProps) => {
       fetchData(String(router.query.id));
     }
     setVariants(props?.variants)
-    fetchVariants(Array.isArray(props?.variants) && props?.variants?.length ? props?.variants[0]?.id : [])
+    fetchVariants(Array.isArray(props?.variants) && props?.variants?.length ? props?.variants[0]?.id : null)
     setGrindSize(Array.isArray(props?.variants) && props?.variants?.length ? props?.variants[0]?.id : [])
   }, [router.query.id]);
 
