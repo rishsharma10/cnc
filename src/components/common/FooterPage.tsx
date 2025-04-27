@@ -30,7 +30,7 @@ const FooterPage = () => {
         <>
             <footer className="footer-section footer">
                 <div className="container">
-                    <Row justify={"space-between"} gutter={[60, 20]}>
+                    <Row justify={"space-between"} gutter={[20, 20]}>
                         <Col span={24} md={12} lg={12} xl={9} xxl={9}>
                             <div className="about-content">
                                 {/* <div className="logo mb-4">

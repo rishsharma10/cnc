@@ -104,6 +104,10 @@ const Category = {
   list: () => requests.get("v1/categories"),
   productList: (id: number) => requests.get(`v1/category-product/${id}`),
 }
+const Order = {
+  list: () => requests.get("v1/orders"),
+  productList: (id: number) => requests.get(`v1/category-product/${id}`),
+}
 const Blogs = {
   list: () => requests.get("v1/blogs"),
   getById: (id: string) => requests.get(`v1/blog/${id}`),
@@ -165,6 +169,7 @@ const FILES = {
 
 const crumbApi = {
   Auth,
+  Order,
   Product,
   Cart,
   Category,

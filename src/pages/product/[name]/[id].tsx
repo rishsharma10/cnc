@@ -141,7 +141,7 @@ const ProductDetail = (props: typeProps) => {
     {
       key: '1',
       label: 'Description',
-      children: <p className='text-justify'>{state?.desc}</p>,
+      children: <p className='text-justify'>{state?.desc ?? "No description"}</p>,
     },
     {
       key: '2',
@@ -324,8 +324,13 @@ const ProductDetail = (props: typeProps) => {
     return newId;
   };
   const addToCart = async () => {
+
+
     debugger
 
+    if(!state?.stock){
+      return Toast.warning(`Produt is not in stock`)
+    }
     try {
       let cart: any = localStorage.getItem('cart');
       cart = cart ? JSON.parse(cart) : [];
@@ -710,7 +715,7 @@ const ProductDetail = (props: typeProps) => {
                 <ul className='list-unstyled p-0'>
                   <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>SKU</span>: <span className='text-secondary'>{state?.sku}</span></li>
                   <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Category</span>: <span className='text-secondary'>Fresh Coffee</span></li>
-                  <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Tags</span>: <span className='text-secondary'>{
+                  {(state?.tag_1 || state?.tag_2 || state?.tag_3) && <li className='product-desc-list mb-2 pb-1'><span className='fw-semibold text-uppercase'>Tags</span>: <span className='text-secondary'>{
                     <>
                       <Tag bordered={true} className='rounded' color="magenta">
                         {state.tag_1}
@@ -722,7 +727,7 @@ const ProductDetail = (props: typeProps) => {
                         {state.tag_3}
                       </Tag>
                     </>
-                  }</span></li>
+                  }</span></li>}
                   {/* <li className='product-desc-list'><span className='fw-semibold text-uppercase'>Share</span>:
                   <ul className="list-unstyled m-0 p-0 d-flex align-items-center gap-4">
                     <li><Link href={'/'}><i className="fa-brands fa-facebook"></i></Link></li>

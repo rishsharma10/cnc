@@ -16,29 +16,49 @@ const HeaderPage = () => {
 
     const items: MenuProps["items"] = [
         {
-          key: "2",
+          key: "1",
           label: (
             <Button
               type="text"
-              onClick={() => router.push(`https://admin.copperandcrumb.in/customer/profile?_token=${userInfo?.access_token}`)}
+              onClick={() => router.push(`/account/profile`)}
               size="small"
               className="p-0 fw-medium bg-transparent rounded-0 h-100"
             >
-            Account
+            Profile
             </Button>
           ),
         },
         {type:"divider"},
-        // {
-        //   key: "1",
-        //   label: (
-        //     <Link href={`/address`} className="fw-medium">
-        //       Address
-        //     </Link>
-        //   ),
-        // },
+        {
+          key: "2",
+          label: (
+            <Button
+              type="text"
+              onClick={() => router.push(`/account/orders`)}
+              size="small"
+              className="p-0 fw-medium bg-transparent rounded-0 h-100"
+            >
+            Orders
+            </Button>
+          ),
+        },
+        {type:"divider"},
         {
           key: "3",
+          label: (
+            <Button
+              type="text"
+              onClick={() => router.push(`/account/address/update`)}
+              size="small"
+              className="p-0 fw-medium bg-transparent rounded-0 h-100"
+            >
+            Address
+            </Button>
+          ),
+        },
+        {type:"divider"},
+        {
+          key: "4",
           label: (
             <Button
               type="text"

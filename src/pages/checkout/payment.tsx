@@ -17,6 +17,7 @@ import {
   Row,
   Space,
   Switch,
+  TextArea,
   TypographyText,
   TypographyTitle,
 } from "@/lib/AntRegistry";
@@ -97,7 +98,19 @@ const Payment = () => {
       };
     });
 
-    const shipping = {
+    const default_shipping = {
+      name: userInfo?.full_name,
+      email: userInfo?.email,
+      phone: userInfo?.phone,
+      address_line_1: userInfo.address_line_1,
+      address_line_2: userInfo.address_line_2,
+      city: userInfo.city,
+      state: userInfo.state,
+      zip: userInfo.zipcode,
+      country:userInfo?.country,
+    }
+
+    const shipping_new = {
       name: values.name,
       email: values.email,
       phone: values.phone,
@@ -108,6 +121,7 @@ const Payment = () => {
       zip: values.zip,
       country: "India",
     };
+    const shipping = defaultAddress == "DEFAULT_ADDRESS" ?default_shipping : shipping_new
     const billing_Address = {
       name: values.b_name,
       email: values.email,
@@ -294,14 +308,14 @@ const Payment = () => {
                       <Input placeholder="Enter email" />
                     </FormItem>
                   </Col>
-                  <Col span={24}>
+                  {/* <Col span={24}>
                     <FormItem name="news_offer">
                       <Checkbox />
                       <span className="mx-3">
                         Email me with news and offers
                       </span>
                     </FormItem>
-                  </Col>
+                  </Col> */}
                   {userInfo?.access_token && userInfo?.address_line_1 ? (
                     <>
                       <Col span={24}>
@@ -338,9 +352,25 @@ const Payment = () => {
                                         <TypographyTitle level={5}>Delivery</TypographyTitle>
                                     </Col> */}
                   {defaultAddress == "DEFAULT_ADDRESS" ? (
-                    <Col span={12}>
+                    <Col span={24}>
                       <Card className="mx-4 p-3 text-muted fw-semibold">
-                        {userInfo?.address_line_1}
+                        <div>
+                          {userInfo?.full_name}
+                        </div>
+                        <div>
+                          {userInfo?.phone}
+                        </div>
+                        <div>
+                        {userInfo?.address_line_1},<span className="mx-1">
+                        {userInfo?.address_line_2}
+                        </span>
+                        </div>
+                        <div>
+                        {userInfo?.city},<span className="mx-1">
+                        {userInfo?.state},<span className="mx-1">{userInfo?.zipcode}</span>
+                        </span>
+                        </div>
+                        
                       </Card>
                     </Col>
                   ) : (
@@ -478,14 +508,14 @@ const Payment = () => {
                                     </Col> */}
                     </>
                   )}
-                  <Col span={24}>
+                  {/* <Col span={24}>
                     <FormItem name="news_offer">
                       <Checkbox />
                       <span className="mx-2">
                         Save this information for next time
                       </span>
                     </FormItem>
-                  </Col>
+                  </Col> */}
                   <Col span={24}>
                     <TypographyText className="fw-bold fs-6">
                       Shipping method
@@ -504,6 +534,23 @@ const Payment = () => {
                       }
                       type="info"
                     />
+                  </Col>
+                  <Col span={24}>
+                    <TypographyText className="fw-bold fs-6">
+                      Notes
+                    </TypographyText>
+                  </Col>
+                  <Col span={24}>
+                  <FormItem
+                          name="notes"
+                          rules={[
+                            { required: false, message: "Please enter notes" },
+                          ]}
+                          className="my-2"
+                        >
+
+                    <TextArea rows={4} placeholder="Enter notes"/>
+                        </FormItem>
                   </Col>
                   <Col span={24}>
                     <TypographyText className="fw-bold fs-6">
@@ -676,7 +723,7 @@ const Payment = () => {
                       }`}
                     >
                       <div
-                        className={`container  position-sticky`}
+                        className={`position-sticky`}
                         style={{
                           top: 0,
                           bottom: 0,

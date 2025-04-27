@@ -29,8 +29,11 @@ const AddToCart = () => {
 
 
 
-    const handleIncDec = async (pid: number, type: string, qty: number, index: number, is_variant?: boolean, attribute_id?: number, attribute_item_id?: number) => {
+    const handleIncDec = async (pid: number, type: string, qty: number, index: number, is_variant?: boolean, attribute_id?: number, attribute_item_id?: number,stock?:number) => {
         debugger
+        if(qty > Number(stock)){
+            return Toast.warning("Cannot buy more than max quantity")
+        }
         setLoadingUpdateCart(true)
         try {
 
@@ -270,7 +273,7 @@ const AddToCart = () => {
                 </Flex>
             </Link>,
             price: <span className='fs-14 fw-semibold'>{`${CURRENCY}${res?.price}`}</span>,
-            quantity: <CartCountCompo is_variant={res?.is_variant ?? false} attribute_item_id={res?.variant?.attribute_item_id} attribute_id={res?.variant?.attribute_id} is_cart={res?.quantity > 1 ? true : false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product.id)} />,
+            quantity: <CartCountCompo is_variant={res?.is_variant ?? false} attribute_item_id={res?.variant?.attribute_item_id} stock={res?.product?.stock} attribute_id={res?.variant?.attribute_id} is_cart={res?.quantity > 1 ? true : false} handleIncDec={handleIncDec} index={index} quantity={res?.quantity} pid={Number(res?.product.id)} />,
             subtotal: <span className='fs-14 fw-semibold'>{`${CURRENCY}${Number(res?.quantity * res?.price)?.toFixed(2)}`}</span>,
         }
     })

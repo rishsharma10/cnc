@@ -380,7 +380,7 @@ motion. `,
       </section> */}
 
       {/* /-------------------------- Gallery section ------------------ */}
-       <section className="gallery-section">
+      { popularProducts?.products?.length !== 0 && <section className="gallery-section">
         <div className="container-fluid px-0">
           <Row justify={"center"} className="mb-5 mx-0">
             <Col span={24} md={20} lg={14} xl={12} className="text-center">
@@ -399,7 +399,7 @@ motion. `,
             </Col>
           </Row>
         </div>
-      </section>
+      </section>}
 
       {/* ---------------------------- Brand Section ------------------- */}
       {/* <section className="beand-section">
