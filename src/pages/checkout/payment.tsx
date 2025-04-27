@@ -88,9 +88,9 @@ const Payment = () => {
         split_sale: res?.product?.split_sale ?? "",
         sku: res?.product?.sku,
         name: res?.product?.name,
-        price: String(res?.product?.price),
+        price: String(res?.product?.customer_buying_price),
         stock: String(res?.product?.stock),
-        quantity: String(res?.product?.quantity),
+        quantity: String(res?.quantity),
         tax_status: res?.product?.tax_status,
         custom_tax: String(res?.product?.custom_tax),
         discount: String(res?.product?.discount),
@@ -142,7 +142,7 @@ const Payment = () => {
       discount: discount  ? String(discount) : "0",
       
       discount_type: null,
-    //   notes: "NOTES GOES HERE",
+      notes: values.notes,
       status: null,
       payments: [
         {
