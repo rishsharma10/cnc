@@ -75,6 +75,7 @@ const requests = {
 
 const Auth = {
   login: (info: any) => requests.post("v1/login", info),
+  resetpassword: (info: any) => requests.post("v1/reset/password", info),
   signUp: (info: any) => requests.post("v1/register", info),
   validateCoupon: (info: any) => requests.post("v1/validate-coupon", info),
   updateAddress: (info: any) => requests.put("v1/update-profile-address", info),
@@ -106,6 +107,7 @@ const Category = {
 }
 const Order = {
   list: () => requests.get("v1/orders"),
+  details: (info:any) => requests.post("v1/order/detail",info),
   productList: (id: number) => requests.get(`v1/category-product/${id}`),
 }
 const Blogs = {

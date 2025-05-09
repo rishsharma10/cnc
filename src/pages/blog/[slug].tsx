@@ -14,6 +14,7 @@ import { TypographyTitle } from '@/lib/AntRegistry';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import crumbApi from '@/utils/crumbApis';
+import { formatToDDMMYYYY } from '@/utils/crumbValidation';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Paragraph } = Typography;
@@ -68,14 +69,7 @@ const BlogDetails = (props:any) => {
             desc: "Being the best cafe Panchkula, Copper & Crumb is connected with the local community. Our team directly works with farmers, promoting sustainability and maintaining the authentic flavor. We have a special apprenticeship program to encourage women in culinary arts."
         },
     ]
-    function formatToDDMMYYYY(dateString:string) {
-        const date = new Date(dateString);
-        const dd = String(date.getUTCDate()).padStart(2, '0');
-        const mm = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
-        const yyyy = date.getUTCFullYear();
-      
-        return `${dd}-${mm}-${yyyy}`;
-      }
+   
     return (
         <Fragment>
             <Head>

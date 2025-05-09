@@ -28,93 +28,11 @@ type Product = {
   id: number;
   quantity: number;
 };
-const LoginPage = () => {
+const ForgotPassword = () => {
   const router = useRouter();
   const { Toast, setUserInfo, initCart, cartData, setCartData } =
     useContext(GlobalContext);
   const [loading, setLoading] = useState(false);
-
-  const addToCart = async (product_id: number, quantity: number) => {
-    try {
-      const cartPayload = {
-        amount: 0,
-        coupon_discount: 0,
-        product_id: product_id,
-        quantity: quantity,
-      };
-      let apiRes = await crumbApi.Cart.add(cartPayload);
-    } catch (error) {
-      console.error("Error adding product to cart:", error);
-    }
-  };
-
-  const updateCart = async (product_id: number, quantity: number) => {
-    const payload = {
-      product_id: product_id,
-      quantity: quantity,
-    };
-    try {
-      const apiRes = await crumbApi.Cart.update(payload);
-    } catch (error) {
-      console.error("Error updating cart:", error);
-    }
-  };
-
-  // const syncCartData = async (localStorageData: CartItem[], newArray:any) => {
-  //   debugger
-  //     // Iterate through the new array of products
-  //     for (const product of newArray) {
-  //       const localStorageItem = localStorageData.find(item => item.id === product.id);
-
-  //       if (localStorageItem) {
-  //         // If the product exists in localStorage, update the quantity
-  //         const updatedQuantity = localStorageItem.quantity;
-  //         await updateCart(product.product_id, updatedQuantity);
-  //       } else {
-  //         // If the product doesn't exist in localStorage, add it to the cart
-  //         await addToCart(product.product_id, product.quantity);
-  //       }
-  //     }
-  //   };
-
-  const syncCartData = async (localStorageData: CartItem[], newArray: any) => {
-    const filteredLocalStorageData = localStorageData.filter((item) => {
-      // Check if the item id is NOT present in the cart (product_id is not equal to item.id)
-      return !newArray.some((cartItem: any) => cartItem.product_id === item.id);
-    });
-
-    console.log(filteredLocalStorageData);
-    debugger;
-
-    for (const product of filteredLocalStorageData) {
-      const { id, quantity } = product; // Extract necessary data
-      await addToCart(id, quantity); // Await the addToCart function for each product
-    }
-
-    // Iterate through the new array of products
-    // for (const product of newArray) {
-    //   const localStorageItem = localStorageData.find(item => item.id === product.id);
-
-    //   if (localStorageItem) {
-    //     // If the product exists in localStorage, update the quantity
-    //     const updatedQuantity = localStorageItem.quantity;
-    //     await updateCart(product.product_id, updatedQuantity);
-    //   } else {
-    //     // If the product doesn't exist in localStorage, add it to the cart
-    //     await addToCart(product.product_id, product.quantity);
-    //   }
-    // }
-
-    // Handle the elements in localStorageData that are not in newArray
-    const unmatchedItems: any = localStorageData.filter(
-      (item: any) => !newArray.some((product: any) => product.id === item.id)
-    );
-
-    // Add unmatched items to the cart
-    for (const item of unmatchedItems) {
-      await addToCart(item.product_id, item.quantity);
-    }
-  };
 
   const handleSubmit = async (values: any) => {
     debugger;
@@ -122,35 +40,16 @@ const LoginPage = () => {
     const payload = {
       email: values.email,
       password: values.password,
+      password_confirmation: values.password_confirmation,
     };
     try {
       setLoading(true);
-      const apiRes = await crumbApi.Auth.login(payload);
-      crumbApi.setToken(apiRes.token);
-      const apiResUser = await crumbApi.Auth.profile();
-      if (router.query.checkout) {
-        let localStorageData: any = localStorage.getItem("cart");
-        let parseData = JSON.parse(String(localStorageData)) ?? [];
-        if (parseData?.length) {
-          let cartData = await crumbApi.Cart.list();
-          await syncCartData(parseData, cartData.cart);
-          localStorage.setItem("cart", JSON.stringify([]));
-        }
+      const apiRes = await crumbApi.Auth.resetpassword(payload);
+      if (apiRes?.status) {
+        Toast.success("Password updated successfully!");
+        router.replace(`/login`);
       } else {
-        localStorage.setItem("cart", JSON.stringify([]));
-      }
-      await initCart();
-      setUserInfo({
-        ...apiResUser?.customer,
-        access_token: apiRes.token,
-      });
-      setCookie(this, COOKIES_USER_COPPER_CRUMB_ACCESS_TOKEN, apiRes?.token, {
-        path: "/",
-      });
-      if (router.query.checkout) {
-        router.replace(`/checkout/payment`);
-      } else {
-        router.replace(`/`);
+        Toast.error("Something went wrong");
       }
     } catch (error: any) {
       Toast.error(error.message);
@@ -211,6 +110,18 @@ const LoginPage = () => {
                     >
                       <InputPassword placeholder="Enter Password" />
                     </FormItem>
+                    <FormItem
+                      name={`password_confirmation`}
+                      label={"Confirm password"}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter confirm password",
+                        },
+                      ]}
+                    >
+                      <InputPassword placeholder="Enter confirm Password" />
+                    </FormItem>
                     <Flex gap={6} justify="space-between" wrap>
                       <div className="d-flex align-items-center gap-2">
                         <TypographyText>Create an account ?</TypographyText>{" "}
@@ -218,13 +129,13 @@ const LoginPage = () => {
                           <p className="text-uppercase text-primary">Sign up</p>
                         </Link>
                       </div>
-                      {/* <div className="d-flex align-items-center gap-2">
-                        <Link href={`/password/forgot`}>
+                      <div className="d-flex align-items-center gap-2">
+                        <Link href={`/signup`}>
                           <p className="text-uppercase text-primary">
-                            Forgot password ?
+                            Back to login
                           </p>
                         </Link>
-                      </div> */}
+                      </div>
                     </Flex>
                     <div className="submit-btn text-center mt-5">
                       <Button
@@ -233,7 +144,7 @@ const LoginPage = () => {
                         type="primary"
                         className="px-5"
                       >
-                        LOGIN
+                        Reset password
                       </Button>
                     </div>
                   </Form>
@@ -247,4 +158,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default ForgotPassword;

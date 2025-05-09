@@ -1,7 +1,10 @@
 import { Button } from '@/lib/AntRegistry';
-import { Card, Descriptions, Grid } from 'antd';
+import { Card, Descriptions, Flex, Grid } from 'antd';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const ViewUserProfile = (props:any) => {
+  const router = useRouter()
     const screens = Grid.useBreakpoint()
   return (
     <div style={{ maxWidth: '100%', overflowX: 'auto'}}>
@@ -14,14 +17,25 @@ const ViewUserProfile = (props:any) => {
         <Descriptions.Item label="Loyalty Points">{props?.loyalty} Points</Descriptions.Item>
         {props?.address_line_1 && <Descriptions.Item label="Address">{props?.address_line_1}</Descriptions.Item>}
       </Descriptions>
+      <Flex gap={10} align='center'>
+<Link className='w-100' href={`/password/reset`}>
+      <Button
+            type="default"
+            style={{ marginTop: '20px', display: 'block', marginInline: 'auto' }}
+            block
+            >
+            Change password
+          </Button>
+              </Link>
       <Button
             type="primary"
             style={{ marginTop: '20px', display: 'block', marginInline: 'auto' }}
             onClick={() => props?.setEditing(true)}
             block
-          >
+            >
             Edit Profile
           </Button>
+            </Flex>
     </Card>
     </div>
   );

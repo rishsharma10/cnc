@@ -210,6 +210,14 @@ export const formatString = (str:string) => {
       ?.replace(/_/g, ' ')  // Replace underscores with spaces
       ?.replace(/\b\w/g, char => char?.toUpperCase());  // Capitalize the first letter of each word
 }
+export const formatToDDMMYYYY = (dateString:string) =>{
+  const date = new Date(dateString);
+  const dd = String(date.getUTCDate()).padStart(2, '0');
+  const mm = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const yyyy = date.getUTCFullYear();
+
+  return `${dd}-${mm}-${yyyy}`;
+}
 
 const crumbValidations = {
   roundOffCeil,

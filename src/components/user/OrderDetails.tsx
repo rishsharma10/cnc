@@ -1,5 +1,5 @@
 import { Col, TypographyText, TypographyTitle } from "@/lib/AntRegistry";
-import { BUCKET_ROOT, CURRENCY } from "@/utils/crumbApis";
+import crumbApi, { BUCKET_ROOT, CURRENCY } from "@/utils/crumbApis";
 import { stringReplace } from "@/utils/crumbValidation";
 import {
   Card,
@@ -14,10 +14,11 @@ import {
 } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import productImage from "@/assets/images/product-placeholder-wp.jpg";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { GlobalContext } from "@/context/Provider";
+import { GetServerSideProps } from "next";
 
 const dummyOrderDetails = {
   id: "1",
@@ -29,7 +30,9 @@ const dummyOrderDetails = {
   paymentMethod: "Credit Card",
 };
 
-const OrderDetails = () => {
+const OrderDetails = (props:any) => {
+  console.log(props,'propssssssssssssssssss');
+  
   const router = useRouter();
   const { userInfo } = useContext(GlobalContext);
   const { id } = router.query; // dynamic ID from URL
@@ -63,72 +66,68 @@ const OrderDetails = () => {
       key: "subtotal",
     },
   ];
-  const [state, setState] = useState({
-    data: [],
-  });
+  const [state, setState] = useState({} as any);
+const [loading, setLoading] = useState(false)
+
+  const initData = async () => {
+    setLoading(true)
+    try {
+      const apiRes = await crumbApi.Order.details({order_id:id})
+      setState(apiRes.data)
+      console.log(apiRes)
+      
+    } catch (error) {
+      
+    }finally{
+      setLoading(false)
+    }
+  }
+  useEffect(() => {
+    initData()
+  },[id])
 
   const dataSource: any =
-    Array.isArray(state?.data) &&
-    state?.data.map((res: any, index) => {
+    Array.isArray(state?.invoice_data?.items) &&
+    state?.invoice_data?.items.map((res: any, index:number) => {
       return {
         key: index,
         product: (
           <Link
-            href={`/product/${stringReplace(res?.product?.name)}/${
-              res?.product.id
+            href={`/product/${stringReplace(res?.name)}/${
+              res?.product_id
             }`}
           >
             <Flex align="center" gap={8}>
               <Avatar
                 src={
-                  res?.product?.feature_image
-                    ? `${BUCKET_ROOT}${res?.product?.feature_image}`
+                  res?.feature_image
+                    ? `${BUCKET_ROOT}${res?.feature_image}`
                     : productImage.src
                 }
                 shape="square"
                 size={100}
               />
               <div>
-                <span className="fs-16 fw-bold">{res?.product.name}</span>
+                <span className="fs-16 fw-bold">{res.name}</span>
                 <br />
-                {res?.is_variant ? (
+                {Number(res?.is_variant) > 0 && (
                   <Fragment>
-                    {res?.variant?.attribute_name ? (
+                    {res?.attribute?.name ? (
                       <TypographyText className="text-muted fs-14 fw-semibold me-1 text-capitalize">
-                        {res?.variant?.attribute_name}
+                        {res?.attribute?.name}
                       </TypographyText>
                     ) : (
                       ""
                     )}
                     /
-                    {res?.variant?.variant_name ? (
+                    {res?.attribute_item?.name ? (
                       <TypographyText className="text-muted fs-14 fw-semibold mx-1 text-capitalize">
-                        {res?.variant?.variant_name}
+                        {res?.attribute_item?.name}
                       </TypographyText>
                     ) : (
                       ""
                     )}
                   </Fragment>
-                ) : res?.is_variant ? (
-                  <Fragment>
-                    {res?.variant?.attribute_name ? (
-                      <TypographyText className="text-muted fs-14 fw-semibold me-1 text-capitalize">
-                        {res?.variant?.attribute_name}
-                      </TypographyText>
-                    ) : (
-                      ""
-                    )}
-                    /
-                    {res?.variant?.variant_name ? (
-                      <TypographyText className="text-muted fs-14 fw-semibold mx-1 text-capitalize">
-                        {res?.variant?.variant_name}
-                      </TypographyText>
-                    ) : (
-                      ""
-                    )}
-                  </Fragment>
-                ) : (
-                  ""
                 )}
               </div>
             </Flex>
@@ -137,7 +136,7 @@ const OrderDetails = () => {
         price: (
           <span className="fs-14 fw-semibold">{`${CURRENCY}${res?.price}`}</span>
         ),
-        quantity: 2,
+        quantity: res?.quantity,
         subtotal: (
           <span className="fs-14 fw-semibold">{`${CURRENCY}${Number(
             res?.quantity * res?.price
@@ -146,8 +145,13 @@ const OrderDetails = () => {
       };
     });
 
+
+    let shipping = state.invoice_data?.shipping
+    let billing = state.invoice_data?.billing
   return (
     <div style={{ padding: "24px", maxWidth: "1200px", margin: "auto" }}>
+      <Spin spinning={loading}>
+
       <Card className="p-3">
         <Flex align="center" gap={3}>
           <Button
@@ -157,7 +161,7 @@ const OrderDetails = () => {
           >
             <BiLeftArrowAlt className="fs-4" />
           </Button>
-          <TypographyTitle level={5}>Order Number: #1020</TypographyTitle>
+          <TypographyTitle level={5}>Order ID: #{state?.order_id}</TypographyTitle>
         </Flex>
         <Spin spinning={false}>
           <div className="cart-content mb-4">
@@ -180,17 +184,17 @@ const OrderDetails = () => {
                   <span className="fw-bold fs-6 text-black">
                     Shipping Address
                   </span>
-                  <div>{userInfo?.full_name}</div>
-                  <div>{userInfo?.phone}</div>
+                  <div>{shipping?.name}</div>
+                  <div>{shipping?.phone}</div>
                   <div>
-                    {userInfo?.address_line_1},
-                    <span className="mx-1">{userInfo?.address_line_2}</span>
+                    {shipping?.address_line_1},
+                    <span className="mx-1">{shipping?.address_line_2}</span>
                   </div>
                   <div>
-                    {userInfo?.city},
+                    {shipping?.city},
                     <span className="mx-1">
-                      {userInfo?.state},
-                      <span className="mx-1">{userInfo?.zipcode}</span>
+                      {shipping?.state},
+                      <span className="mx-1">{shipping?.zip}</span>
                     </span>
                   </div>
                 </div>
@@ -198,17 +202,17 @@ const OrderDetails = () => {
                   <span className="fw-bold fs-6 text-black">
                     Billing Address
                   </span>
-                  <div>{userInfo?.full_name}</div>
-                  <div>{userInfo?.phone}</div>
+                  <div>{billing?.name}</div>
+                  <div>{billing?.phone}</div>
                   <div>
-                    {userInfo?.address_line_1},
-                    <span className="mx-1">{userInfo?.address_line_2}</span>
+                    {billing?.address_line_1},
+                    <span className="mx-1">{billing?.address_line_2}</span>
                   </div>
                   <div>
-                    {userInfo?.city},
+                    {billing?.city},
                     <span className="mx-1">
-                      {userInfo?.state},
-                      <span className="mx-1">{userInfo?.zipcode}</span>
+                      {billing?.state},
+                      <span className="mx-1">{billing?.zip}</span>
                     </span>
                   </div>
                 </div>
@@ -218,19 +222,19 @@ const OrderDetails = () => {
                   <span className="fw-bold fs-6 text-black">
                     Delivery
                   </span>
-                  <div className="fs-6">{userInfo?.full_name}</div>
+                  <div className="fs-6">{state?.payload?.first_name}</div>
                   </div>
               <div>
                   <span className="fw-bold fs-6 text-black">
                     Payment Mode
                   </span>
-                  <div className="fs-6">{userInfo?.full_name}</div>
+                  <div className="fs-6">{state?.invoice_data?.payments[0]?.type}</div>
                   </div>
               <div>
                   <span className="fw-bold fs-6 text-black">
                     Payment status
                   </span>
-                  <div className="fs-6">{userInfo?.full_name}</div>
+                  <div className="fs-6">{state?.invoice_data?.status ?? 'Shipped'}</div>
                   </div>
               </Flex>
             </Card>
@@ -242,26 +246,26 @@ const OrderDetails = () => {
               <div className="cart-total-checkout">
                 <ul className="list-unstyled mb-5 p-0">
                   <li className="cart-list">
-                    <span>Subtotal . {2} items</span>
+                    <span>Subtotal . {state?.invoice_data?.items?.length ??0} items</span>
                     <span className="fw-semibold">
                       {CURRENCY}
-                      {Number(2000).toFixed(2)}
+                      {Number(state?.invoice_data?.payments[0]?.amount).toFixed(2)}
                     </span>
                   </li>
                   <li className="cart-list">
                     <span>Shipping</span>
                     <span className="fw-semibold">FREE</span>
                   </li>
-                  <li className="cart-list">
+                  {/* <li className="cart-list">
                     <span>Tax</span>
-                    <span className="fw-semibold">{CURRENCY}9</span>
-                  </li>
+                    <span className="fw-semibold">{CURRENCY}{state?.invoice_data?.tax ?? 0}</span>
+                  </li> */}
                   <Divider className="m-0 p-0" />
                   <li className="cart-list">
                     <span className="fs-5 fw-bold">Total</span>
                     <span className="fs-5 fw-bold">
                       {CURRENCY}
-                      {800}
+                      {Number(state?.invoice_data?.payments[0]?.amount)}
                     </span>
                   </li>
                 </ul>
@@ -295,8 +299,31 @@ const OrderDetails = () => {
           </Descriptions>
         </Card> */}
       </Card>
+      </Spin>
+
     </div>
   );
 };
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const payload = {
+      order_id:context.query.id
+    }
+    const apiRes = await crumbApi.Order.details(payload)
+    console.log(apiRes,'apiresssss')
+    return {
+      props: { ...apiRes.data },
+
+    }
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+
+    }
+  }
+}
 export default OrderDetails;
