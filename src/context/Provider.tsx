@@ -234,7 +234,8 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   }
  const isCart = (pid:any) => {
   debugger
-    const isInCart = Array.isArray(cartData?.data) && cartData?.data.some((item:any) => item.product_id === pid);
+  if(!cartData?.data?.length) return
+    const isInCart = Array.isArray(cartData?.data) && cartData?.data.some((item:any) => item?.product?.id === pid);
     return isInCart ? true : false;
   }
 
@@ -269,6 +270,7 @@ function GlobalProvider(props: GlobleContextProviderProps) {
   useEffect(() => {
     setIsClient(true);  // Set the flag to true once mounted on the client-side
   }, []);
+  
   useEffect(() => {
     const handleRouteChangeComplete = () => {
       setCollapsed(false);

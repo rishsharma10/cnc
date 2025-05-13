@@ -132,6 +132,7 @@ const ProductDetail = (props: typeProps) => {
   const router = useRouter()
   const [state, setState] = useState(props as typeProps)
   const [loading, setLoading] = useState(false)
+  const [buyNowLoading, setBuyNowLoading] = useState(false)
   const [relatedProduct, setRelatedProduct] = useState({ data: [], count: 0 })
   const [quantity, setQuantity] = useState(1)
   const screens = Grid.useBreakpoint()
@@ -399,8 +400,8 @@ const ProductDetail = (props: typeProps) => {
         Toast.success(apiRes.message)
       }
     } catch (error) {
-
     } finally {
+      setBuyNowLoading(false)
       setLoading(false)
     }
   }
@@ -438,10 +439,12 @@ const ProductDetail = (props: typeProps) => {
   }
 
   const handleBuyNow = async () => {
+    debugger
     try {
       if(state?.is_cart || state?.is_cart_local){
         router.push(`/checkout/payment`)
       }else{
+        setBuyNowLoading(true)
         await addToCart()
         router.push(`/checkout/payment`)
       }
@@ -512,24 +515,7 @@ const ProductDetail = (props: typeProps) => {
     // setSelectedImage(data?.images.length ? data?.images[0] : '')
   }, [router.query.id])
 
-  const arrGrindSize = [
-    {
-      value: 'WHOLE_BEANS',
-      label: 'Whole Beans'
-    },
-    {
-      value: 'COARSE_GRIND',
-      label: 'Coarse Grind'
-    },
-    {
-      value: 'MEDIUM_GRIND',
-      label: 'Medium Grind'
-    },
-    {
-      value: 'FINE_GRIND',
-      label: 'Fine Grind'
-    },
-  ]
+ 
   const quantityArr = [
     { value: 1, label: '1' },
     { value: 2, label: '2' },
@@ -553,7 +539,7 @@ const ProductDetail = (props: typeProps) => {
   const fetchData = async (id: string) => {
     debugger
     try {
-      setLoading(true);
+      // setLoading(true);
       const apiRes1 = await crumbApi.Product.details(String(router.query.id))
     } catch (err: any) {
       setSizeData([]);
@@ -704,12 +690,12 @@ const ProductDetail = (props: typeProps) => {
                 </Flex>
                 <Flex align='center' gap={20} className='my-3'>
                   {/* <CartCountCompo is_cart={state.is_cart} handleIncDec={handleIncDec} quantity={state.cart_qty} pid={Number(router.query.id)} /> */}
-                  {userInfo?.access_token ? <Fragment><Button onClick={addToCart} loading={loading} type='primary' size='large' className='px-5'>add to cart</Button>
+                  {userInfo?.access_token ? <Fragment><Button onClick={addToCart} loading={(loading && !buyNowLoading)} type='primary' size='large' className='px-5'>add to cart</Button>
                   </Fragment> :
-                    <Fragment><Button onClick={addToCart} loading={loading} type='primary' size='large' className={!screens.md ? "px-4" : 'px-5'}>add to cart</Button>
+                    <Fragment><Button onClick={addToCart} loading={(loading && !buyNowLoading)} type='primary' size='large' className={!screens.md ? "px-4" : 'px-5'}>add to cart</Button>
                     </Fragment>}
 
-                  <Button onClick={handleBuyNow} type='primary' size='large' className='px-5'>Buy now</Button>
+                  <Button onClick={handleBuyNow} loading={(loading && buyNowLoading)} type='primary' size='large' className='px-5'>Buy now</Button>
                 </Flex>
 
                 <ul className='list-unstyled p-0'>
