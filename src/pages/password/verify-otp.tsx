@@ -28,7 +28,7 @@ type Product = {
   id: number;
   quantity: number;
 };
-const ForgotPassword = () => {
+const VerifyOtp = () => {
   const router = useRouter();
   const { Toast, setUserInfo, initCart, cartData, setCartData } =
     useContext(GlobalContext);
@@ -38,16 +38,16 @@ const ForgotPassword = () => {
     debugger;
     console.log(values, "valuesssss");
     const payload = {
-      email: values.email,
-    //   password: values.password,
-    //   password_confirmation: values.password_confirmation,
+      email: atob(String(router.query.email)),
+      otp: values.otp,
+      //   password_confirmation: values.password_confirmation,
     };
     try {
       setLoading(true);
-      const apiRes = await crumbApi.Auth.forgotpassword(payload);
+      const apiRes = await crumbApi.Auth.verifyOtp(payload);
       if (apiRes?.status) {
         Toast.success(apiRes?.message);
-        router.replace(`/password/verify-otp?email=${btoa(payload.email)}`);
+        router.replace(`/password/set?email=${(String(router.query.email))}`);
       } else {
         Toast.error("Something went wrong");
       }
@@ -60,8 +60,8 @@ const ForgotPassword = () => {
   return (
     <Fragment>
       <Head>
-        <title>{`Forgot password`} at Copper & Crumb</title>
-        <meta name="desription" content={`Forgot password at copper & crumb`} />
+        <title>{`Verify OTP`} at Copper & Crumb</title>
+        <meta name="desription" content={`Verify OTP at copper & crumb`} />
       </Head>
       <section className="h-100 py-3">
         <div className="container-fluid h-100">
@@ -86,30 +86,22 @@ const ForgotPassword = () => {
                   </div>
                   <Form layout="vertical" size="large" onFinish={handleSubmit}>
                     <FormItem
-                      name={`email`}
-                      label={"Email"}
+                      name="otp"
+                      label="OTP"
                       rules={[
                         {
                           required: true,
-                          message: "Please enter your email address",
+                          message: "Please enter OTP",
                         },
                         {
-                          type: "email",
-                          message: "Please enter valid email address",
+                          pattern: /^\d{6}$/,
+                          message: "OTP must be a 6-digit number",
                         },
                       ]}
+                      normalize={(value) => value.replace(/\s/g, "")} // removes whitespaces
                     >
-                      <Input placeholder="Enter Email" />
+                      <Input placeholder="Enter OTP" maxLength={6} />
                     </FormItem>
-                    <Flex justify="space-between" wrap>
-                      <div className="d-flex align-items-center m-0 p-0">
-                        <Link href={`/login`}>
-                          <p className="text-primary">
-                            Back to login
-                          </p>
-                        </Link>
-                      </div>
-                    </Flex>
                     <div className="submit-btn text-center mt-5">
                       <Button
                         loading={loading}
@@ -117,7 +109,7 @@ const ForgotPassword = () => {
                         type="primary"
                         className="px-5"
                       >
-                        Send OTP
+                        Verify OTP
                       </Button>
                     </div>
                   </Form>
@@ -131,4 +123,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default VerifyOtp;

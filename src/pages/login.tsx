@@ -153,7 +153,7 @@ const LoginPage = () => {
         router.replace(`/`);
       }
     } catch (error: any) {
-      Toast.error(error.message);
+      Toast.warning(error?.response?.body?.message);
       setLoading(false);
     } finally {
     }
@@ -215,16 +215,16 @@ const LoginPage = () => {
                       <div className="d-flex align-items-center gap-2">
                         <TypographyText>Create an account ?</TypographyText>{" "}
                         <Link href={`/signup`}>
-                          <p className="text-uppercase text-primary">Sign up</p>
+                          <p className="text-primary">Sign up</p>
                         </Link>
                       </div>
-                      {/* <div className="d-flex align-items-center gap-2">
+                      <div className="d-flex align-items-center gap-2">
                         <Link href={`/password/forgot`}>
-                          <p className="text-uppercase text-primary">
+                          <p className="text-primary">
                             Forgot password ?
                           </p>
                         </Link>
-                      </div> */}
+                      </div>
                     </Flex>
                     <div className="submit-btn text-center mt-5">
                       <Button

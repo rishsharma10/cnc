@@ -40,7 +40,15 @@ const SignupPage = () => {
               });
             router.replace(`/`)
         } catch (error: any) {
-            Toast.error(error.message)
+            let errorData = error?.response?.body?.errors
+            console.log(error.response.body,'eroooooooo')
+            if (errorData && typeof errorData === 'object' && !Array.isArray(errorData)) {
+                const firstKey = Object.keys(errorData)[0];
+                const firstMessage = errorData[firstKey][0];
+                Toast.warning(firstMessage);
+            } else {
+                Toast.error(JSON.stringify(error?.message || "An unexpected error occurred"));
+            }
             setLoading(false)
         } finally {
         }
@@ -106,9 +114,9 @@ const SignupPage = () => {
                                         <InputPassword placeholder='Enter Confirm Password' />
                                     </FormItem>
                                     {/* <Link href={`/login`}><TypographyText> Login</TypographyText></Link> */}
-                                    <Flex gap={6}>
+                                    <Flex gap={6}  align='center'>
 
-                                    <TypographyText>Already have an account ?</TypographyText> <Link href={`/login`}><p className='text-uppercase text-primary'>Login</p></Link>
+                                    <TypographyText>Already have an account ?</TypographyText> <Link href={`/login`}><p className='text-primary'>Login</p></Link>
                                     </Flex>
                                     <div className="submit-btn text-center mt-2">
                                         <Button loading={loading} htmlType='submit' type='primary' className='px-5'>Sign Up</Button>
