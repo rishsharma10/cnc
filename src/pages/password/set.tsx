@@ -51,7 +51,8 @@ const SetNewPassword = () => {
         Toast.success("Password updated successfully!");
         router.replace(`/login`);
       } else {
-        Toast.error("Something went wrong");
+        setLoading(false)
+        Toast.error(apiRes?.message ?? "Something went wrong");
       }
     } catch (error: any) {
       Toast.error(error.message);

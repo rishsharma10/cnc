@@ -49,10 +49,11 @@ const ForgotPassword = () => {
         Toast.success(apiRes?.message);
         router.replace(`/password/verify-otp?email=${btoa(payload.email)}`);
       } else {
-        Toast.error("Something went wrong");
+        setLoading(false)
+        Toast.warning(apiRes?.message ??"Something went wrong");
       }
     } catch (error: any) {
-      Toast.error(error.message);
+      Toast.error(error.response.body?.message);
       setLoading(false);
     } finally {
     }
