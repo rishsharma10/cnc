@@ -57,7 +57,17 @@ const Reset = () => {
             <Form.Item
               label="Password"
               name="password"
-              rules={[{ required: true }]}
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter password",
+                },
+                {
+                  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/,
+                  message:
+                    "Password must be at least 8 characters and include uppercase, lowercase, number, and symbol",
+                },
+              ]}
             >
               <Input placeholder="Enter password" />
             </Form.Item>
@@ -66,7 +76,22 @@ const Reset = () => {
             <Form.Item
               label="Confirm password"
               name="password_confirmation"
-              rules={[{ required: true }]}
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter confirm password",
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error("The passwords you entered do not match")
+                    );
+                  },
+                })
+              ]}
             >
               <Input placeholder="Enter confirm password" />
             </Form.Item>

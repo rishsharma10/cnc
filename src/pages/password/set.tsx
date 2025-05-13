@@ -87,12 +87,24 @@ const SetNewPassword = () => {
                       />
                     </Link>
                   </div>
+                  <h2 className="text-center mb-1">Set a New Password</h2>
+                  <p className="text-center text-bold fs-6 mb-4">
+                  Create a strong password to secure your Copper & Crumb account.
+                  </p>
                   <Form layout="vertical" size="large" onFinish={handleSubmit}>
                     <FormItem
                       name={`password`}
                       label={"Create new password"}
                       rules={[
-                        { required: true, message: "Please enter password" },
+                        {
+                          required: true,
+                          message: "Please enter password",
+                        },
+                        {
+                          pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/,
+                          message:
+                            "Password must be at least 8 characters and include uppercase, lowercase, number, and symbol",
+                        },
                       ]}
                     >
                       <InputPassword placeholder="Enter new Password" />
@@ -105,6 +117,16 @@ const SetNewPassword = () => {
                           required: true,
                           message: "Please enter confirm password",
                         },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (!value || getFieldValue("password") === value) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error("The passwords you entered do not match")
+                            );
+                          },
+                        })
                       ]}
                     >
                       <InputPassword placeholder="Enter confirm Password" />

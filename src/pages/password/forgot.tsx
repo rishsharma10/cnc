@@ -39,8 +39,8 @@ const ForgotPassword = () => {
     console.log(values, "valuesssss");
     const payload = {
       email: values.email,
-    //   password: values.password,
-    //   password_confirmation: values.password_confirmation,
+      //   password: values.password,
+      //   password_confirmation: values.password_confirmation,
     };
     try {
       setLoading(true);
@@ -49,8 +49,8 @@ const ForgotPassword = () => {
         Toast.success(apiRes?.message);
         router.replace(`/password/verify-otp?email=${btoa(payload.email)}`);
       } else {
-        setLoading(false)
-        Toast.warning(apiRes?.message ??"Something went wrong");
+        setLoading(false);
+        Toast.warning(apiRes?.message ?? "Something went wrong");
       }
     } catch (error: any) {
       Toast.error(error.response.body?.message);
@@ -85,6 +85,11 @@ const ForgotPassword = () => {
                       />
                     </Link>
                   </div>
+                  <h2 className="text-center mb-1">Forgot Your Password?</h2>
+                  <p className="text-center text-bold fs-6 mb-4">
+                    No worries! We &apos;ll send you a code to reset your password and
+                    get you brewing again.
+                  </p>
                   <Form layout="vertical" size="large" onFinish={handleSubmit}>
                     <FormItem
                       name={`email`}
@@ -105,9 +110,7 @@ const ForgotPassword = () => {
                     <Flex justify="space-between" wrap>
                       <div className="d-flex align-items-center m-0 p-0">
                         <Link href={`/login`}>
-                          <p className="text-primary">
-                            Back to login
-                          </p>
+                          <p className="text-primary">Back to login</p>
                         </Link>
                       </div>
                     </Flex>

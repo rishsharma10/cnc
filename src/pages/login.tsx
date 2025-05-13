@@ -185,6 +185,8 @@ const LoginPage = () => {
                       />
                     </Link>
                   </div>
+                  <h2 className="text-center mb-1">Login to Your Account</h2>
+                  <p className="text-center text-bold fs-6 mb-4">Enjoy personalized offers and track your orders easily.</p>
                   <Form layout="vertical" size="large" onFinish={handleSubmit}>
                     <FormItem
                       name={`email`}

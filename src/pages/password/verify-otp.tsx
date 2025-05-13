@@ -94,6 +94,10 @@ import {
                         <img src={logo.src} alt="logo" height={120} width={120} />
                       </Link>
                     </div>
+                    <h2 className="text-center mb-1">Verify Your OTP</h2>
+                  <p className="text-center text-bold fs-6 mb-4">
+                  Enter the 6-digit code sent to your email. Just one step away from getting back in.
+                  </p>
                     <Form layout="vertical" size="large" onFinish={handleSubmit}>
                       <FormItem
                         name="otp"
